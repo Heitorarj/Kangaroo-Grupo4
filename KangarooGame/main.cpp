@@ -13,6 +13,8 @@ int main() {
 	Escada minhasEscadas(75, 15, sf::Color::Yellow, sf::Color::Blue);
 	Jogador meuJogador;
 
+	Texto meuTexto;
+
 	while (janela.isOpen()) {
 
 		sf::Event evento;
@@ -32,6 +34,7 @@ int main() {
 			janela.draw(minhasEscadas.retanguloCenario[i]);
 		}
 		janela.draw(meuJogador.jogadorCorpo);
+		janela.draw(meuTexto.texto);
 		janela.display();
 	}
 }

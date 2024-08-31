@@ -109,4 +109,19 @@ public:
 
 };
 
+class Texto {
+public:
+
+	sf::Font fonte;
+	sf::Text texto;
+
+	Texto() {
+		fonte.loadFromFile("assets/x-files.ttf");
+		sf::Text meuTexto("Pontos:\t", fonte, 24);
+		texto = meuTexto;
+		texto.setColor(sf::Color::Black);
+		texto.setPosition(sf::Vector2f(425, 750));
+	}
+};
+
 #endif
