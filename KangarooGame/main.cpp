@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include "ClassesFuncoes.hpp"
+
+#include "Moveis.hpp"
+#include "Cenario.hpp"
 
 int main() {
 
