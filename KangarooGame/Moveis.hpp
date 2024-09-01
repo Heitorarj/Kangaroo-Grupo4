@@ -1,3 +1,4 @@
+
 #ifndef MOVEIS_HPP_
 #define MOVEIS_HPP_
 
@@ -12,7 +13,7 @@ public:
 	sf::Texture jogadorAgachadoTextura;
 	sf::Sprite jogadorCorpo;
 	sf::Vector2f escalaOriginal = sf::Vector2f(0.05, 0.05);
-	sf::Vector2f escalaAgachado = sf::Vector2f(0.05, 0.05); // Ajuste o fator de escala para a imagem agachada
+	sf::Vector2f escalaAgachado = sf::Vector2f(0.045, 0.045); // Ajuste o fator de escala para a imagem agachada
 
 	Jogador() {
 		jogadorTextura.loadFromFile("assets/kangaroo.png");
