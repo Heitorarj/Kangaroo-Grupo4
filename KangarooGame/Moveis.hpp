@@ -12,14 +12,16 @@ public:
 	sf::Texture jogadorAgachadoTextura;
 	sf::Sprite jogadorCorpo;
 	sf::Vector2f escalaOriginal = sf::Vector2f(0.05, 0.05);
-	sf::Vector2f escalaAgachado = sf::Vector2f(0.1, 0.1); // Ajuste o fator de escala para a imagem agachada
+	sf::Vector2f escalaAgachado = sf::Vector2f(0.05, 0.05); // Ajuste o fator de escala para a imagem agachada
 
 	Jogador() {
 		jogadorTextura.loadFromFile("assets/kangaroo.png");
 		jogadorAgachadoTextura.loadFromFile("assets/kangarooAgachado.png");
 		jogadorCorpo.setTexture(jogadorTextura);
-		jogadorCorpo.setScale(sf::Vector2f(0.05, 0.05));
+		jogadorCorpo.setScale(escalaOriginal);
 		jogadorCorpo.setPosition(sf::Vector2f(200, 600));
+		jogadorCorpo.setOrigin(jogadorCorpo.getLocalBounds().width / 2,
+				jogadorCorpo.getLocalBounds().height / 2);
 	}
 
 	void moveJogador() {
@@ -51,11 +53,14 @@ public:
 			jogadorCorpo.setPosition(
 					sf::Vector2f(jogadorCorpo.getPosition().x,
 							jogadorCorpo.getPosition().y + velocidadeY));
-		}
-		else {
+		} else {
 			jogadorCorpo.setTexture(jogadorTextura); // Retorna à textura original
 			jogadorCorpo.setScale(escalaOriginal); // Retorna à escala original
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
+			jogadorCorpo.rotate(5); // Transforma o kanguru em um sharingan, apenas um easter egg engraçadinho
+		}
+
 	}
 
 };
