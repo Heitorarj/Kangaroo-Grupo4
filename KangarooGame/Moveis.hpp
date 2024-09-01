@@ -15,6 +15,7 @@ public:
 	sf::Vector2f escalaAgachado = sf::Vector2f(0.05, 0.05); // Ajuste o fator de escala para a imagem agachada
 	int pontos;
 
+
 	Jogador() {
 		jogadorTextura.loadFromFile("assets/kangaroo.png");
 		jogadorAgachadoTextura.loadFromFile("assets/kangarooAgachado.png");
@@ -62,6 +63,8 @@ public:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
 			jogadorCorpo.rotate(10); // Transforma o kanguru em um sharingan, apenas um easter egg engraçadinho
 		}
+
+		jogadorCorpo.move(velocidadeX, velocidadeY); //Velocidade aplicada somente após de determinar a direção
 
 	}
 
