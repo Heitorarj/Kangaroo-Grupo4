@@ -109,6 +109,33 @@ public:
 
 };
 
+class Hitbox: public Cenario {
+public:
+
+	Hitbox() {
+		retanguloCenario.setOutlineColor(sf::Color::Red);
+		retanguloCenario.setSize(sf::Vector2f(60, 100));
+		retanguloCenario.setFillColor(sf::Color::Transparent);
+		retanguloCenario.setOutlineThickness(5);
+		retanguloCenario.setOrigin(
+				sf::Vector2f((retanguloCenario.getLocalBounds().width / 2),
+						retanguloCenario.getLocalBounds().height / 2));
+	}
+};
+class HitboxTester: public Cenario {
+public:
+	HitboxTester() {
+		retanguloCenario.setOutlineColor(sf::Color::Red);
+		retanguloCenario.setSize(sf::Vector2f(60, 100));
+		retanguloCenario.setFillColor(sf::Color::Transparent);
+		retanguloCenario.setOutlineThickness(5);
+		retanguloCenario.setOrigin(
+				sf::Vector2f((retanguloCenario.getLocalBounds().width / 2),
+						retanguloCenario.getLocalBounds().height / 2));
+	}
+
+};
+
 class Texto {
 public:
 
@@ -119,7 +146,6 @@ public:
 		fonte.loadFromFile("assets/x-files.ttf");
 		sf::Text meuTexto("Pontos:\t", fonte, 24);
 		texto = meuTexto;
-		texto.setColor(sf::Color::Black);
 		texto.setPosition(sf::Vector2f(425, 750));
 	}
 };
