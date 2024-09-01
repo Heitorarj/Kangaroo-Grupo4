@@ -1,11 +1,9 @@
-
 #ifndef CENARIO_HPP_
 #define CENARIO_HPP_
 
 class Cenario {
 public:
 	sf::RectangleShape retanguloCenario;
-	int largura, altura;
 };
 
 class Parede: public Cenario {
@@ -137,17 +135,45 @@ public:
 
 };
 
-class Texto {
+class Fruta {
+public:
+	sf::Texture frutaTextura;
+	sf::Sprite frutaCorpo[3];
+
+	Fruta() {
+		for (int i = 0; i < 3; i++) {
+			frutaTextura.loadFromFile("assets/fruta.png");
+			frutaCorpo[i].setTexture(frutaTextura);
+			frutaCorpo[i].setScale(0.4, 0.4);
+			frutaCorpo[i].setOrigin(frutaCorpo[i].getLocalBounds().width / 2,
+					frutaCorpo[i].getLocalBounds().height / 2);
+		}
+
+		frutaCorpo[0].setPosition(700, 510);
+		frutaCorpo[1].setPosition(300, 420);
+		frutaCorpo[2].setPosition(600, 310);
+
+	}
+
+};
+
+class Texto: public Cenario {
 public:
 
 	sf::Font fonte;
 	sf::Text texto;
 
 	Texto() {
-		fonte.loadFromFile("assets/x-files.ttf");
+		retanguloCenario.setFillColor(sf::Color::Black);
+		retanguloCenario.setOutlineColor(sf::Color::Blue);
+		retanguloCenario.setOutlineThickness(5);
+		retanguloCenario.setSize(sf::Vector2f(150, 25));
+
+		fonte.loadFromFile("assets/arial_narrow_7.ttf");
 		sf::Text meuTexto("Pontos:\t", fonte, 24);
 		texto = meuTexto;
-		texto.setPosition(sf::Vector2f(425, 750));
+		texto.setPosition(sf::Vector2f(400, 760));
+		retanguloCenario.setPosition(395, 762);
 	}
 };
 
