@@ -1,3 +1,4 @@
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -14,7 +15,7 @@ int main() {
 	Jogador meuJogador;
 	Hitbox kangarooHitbox;
 	HitboxTester testadorHitbox;
-	Fruta minhaFruta;
+
 	Texto meuTexto;
 
 	while (janela.isOpen()) {
@@ -47,11 +48,9 @@ int main() {
 			testadorHitbox.retanguloCenario.setOutlineColor(sf::Color::Red);
 		} // If para testar colisões temporariamente
 
-		if (meuJogador.jogadorCorpo.getGlobalBounds().intersects(
-				minhasParedes.retanguloCenario[0].getGlobalBounds())) {
-			meuJogador.jogadorCorpo.setPosition(
-					sf::Vector2f(meuJogador.jogadorCorpo.getPosition().x,
-							meuJogador.jogadorCorpo.getPosition().y - 1));
+		if(meuJogador.jogadorCorpo.getGlobalBounds().intersects(minhasParedes.retanguloCenario[0].getGlobalBounds()))
+		{
+			meuJogador.jogadorCorpo.setPosition(sf::Vector2f(meuJogador.jogadorCorpo.getPosition().x, meuJogador.jogadorCorpo.getPosition().y - 1));
 		} // Estava testando o agachamento do canguru, if temporario
 
 		for (int i = 0; i < 6; ++i) {
@@ -60,18 +59,6 @@ int main() {
 		for (int i = 0; i < 15; ++i) {
 			janela.draw(minhasEscadas.retanguloCenario[i]);
 		}
-
-		for (int i = 0; i < 3; ++i) {
-			janela.draw(minhaFruta.frutaCorpo[i]);
-
-			if (meuJogador.jogadorCorpo.getGlobalBounds().intersects(
-					minhaFruta.frutaCorpo[i].getGlobalBounds())) {
-				meuJogador.pontos += 100;
-				minhaFruta.frutaCorpo[i].setPosition(-50, -50);
-			}
-			std::cout << "Pontos: " << meuJogador.pontos << std::endl;
-		}
-
 		janela.draw(meuJogador.jogadorCorpo);
 		janela.draw(meuTexto.texto);
 		janela.draw(kangarooHitbox.retanguloCenario);

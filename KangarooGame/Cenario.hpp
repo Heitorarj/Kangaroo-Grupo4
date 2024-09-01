@@ -1,3 +1,4 @@
+
 #ifndef CENARIO_HPP_
 #define CENARIO_HPP_
 
@@ -132,28 +133,6 @@ public:
 		retanguloCenario.setOrigin(
 				sf::Vector2f((retanguloCenario.getLocalBounds().width / 2),
 						retanguloCenario.getLocalBounds().height / 2));
-	}
-
-};
-
-class Fruta {
-public:
-	sf::Texture frutaTextura;
-	sf::Sprite frutaCorpo[3];
-
-	Fruta() {
-		for (int i = 0; i < 3; i++) {
-			frutaTextura.loadFromFile("assets/fruta.png");
-			frutaCorpo[i].setTexture(frutaTextura);
-			frutaCorpo[i].setScale(0.4, 0.4);
-			frutaCorpo[i].setOrigin(frutaCorpo[i].getLocalBounds().width / 2,
-					frutaCorpo[i].getLocalBounds().height / 2);
-		}
-
-		frutaCorpo[0].setPosition(700, 510);
-		frutaCorpo[1].setPosition(300, 420);
-		frutaCorpo[2].setPosition(600, 310);
-
 	}
 
 };
