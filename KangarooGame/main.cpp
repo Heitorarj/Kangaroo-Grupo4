@@ -68,6 +68,9 @@ int main() {
 					minhaFruta.frutaCorpo[i].getGlobalBounds())) {
 				meuJogador.pontos += 100;
 				minhaFruta.frutaCorpo[i].setPosition(-50, -50);
+				char str[5];
+				sprintf(str, "Pontos:\t%d", meuJogador.pontos); // Código pego do ChuvaGame
+				meuTexto.texto.setString(str);
 			}
 			std::cout << "Pontos: " << meuJogador.pontos << std::endl;
 		}
