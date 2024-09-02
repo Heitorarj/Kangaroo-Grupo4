@@ -53,7 +53,6 @@ int main() {
 					sf::Vector2f(meuJogador.jogadorCorpo.getPosition().x,
 							meuJogador.jogadorCorpo.getPosition().y - 1));
 		} // Estava testando o agachamento do canguru, if temporario
-
 		for (int i = 0; i < 6; ++i) {
 			janela.draw(minhasParedes.retanguloCenario[i]);
 		}
@@ -68,9 +67,9 @@ int main() {
 					minhaFruta.frutaCorpo[i].getGlobalBounds())) {
 				meuJogador.pontos += 100;
 				minhaFruta.frutaCorpo[i].setPosition(-50, -50);
-				char str[5];
-				sprintf(str, "Pontos:\t%d", meuJogador.pontos); // Código pego do ChuvaGame
-				meuTexto.texto.setString(str);
+				char textoContador[5];
+				sprintf( textoContador, "Pontos:\t%d", meuJogador.pontos); // Código pego do ChuvaGame
+				meuTexto.texto.setString(textoContador);
 			}
 			std::cout << "Pontos: " << meuJogador.pontos << std::endl;
 		}

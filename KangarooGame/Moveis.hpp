@@ -9,6 +9,7 @@ public:
 class Jogador: public Movel {
 public:
 	sf::Texture jogadorTextura;
+	sf::Texture jogadorTexturaGirado;
 	sf::Texture jogadorAgachadoTextura;
 	sf::Sprite jogadorCorpo;
 	sf::Vector2f escalaOriginal = sf::Vector2f(0.05, 0.05);
@@ -17,6 +18,7 @@ public:
 
 	Jogador() {
 		jogadorTextura.loadFromFile("assets/kangaroo.png");
+		jogadorTexturaGirado.loadFromFile("assets/kangarooGirado.png");
 		jogadorAgachadoTextura.loadFromFile("assets/kangarooAgachado.png");
 		jogadorCorpo.setTexture(jogadorTextura);
 		jogadorCorpo.setScale(escalaOriginal);
@@ -31,9 +33,11 @@ public:
 		velocidadeY = 0;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			velocidadeX = 0.12;
+			jogadorCorpo.setTexture(jogadorTextura);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			velocidadeX = -0.12;
+			jogadorCorpo.setTexture(jogadorTexturaGirado);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 			velocidadeY = -0.12;
@@ -43,7 +47,7 @@ public:
 			jogadorCorpo.setScale(escalaAgachado); // Aplica a escala para a imagem agachada
 			velocidadeY = 0.12;
 		} else {
-			jogadorCorpo.setTexture(jogadorTextura); // Retorna à textura original
+			//jogadorCorpo.setTexture(jogadorTextura); // Retorna à textura original
 			jogadorCorpo.setScale(escalaOriginal); // Retorna à escala original
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
