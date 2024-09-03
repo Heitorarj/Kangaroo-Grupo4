@@ -1,3 +1,4 @@
+
 #ifndef CENARIO_HPP_
 #define CENARIO_HPP_
 
