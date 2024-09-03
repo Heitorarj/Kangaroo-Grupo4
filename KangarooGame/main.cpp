@@ -1,3 +1,4 @@
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -9,8 +10,8 @@ int main() {
 
 	sf::RenderWindow janela(sf::VideoMode(1100, 800), "Kangaroo Game");
 
-	Parede minhasParedes(800, 25, sf::Color::Yellow, sf::Color::Blue);
-	Escada minhasEscadas(75, 15, sf::Color::Yellow, sf::Color::Blue);
+	Parede minhasParedes(800, 25, sf::Color(168, 106, 12), sf::Color(168, 106, 12));
+	Escada minhasEscadas(75, 15, sf::Color(168, 106, 12), sf::Color(168, 106, 12));
 	Jogador meuJogador;
 	Hitbox kangarooHitbox;
 	HitboxTester testadorHitbox;
@@ -38,7 +39,7 @@ int main() {
 							sf::Mouse::getPosition(janela).y));
 		}
 
-		janela.clear();
+		janela.clear(sf::Color(83, 0, 138));
 
 		if (testadorHitbox.retanguloCenario.getGlobalBounds().intersects(
 				meuJogador.jogadorCorpo.getGlobalBounds())) {
