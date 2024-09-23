@@ -1,7 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <iostream>
-
+#include "Jogo.hpp"
 #include "Moveis.hpp"
 #include "Cenario.hpp"
 
@@ -9,10 +6,9 @@ int main() {
 
 	sf::RenderWindow janela(sf::VideoMode(1100, 800), "Kangaroo Game");
 
-	Parede minhasParedes(800, 25, sf::Color(168, 106, 12),
-			sf::Color(0, 0, 0));
-	Escada minhasEscadas(75, 15, sf::Color(168, 106, 12),
-			sf::Color(0, 0, 0));
+	Parede minhasParedes;
+	Escada minhasEscadas;
+	criaFase(1, &minhasParedes, &minhasEscadas);
 	Jogador meuJogador;
 	Hitbox kangarooHitbox;
 	HitboxTester testadorHitbox;
@@ -55,12 +51,6 @@ int main() {
 					sf::Vector2f(meuJogador.jogadorCorpo.getPosition().x,
 							meuJogador.jogadorCorpo.getPosition().y - 1));
 		} // Estava testando o agachamento do canguru, if temporario
-		for (int i = 0; i < 6; ++i) {
-			janela.draw(minhasParedes.retanguloCenario[i]);
-		}
-		for (int i = 0; i < 15; ++i) {
-			janela.draw(minhasEscadas.retanguloCenario[i]);
-		}
 
 		for (int i = 0; i < 3; ++i) {
 			janela.draw(minhaFruta.frutaCorpo[i]);
@@ -76,6 +66,7 @@ int main() {
 			std::cout << "Pontos: " << meuJogador.pontos << std::endl;
 		}
 
+		desenhaFase(minhasParedes, minhasEscadas, &janela);
 		janela.draw(meuJogador.jogadorCorpo);
 		janela.draw(meuTexto.retanguloCenario);
 		janela.draw(meuTexto.texto);
