@@ -1,4 +1,3 @@
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -10,8 +9,10 @@ int main() {
 
 	sf::RenderWindow janela(sf::VideoMode(1100, 800), "Kangaroo Game");
 
-	Parede minhasParedes(800, 25, sf::Color(168, 106, 12), sf::Color(168, 106, 12));
-	Escada minhasEscadas(75, 15, sf::Color(168, 106, 12), sf::Color(168, 106, 12));
+	Parede minhasParedes(800, 25, sf::Color(168, 106, 12),
+			sf::Color(0, 0, 0));
+	Escada minhasEscadas(75, 15, sf::Color(168, 106, 12),
+			sf::Color(0, 0, 0));
 	Jogador meuJogador;
 	Hitbox kangarooHitbox;
 	HitboxTester testadorHitbox;
@@ -69,7 +70,7 @@ int main() {
 				meuJogador.pontos += 100;
 				minhaFruta.frutaCorpo[i].setPosition(-50, -50);
 				char textoContador[5];
-				sprintf( textoContador, "Pontos:\t%d", meuJogador.pontos); // Código pego do ChuvaGame
+				sprintf(textoContador, "Pontos:\t%d", meuJogador.pontos); // Código pego do ChuvaGame
 				meuTexto.texto.setString(textoContador);
 			}
 			std::cout << "Pontos: " << meuJogador.pontos << std::endl;

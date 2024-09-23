@@ -12,8 +12,8 @@ public:
 	sf::Texture jogadorTexturaGirado;
 	sf::Texture jogadorAgachadoTextura;
 	sf::Sprite jogadorCorpo;
-	sf::Vector2f escalaOriginal = sf::Vector2f(0.05, 0.05);//tamanho kangaroo normal
-	sf::Vector2f escalaAgachado = sf::Vector2f(0.04, 0.04);//tamanho kangaroo agachado
+	sf::Vector2f escalaOriginal = sf::Vector2f(0.05, 0.05); //tamanho kangaroo normal
+	sf::Vector2f escalaAgachado = sf::Vector2f(0.04, 0.04); //tamanho kangaroo agachado
 	int pontos = 0;
 
 	Jogador() {
@@ -32,17 +32,17 @@ public:
 		velocidadeY = 0;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			jogadorCorpo.setTexture(jogadorAgachadoTextura);// Troca a textura ao agachar
-			jogadorCorpo.setScale(escalaAgachado);// Aplica a escala para a imagem agachada
+			jogadorCorpo.setTexture(jogadorAgachadoTextura); // Troca a textura ao agachar
+			jogadorCorpo.setScale(escalaAgachado); // Aplica a escala para a imagem agachada
 			velocidadeY = 0.12;
-		}else {
+		} else {
 			jogadorCorpo.setTexture(jogadorTextura);
 			jogadorCorpo.setScale(escalaOriginal);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			velocidadeX = -0.12;
-			jogadorCorpo.setTexture(jogadorTexturaGirado);//Altera a imagem para o kanguru invertido
-			jogadorCorpo.setScale(escalaOriginal);// Aplica a escala para a imagem normal
+			jogadorCorpo.setTexture(jogadorTexturaGirado); //Altera a imagem para o kanguru invertido
+			jogadorCorpo.setScale(escalaOriginal); // Aplica a escala para a imagem normal
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			velocidadeX = 0.12;
@@ -54,10 +54,10 @@ public:
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-			jogadorCorpo.rotate(5);// Transforma o kanguru em um sharingan, apenas um easter egg engraçadinho
+			jogadorCorpo.rotate(5); // Transforma o kanguru em um sharingan, apenas um easter egg engraçadinho
 		}
 
-		jogadorCorpo.move(velocidadeX, velocidadeY);//Velocidade aplicada só após de determinar a direção
+		jogadorCorpo.move(velocidadeX, velocidadeY); //Velocidade aplicada só após de determinar a direção
 	}
 };
 
