@@ -1,5 +1,6 @@
 #ifndef CENARIO_HPP_
 #define CENARIO_HPP_
+
 #include "Jogo.hpp"
 class Cenario {
 public:
@@ -8,12 +9,11 @@ public:
 
 class Parede: public Cenario {
 public:
-
 	sf::RectangleShape retanguloCenario[10];
-
 	Parede();
 	Parede(int inputLargura, int inputAltura, sf::Color inputCor,
 			sf::Color inputCorBorda, int inputNumeroFase);
+	void girar();
 };
 class Escada: public Cenario {
 public:
@@ -21,16 +21,7 @@ public:
 	Escada();
 	Escada(int inputLargura, int inputAltura, sf::Color inputCor,
 			sf::Color inputCorBorda, int inputNumeroFase);
-};
-
-class Hitbox: public Cenario {
-public:
-	Hitbox();
-};
-
-class HitboxTester: public Cenario {
-public:
-	HitboxTester();
+	void girar();
 };
 
 class Fruta {
@@ -39,6 +30,28 @@ public:
 	sf::Sprite frutaCorpo[3];
 
 	Fruta();
+	Fruta(int inputNumeroFase);
+	void girar();
+};
+
+class Arvore {
+public:
+	sf::Texture arvoreTextura;
+	sf::Sprite arvoreCorpo[3];
+
+	Arvore();
+	Arvore(int inputNumeroFase);
+	void girar();
+};
+
+class Flor {
+public:
+	sf::Texture florTextura;
+	sf::Sprite florCorpo[5];
+
+	Flor();
+	Flor(int inputNumeroFase);
+	void girar();
 };
 
 class Texto: public Cenario {

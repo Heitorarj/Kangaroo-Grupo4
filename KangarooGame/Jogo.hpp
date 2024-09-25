@@ -4,9 +4,18 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <ctime>
 #include "Cenario.hpp"
+#include "Moveis.hpp"
 
-void criaFase(int numeroFase, Parede *inputParede, Escada *inputEscada);
-void desenhaFase(Parede inputParede, Escada inputEscada, sf::RenderWindow *inputJanela);
+void criaFase(int inputNumeroFase, Parede *inputParede, Escada *inputEscada,
+		Fruta *inputFruta, Arvore *inputArvore, Flor *inputFlor, Nuvem *inputNuvem);
+void desenhaFase(Parede inputParede, Escada inputEscada, Fruta *inputFruta,
+		Arvore *inputArvore, Flor *inputFlor, Nuvem *inputNuvem, sf::RenderWindow *inputJanela,
+		int inputNumeroFase);
+void checarColisaoFruta(Jogador *inputJogador, Fruta *inputFruta,
+		Texto *inputTexto);
+void girar(Parede *inputParede, Escada *inputEscada, Fruta *inputFruta,
+		Arvore *inputArvore, Flor *inputFlor, Nuvem *inputNuvem);
 
 #endif
