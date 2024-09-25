@@ -12,11 +12,25 @@ public:
 	sf::Texture jogadorTexturaGirado;
 	sf::Texture jogadorAgachadoTextura;
 	sf::Sprite jogadorCorpo;
+	sf::RectangleShape jogadorHitbox;
 	sf::Vector2f escalaOriginal;
 	sf::Vector2f escalaAgachado;
 	int pontos;
 
 	Jogador();
 	void moveJogador();
+};
+
+class Nuvem : public Movel
+{
+public:
+	float velocidadeX[5];
+	sf::Texture nuvemTextura;
+	sf::Sprite nuvemCorpo[5];
+
+	Nuvem();
+	Nuvem(int inputNumeroFase);
+	void moverNuvem();
+	void girar();
 };
 #endif
