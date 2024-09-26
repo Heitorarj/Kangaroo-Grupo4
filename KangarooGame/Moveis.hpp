@@ -21,13 +21,22 @@ public:
 	void moveJogador();
 };
 
-class Nuvem: public Movel {
+class Nuvem {
 public:
 	float velocidadeX;
 	sf::Texture nuvemTextura;
 	sf::Sprite nuvemCorpo;
 
 	Nuvem();
-	void moverNuvem();
+};
+
+class Filhote {
+public:
+	sf::Texture filhoteTextura;
+	sf::Sprite filhoteCorpo;
+	sf::RectangleShape filhoteHitbox;
+	float velocidadeX;
+
+	Filhote();
 };
 #endif

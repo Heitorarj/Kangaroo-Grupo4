@@ -63,9 +63,9 @@ void criarFruta(int inputNumeroFase, std::vector<Fruta> *inputFruta) {
 	if (inputNumeroFase == 1) {
 		std::vector<Fruta> minhasFrutas(3);
 
-		minhasFrutas[0].frutaCorpo.setPosition(735, 465);
-		minhasFrutas[1].frutaCorpo.setPosition(280, 400);
-		minhasFrutas[2].frutaCorpo.setPosition(630, 220);
+		minhasFrutas[0].frutaCorpo.setPosition(750, 515);
+		minhasFrutas[1].frutaCorpo.setPosition(280, 420);
+		minhasFrutas[2].frutaCorpo.setPosition(680, 270);
 
 		*inputFruta = minhasFrutas;
 
@@ -76,9 +76,9 @@ void criarArvore(int inputNumeroFase, std::vector<Arvore> *inputArvore) {
 	if (inputNumeroFase == 1) {
 		std::vector<Arvore> minhasArvores(3);
 
-		minhasArvores[0].arvoreCorpo.setPosition(700, 470);
-		minhasArvores[1].arvoreCorpo.setPosition(300, 470);
-		minhasArvores[2].arvoreCorpo.setPosition(600, 270);
+		minhasArvores[0].arvoreCorpo.setPosition(700, 483);
+		minhasArvores[1].arvoreCorpo.setPosition(600, 286);
+		minhasArvores[2].arvoreCorpo.setPosition(150, 86);
 
 		*inputArvore = minhasArvores;
 	}
@@ -88,11 +88,11 @@ void criarFlor(int inputNumeroFase, std::vector<Flor> *inputFlor) {
 	if (inputNumeroFase == 1) {
 		std::vector<Flor> minhasFlores(5);
 
-		minhasFlores[0].florCorpo.setPosition(150, 710);
-		minhasFlores[1].florCorpo.setPosition(300, 710);
-		minhasFlores[2].florCorpo.setPosition(500, 510);
-		minhasFlores[3].florCorpo.setPosition(300, 310);
-		minhasFlores[4].florCorpo.setPosition(700, 110);
+		minhasFlores[0].florCorpo.setPosition(150, 722);
+		minhasFlores[1].florCorpo.setPosition(300, 722);
+		minhasFlores[2].florCorpo.setPosition(500, 522);
+		minhasFlores[3].florCorpo.setPosition(300, 322);
+		minhasFlores[4].florCorpo.setPosition(700, 122);
 
 		*inputFlor = minhasFlores;
 	}
@@ -101,9 +101,8 @@ void criarFlor(int inputNumeroFase, std::vector<Flor> *inputFlor) {
 void criarNuvem(int inputNumeroFase, std::vector<Nuvem> *inputNuvem) {
 	if (inputNumeroFase == 1) {
 
-		std::vector<Nuvem> minhasNuvens(5);
+		std::vector<Nuvem> minhasNuvens(4);
 
-		minhasNuvens[0].nuvemCorpo.setPosition(150, 710);
 		minhasNuvens[0].nuvemCorpo.setPosition(950 + (rand() % 10),
 				rand() % 100);
 		minhasNuvens[1].nuvemCorpo.setPosition(950 + (rand() % 10),
@@ -111,18 +110,27 @@ void criarNuvem(int inputNumeroFase, std::vector<Nuvem> *inputNuvem) {
 		minhasNuvens[2].nuvemCorpo.setPosition((rand() % 100) + (rand() % 100),
 				rand() % 200 + 50);
 		minhasNuvens[3].nuvemCorpo.setPosition((rand() % 100) + (rand() % 100),
-				rand() % 230 + 50);
-		minhasNuvens[4].nuvemCorpo.setPosition((rand() % 100) + (rand() % 100),
 				rand() % 400 + 50);
 
 		*inputNuvem = minhasNuvens;
 	}
 }
 
+void criarFilhote(int inputNumeroFase, Filhote *inputFilhote) {
+	if (inputNumeroFase == 1) {
+		Filhote meuFilhote;
+
+		meuFilhote.filhoteCorpo.setPosition(800, 120);
+
+		*inputFilhote = meuFilhote;
+	}
+}
+
 void criarMapa(int inputNumeroFase, std::vector<Parede> *inputParede,
 		std::vector<Escada> *inputEscada, std::vector<Fruta> *inputFruta,
 		std::vector<Arvore> *inputArvore, std::vector<Flor> *inputFlor,
-		std::vector<Nuvem> *inputNuvem, sf::RenderWindow *janela) {
+		std::vector<Nuvem> *inputNuvem, Filhote *inputFilhote,
+		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
 		criarParede(inputNumeroFase, inputParede);
 		criarEscada(inputNumeroFase, inputEscada);
@@ -130,6 +138,7 @@ void criarMapa(int inputNumeroFase, std::vector<Parede> *inputParede,
 		criarArvore(inputNumeroFase, inputArvore);
 		criarFlor(inputNumeroFase, inputFlor);
 		criarNuvem(inputNumeroFase, inputNuvem);
+		criarFilhote(inputNumeroFase, inputFilhote);
 
 	}
 }
@@ -137,7 +146,8 @@ void criarMapa(int inputNumeroFase, std::vector<Parede> *inputParede,
 void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		std::vector<Escada> &inputEscada, std::vector<Fruta> &inputFruta,
 		std::vector<Arvore> &inputArvore, std::vector<Flor> &inputFlor,
-		std::vector<Nuvem> &inputNuvem, sf::RenderWindow *janela) {
+		std::vector<Nuvem> &inputNuvem, Filhote *inputFilhote,
+		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
 			inputNuvem[i].nuvemCorpo.setTexture(inputNuvem[i].nuvemTextura);
@@ -161,6 +171,9 @@ void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		for (unsigned int i = 0; i < inputEscada.size(); i++) {
 			janela->draw(inputEscada[i].retanguloCenario);
 		}
+		inputFilhote->filhoteCorpo.setTexture(inputFilhote->filhoteTextura);
+		janela->draw(inputFilhote->filhoteCorpo);
+		janela->draw(inputFilhote->filhoteHitbox);
 	}
 }
 
@@ -180,12 +193,44 @@ void checarColisaoFruta(Jogador *inputJogador, std::vector<Fruta> &inputFruta,
 	}
 }
 
+void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
+		sf::RenderWindow *inputJanela) {
+	if (inputJogador->jogadorHitbox.getGlobalBounds().intersects(
+			inputFilhote->filhoteHitbox.getGlobalBounds()) == true) {
+		inputJanela->close();
+	}
+}
+
 void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem) {
 	if (inputNumeroFase == 1) {
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
-			inputNuvem[i].moverNuvem();
+			if ((inputNuvem[i].nuvemCorpo.getPosition().x <= 0)
+					or (inputNuvem[i].nuvemCorpo.getPosition().x >= 1000)) {
+				inputNuvem[i].nuvemCorpo.setPosition(
+						inputNuvem[i].nuvemCorpo.getPosition().x, rand() % 500);
+				inputNuvem[i].velocidadeX *= -1;
+			}
+			inputNuvem[i].nuvemCorpo.setPosition(
+					inputNuvem[i].nuvemCorpo.getPosition().x
+							+ inputNuvem[i].velocidadeX,
+					inputNuvem[i].nuvemCorpo.getPosition().y);
 		}
 	}
+}
 
+void moverFilhote(int inputNumeroFase, Filhote *inputFilhote) {
+	if (inputNumeroFase == 1) {
+		if ((inputFilhote->filhoteCorpo.getPosition().x <= 600)
+				or (inputFilhote->filhoteCorpo.getPosition().x >= 850)) {
+			inputFilhote->velocidadeX *= -1;
+		}
+		inputFilhote->filhoteHitbox.setPosition(
+				inputFilhote->filhoteCorpo.getPosition().x,
+				inputFilhote->filhoteCorpo.getPosition().y);
+		inputFilhote->filhoteCorpo.setPosition(
+				inputFilhote->filhoteCorpo.getPosition().x
+						+ inputFilhote->velocidadeX,
+				inputFilhote->filhoteCorpo.getPosition().y);
+	}
 }
 
