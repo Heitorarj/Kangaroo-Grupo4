@@ -1,195 +1,48 @@
 #include "Jogo.hpp"
 #include "Cenario.hpp"
 
-Parede::Parede() {
-}
-Parede::Parede(int inputLargura, int inputAltura, sf::Color inputCor,
-		sf::Color inputCorBorda, int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 6; i++) {
-			if (i == 0) {
-				retanguloCenario[i].setOutlineColor(inputCorBorda);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setFillColor(sf::Color(113, 175, 41));
-				retanguloCenario[i].setSize(sf::Vector2f(inputLargura, 50));
-			} else if (i == 4) {
-				retanguloCenario[i].setOutlineColor(inputCorBorda);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setFillColor(inputCor);
-				retanguloCenario[i].setSize(sf::Vector2f(100, 800));
-			} else if (i == 5) {
-				retanguloCenario[i].setOutlineColor(inputCorBorda);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setFillColor(inputCor);
-				retanguloCenario[i].setSize(sf::Vector2f(200, 800));
-			} else {
-				retanguloCenario[i].setOutlineColor(inputCorBorda);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setFillColor(inputCor);
-				retanguloCenario[i].setSize(
-						sf::Vector2f(inputLargura, inputAltura));
-			}
+Parede::Parede(int inputLargura, int inputAltura, int inputPosicaoX,
+		int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda) {
 
-		}
-		retanguloCenario[0].setPosition(100, 750);
-		retanguloCenario[1].setPosition(100, 550);
-		retanguloCenario[2].setPosition(100, 350);
-		retanguloCenario[3].setPosition(100, 150);
-		retanguloCenario[4].setPosition(0, 0);
-		retanguloCenario[5].setPosition(900, 0);
-
-	}
-
-}
-void Parede::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 10; i++) {
-			retanguloCenario[i].rotate(5);
-		}
-	}
+	retanguloCenario.setOutlineColor(inputCorBorda);
+	retanguloCenario.setOutlineThickness(5);
+	retanguloCenario.setFillColor(inputCor);
+	retanguloCenario.setSize(sf::Vector2f(inputLargura, inputAltura));
+	retanguloCenario.setPosition(inputPosicaoX, inputPosicaoY);
 }
 
-Escada::Escada() {
-}
-Escada::Escada(int inputLargura, int inputAltura, sf::Color inputCor,
-		sf::Color inputCorBorda, int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 15; i++) {
-			if (i == 12 or i == 13 or i == 14) {
-				retanguloCenario[i].setOutlineColor(sf::Color::Red);
-				retanguloCenario[i].setFillColor(sf::Color::Transparent);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setSize(
-						sf::Vector2f(inputLargura + 20, 190));
-			} else {
-				retanguloCenario[i].setOutlineColor(inputCorBorda);
-				retanguloCenario[i].setOutlineThickness(5);
-				retanguloCenario[i].setFillColor(inputCor);
-				retanguloCenario[i].setSize(
-						sf::Vector2f(inputLargura, inputAltura));
-			}
+Escada::Escada(int inputLargura, int inputAltura, int inputPosicaoX,
+		int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda) {
 
-		}
-		retanguloCenario[0].setPosition(775, 715); // Primeiro andar 0, 1, 2 e 3
-		retanguloCenario[1].setPosition(775,
-				retanguloCenario[0].getPosition().y - 40);
-		retanguloCenario[2].setPosition(775,
-				retanguloCenario[1].getPosition().y - 40);
-		retanguloCenario[3].setPosition(775,
-				retanguloCenario[2].getPosition().y - 40); //	Primeiro andar
-		retanguloCenario[4].setPosition(150,
-				retanguloCenario[3].getPosition().y - 80); //  Segundo andar 4, 5, 6 e 7
-		retanguloCenario[5].setPosition(150,
-				retanguloCenario[4].getPosition().y - 40);
-		retanguloCenario[6].setPosition(150,
-				retanguloCenario[5].getPosition().y - 40);
-		retanguloCenario[7].setPosition(150,
-				retanguloCenario[6].getPosition().y - 40); // Segundo andar
-		retanguloCenario[8].setPosition(775,
-				retanguloCenario[7].getPosition().y - 80); // Terceiro andar 8, 9, 10 e 11
-		retanguloCenario[9].setPosition(775,
-				retanguloCenario[8].getPosition().y - 40);
-		retanguloCenario[10].setPosition(775,
-				retanguloCenario[9].getPosition().y - 40);
-		retanguloCenario[11].setPosition(775,
-				retanguloCenario[10].getPosition().y - 40); // Terceiro andar
-		retanguloCenario[12].setPosition(765, // Escada invisíveis que irão colidir com o jogador 12, 13 e 14
-				retanguloCenario[0].getPosition().y - 160);
-		retanguloCenario[13].setPosition(140,
-				retanguloCenario[4].getPosition().y - 160);
-		retanguloCenario[14].setPosition(765,
-				retanguloCenario[8].getPosition().y - 160); // Escada invisíveis que irão colidir com o jogador
-
-	}
-}
-
-void Escada::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 15; i++) {
-			retanguloCenario[i].rotate(5);
-		}
-	}
+	retanguloCenario.setOutlineColor(inputCorBorda);
+	retanguloCenario.setOutlineThickness(5);
+	retanguloCenario.setFillColor(inputCor);
+	retanguloCenario.setSize(sf::Vector2f(inputLargura, inputAltura));
+	retanguloCenario.setPosition(inputPosicaoX, inputPosicaoY);
 }
 
 Fruta::Fruta() {
-}
-
-Fruta::Fruta(int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 3; i++) {
-			frutaTextura.loadFromFile("assets/fruta.png");
-			frutaCorpo[i].setTexture(frutaTextura);
-			frutaCorpo[i].setScale(0.2, 0.2);
-			frutaCorpo[i].setOrigin(frutaCorpo[i].getLocalBounds().width / 2,
-					frutaCorpo[i].getLocalBounds().height / 2);
-		}
-
-		frutaCorpo[0].setPosition(735, 465);
-		frutaCorpo[1].setPosition(280, 400);
-		frutaCorpo[2].setPosition(630, 220);
-	}
-}
-
-void Fruta::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 3; i++) {
-			frutaCorpo[i].rotate(5);
-		}
-	}
+	frutaTextura.loadFromFile("assets/fruta.png");
+	frutaCorpo.setTexture(frutaTextura);
+	frutaCorpo.setScale(0.2, 0.2);
+	frutaCorpo.setOrigin(frutaCorpo.getLocalBounds().width / 2,
+			frutaCorpo.getLocalBounds().height / 2);
 }
 
 Arvore::Arvore() {
-}
-
-Arvore::Arvore(int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 3; i++) {
-			arvoreTextura.loadFromFile("assets/arvore.png");
-			arvoreCorpo[i].setTexture(arvoreTextura);
-			arvoreCorpo[i].setScale(5, 5);
-			arvoreCorpo[i].setOrigin(arvoreCorpo[i].getLocalBounds().width / 2,
-					arvoreCorpo[i].getLocalBounds().height / 2);
-		}
-
-		arvoreCorpo[0].setPosition(700, 470);
-		arvoreCorpo[1].setPosition(300, 470);
-		arvoreCorpo[2].setPosition(600, 270);
-	}
-}
-
-void Arvore::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 3; i++) {
-			arvoreCorpo[i].rotate(5);
-		}
-	}
+	arvoreTextura.loadFromFile("assets/arvore.png");
+	arvoreCorpo.setTexture(arvoreTextura);
+	arvoreCorpo.setScale(5, 5);
+	arvoreCorpo.setOrigin(arvoreCorpo.getLocalBounds().width / 2,
+			arvoreCorpo.getLocalBounds().height / 2);
 }
 
 Flor::Flor() {
-}
-Flor::Flor(int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 5; i++) {
-			florTextura.loadFromFile("assets/flor.png");
-			florCorpo[i].setTexture(florTextura);
-			florCorpo[i].setScale(5, 5);
-			florCorpo[i].setOrigin(florCorpo[i].getLocalBounds().width / 2,
-					florCorpo[i].getLocalBounds().height / 2);
-		}
-
-		florCorpo[0].setPosition(150, 710);
-		florCorpo[1].setPosition(300, 710);
-		florCorpo[2].setPosition(500, 510);
-		florCorpo[3].setPosition(300, 310);
-		florCorpo[4].setPosition(700, 110);
-	}
-}
-void Flor::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 5; i++) {
-			florCorpo[i].rotate(5);
-		}
-	}
+	florTextura.loadFromFile("assets/flor.png");
+	florCorpo.setTexture(florTextura);
+	florCorpo.setScale(5, 5);
+	florCorpo.setOrigin(florCorpo.getLocalBounds().width / 2,
+			florCorpo.getLocalBounds().height / 2);
 }
 
 Texto::Texto() {

@@ -2,60 +2,50 @@
 #define CENARIO_HPP_
 
 #include "Jogo.hpp"
-class Cenario {
+
+class Parede {
 public:
 	sf::RectangleShape retanguloCenario;
+
+	Parede(int inputLargura, int inputAltura, int inputPosicaoX,
+			int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda);
 };
 
-class Parede: public Cenario {
+class Escada {
 public:
-	sf::RectangleShape retanguloCenario[10];
-	Parede();
-	Parede(int inputLargura, int inputAltura, sf::Color inputCor,
-			sf::Color inputCorBorda, int inputNumeroFase);
-	void girar();
-};
-class Escada: public Cenario {
-public:
-	sf::RectangleShape retanguloCenario[15];
-	Escada();
-	Escada(int inputLargura, int inputAltura, sf::Color inputCor,
-			sf::Color inputCorBorda, int inputNumeroFase);
-	void girar();
+	sf::RectangleShape retanguloCenario;
+
+	Escada(int inputLargura, int inputAltura, int inputPosicaoX,
+			int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda);
 };
 
 class Fruta {
 public:
 	sf::Texture frutaTextura;
-	sf::Sprite frutaCorpo[3];
+	sf::Sprite frutaCorpo;
 
 	Fruta();
-	Fruta(int inputNumeroFase);
-	void girar();
 };
 
 class Arvore {
 public:
 	sf::Texture arvoreTextura;
-	sf::Sprite arvoreCorpo[3];
+	sf::Sprite arvoreCorpo;
 
 	Arvore();
-	Arvore(int inputNumeroFase);
-	void girar();
 };
 
 class Flor {
 public:
 	sf::Texture florTextura;
-	sf::Sprite florCorpo[5];
+	sf::Sprite florCorpo;
 
 	Flor();
-	Flor(int inputNumeroFase);
-	void girar();
 };
 
-class Texto: public Cenario {
+class Texto {
 public:
+	sf::RectangleShape retanguloCenario;
 	sf::Font fonte;
 	sf::Text texto;
 
