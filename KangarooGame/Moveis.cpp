@@ -7,7 +7,7 @@ Jogador::Jogador() {
 	jogadorAgachadoTextura.loadFromFile("assets/kangarooAgachado.png");
 	jogadorCorpo.setTexture(jogadorTextura);
 	jogadorCorpo.setScale(escalaOriginal);
-	jogadorCorpo.setPosition(sf::Vector2f(225, 650));
+	jogadorCorpo.setPosition(sf::Vector2f(225, 700));
 	jogadorCorpo.setOrigin(jogadorCorpo.getLocalBounds().width / 2,
 			jogadorCorpo.getLocalBounds().height / 2);
 	escalaOriginal = sf::Vector2f(0.1, 0.1); //tamanho kangaroo normal
@@ -69,14 +69,19 @@ Nuvem::Nuvem() {
 	velocidadeX = 0.03;
 }
 
-void Nuvem::moverNuvem() {
-
-	if ((nuvemCorpo.getPosition().x <= 0)
-			or (nuvemCorpo.getPosition().x >= 1000)) {
-		nuvemCorpo.setPosition(nuvemCorpo.getPosition().x, rand() % 500);
-		velocidadeX *= -1;
-	}
-	nuvemCorpo.setPosition(nuvemCorpo.getPosition().x + velocidadeX,
-			nuvemCorpo.getPosition().y);
+Filhote::Filhote() {
+	filhoteTextura.loadFromFile("assets/kangaroo.png");
+	filhoteCorpo.setTexture(filhoteTextura);
+	filhoteCorpo.setOrigin(filhoteCorpo.getLocalBounds().width / 2,
+			filhoteCorpo.getLocalBounds().height / 2);
+	filhoteCorpo.setScale(0.05, 0.05);
+	filhoteHitbox.setSize(
+			sf::Vector2f(filhoteCorpo.getLocalBounds().width / 20,
+					filhoteCorpo.getLocalBounds().height / 20));
+	filhoteHitbox.setOrigin(filhoteHitbox.getLocalBounds().width / 2,
+			filhoteHitbox.getLocalBounds().height / 2);
+	filhoteHitbox.setFillColor(sf::Color::Transparent);
+	filhoteHitbox.setOutlineColor(sf::Color::Green);
+	filhoteHitbox.setOutlineThickness(5);
+	velocidadeX = 0.05;
 }
-

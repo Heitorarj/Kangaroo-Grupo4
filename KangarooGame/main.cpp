@@ -1,3 +1,4 @@
+
 #include "Jogo.hpp"
 #include "Moveis.hpp"
 #include "Cenario.hpp"
@@ -11,12 +12,13 @@ int main() {
 	std::vector<Arvore> minhasArvores;
 	std::vector<Flor> minhasFlores;
 	std::vector<Nuvem> minhasNuvens;
+	Filhote meuFilhote;
 	Jogador meuJogador;
 	Texto meuTexto;
 	srand(time(NULL));
 
 	criarMapa(1, &minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores,
-			&minhasFlores, &minhasNuvens, &janela);
+			&minhasFlores, &minhasNuvens, &meuFilhote, &janela);
 
 	while (janela.isOpen()) {
 
@@ -30,10 +32,12 @@ int main() {
 
 		meuJogador.moveJogador();
 		moverNuvem(1, minhasNuvens);
+		moverFilhote(1, &meuFilhote);
+		checarFimJogo(&meuJogador, &meuFilhote, &janela);
 		janela.clear(sf::Color(168, 231, 240));
 		checarColisaoFruta(&meuJogador, minhasFrutas, &meuTexto);
 		desenharMapa(1, minhasParedes, minhasEscadas, minhasFrutas,
-				minhasArvores, minhasFlores, minhasNuvens, &janela);
+				minhasArvores, minhasFlores, minhasNuvens, &meuFilhote, &janela);
 		janela.draw(meuJogador.jogadorCorpo);
 		janela.draw(meuJogador.jogadorHitbox);
 		janela.draw(meuTexto.retanguloCenario);

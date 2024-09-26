@@ -1,3 +1,4 @@
+
 #include "Jogo.hpp"
 #include "Cenario.hpp"
 
@@ -24,7 +25,7 @@ Escada::Escada(int inputLargura, int inputAltura, int inputPosicaoX,
 Fruta::Fruta() {
 	frutaTextura.loadFromFile("assets/fruta.png");
 	frutaCorpo.setTexture(frutaTextura);
-	frutaCorpo.setScale(0.2, 0.2);
+	frutaCorpo.setScale(0.04, 0.04);
 	frutaCorpo.setOrigin(frutaCorpo.getLocalBounds().width / 2,
 			frutaCorpo.getLocalBounds().height / 2);
 }
@@ -32,7 +33,7 @@ Fruta::Fruta() {
 Arvore::Arvore() {
 	arvoreTextura.loadFromFile("assets/arvore.png");
 	arvoreCorpo.setTexture(arvoreTextura);
-	arvoreCorpo.setScale(5, 5);
+	arvoreCorpo.setScale(4, 4);
 	arvoreCorpo.setOrigin(arvoreCorpo.getLocalBounds().width / 2,
 			arvoreCorpo.getLocalBounds().height / 2);
 }
@@ -40,7 +41,7 @@ Arvore::Arvore() {
 Flor::Flor() {
 	florTextura.loadFromFile("assets/flor.png");
 	florCorpo.setTexture(florTextura);
-	florCorpo.setScale(5, 5);
+	florCorpo.setScale(3, 3);
 	florCorpo.setOrigin(florCorpo.getLocalBounds().width / 2,
 			florCorpo.getLocalBounds().height / 2);
 }
