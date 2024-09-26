@@ -21,16 +21,13 @@ public:
 	void moveJogador();
 };
 
-class Nuvem : public Movel
-{
+class Nuvem: public Movel {
 public:
-	float velocidadeX[5];
+	float velocidadeX;
 	sf::Texture nuvemTextura;
-	sf::Sprite nuvemCorpo[5];
+	sf::Sprite nuvemCorpo;
 
 	Nuvem();
-	Nuvem(int inputNumeroFase);
 	void moverNuvem();
-	void girar();
 };
 #endif

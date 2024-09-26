@@ -10,8 +10,8 @@ Jogador::Jogador() {
 	jogadorCorpo.setPosition(sf::Vector2f(225, 650));
 	jogadorCorpo.setOrigin(jogadorCorpo.getLocalBounds().width / 2,
 			jogadorCorpo.getLocalBounds().height / 2);
-	escalaOriginal = sf::Vector2f(0.05, 0.05); //tamanho kangaroo normal
-	escalaAgachado = sf::Vector2f(0.04, 0.04); //tamanho kangaroo agachado
+	escalaOriginal = sf::Vector2f(0.1, 0.1); //tamanho kangaroo normal
+	escalaAgachado = sf::Vector2f(0.1, 0.1); //tamanho kangaroo agachado
 	jogadorHitbox.setFillColor(sf::Color::Transparent);
 	jogadorHitbox.setOutlineColor(sf::Color::Green);
 	jogadorHitbox.setOutlineThickness(5);
@@ -60,48 +60,23 @@ void Jogador::moveJogador() {
 }
 
 Nuvem::Nuvem() {
+
+	nuvemTextura.loadFromFile("assets/nuvem.png");
+	nuvemCorpo.setTexture(nuvemTextura);
+	nuvemCorpo.setScale(5, 5);
+	nuvemCorpo.setOrigin(nuvemCorpo.getLocalBounds().width / 2,
+			nuvemCorpo.getLocalBounds().height / 2);
+	velocidadeX = 0.03;
 }
-Nuvem::Nuvem(int inputNumeroFase) {
-	if (inputNumeroFase == 1) {
-		for (int i = 0; i < 5; i++) {
-			nuvemTextura.loadFromFile("assets/nuvem.png");
-			nuvemCorpo[i].setTexture(nuvemTextura);
-			nuvemCorpo[i].setScale(5, 5);
-			nuvemCorpo[i].setOrigin(nuvemCorpo[i].getLocalBounds().width / 2,
-					nuvemCorpo[i].getLocalBounds().height / 2);
-			velocidadeX[i] = 1;
-		}
-		srand(time(NULL));
-		nuvemCorpo[0].setPosition((rand() % 100) + (rand() % 100),
-				rand() % 100);
-		nuvemCorpo[1].setPosition((rand() % 100) + (rand() % 100),
-				rand() % 200 + 50);
-		nuvemCorpo[2].setPosition((rand() % 100) + (rand() % 100),
-				rand() % 200 + 50);
-		nuvemCorpo[3].setPosition((rand() % 100) + (rand() % 100),
-				rand() % 230 + 50);
-		nuvemCorpo[4].setPosition((rand() % 100) + (rand() % 100),
-				rand() % 400 + 50);
-	}
-}
+
 void Nuvem::moverNuvem() {
-	for (int i = 0; i < 5; i++) {
-		if ((nuvemCorpo[i].getPosition().x <= 0)
-				or (nuvemCorpo[i].getPosition().x >= 1000)) {
-			nuvemCorpo[i].setPosition(
-							nuvemCorpo[i].getPosition().x,
-							rand () % 500);
-			velocidadeX[i] *= -1;
-		}
-		nuvemCorpo[i].setPosition(
-				nuvemCorpo[i].getPosition().x + velocidadeX[i],
-				nuvemCorpo[i].getPosition().y);
+
+	if ((nuvemCorpo.getPosition().x <= 0)
+			or (nuvemCorpo.getPosition().x >= 1000)) {
+		nuvemCorpo.setPosition(nuvemCorpo.getPosition().x, rand() % 500);
+		velocidadeX *= -1;
 	}
+	nuvemCorpo.setPosition(nuvemCorpo.getPosition().x + velocidadeX,
+			nuvemCorpo.getPosition().y);
 }
-void Nuvem::girar() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
-		for (int i = 0; i < 5; i++) {
-			nuvemCorpo[i].rotate(5);
-		}
-	}
-}
+

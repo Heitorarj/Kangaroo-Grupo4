@@ -5,16 +5,18 @@
 int main() {
 
 	sf::RenderWindow janela(sf::VideoMode(1100, 800), "Kangaroo Game");
-	Parede minhasParedes;
-	Escada minhasEscadas;
-	Fruta minhasFrutas;
-	Arvore minhasArvores;
-	Flor minhasFlores;
-	Nuvem minhasNuvens;
+	std::vector<Parede> minhasParedes;
+	std::vector<Escada> minhasEscadas;
+	std::vector<Fruta> minhasFrutas;
+	std::vector<Arvore> minhasArvores;
+	std::vector<Flor> minhasFlores;
+	std::vector<Nuvem> minhasNuvens;
 	Jogador meuJogador;
 	Texto meuTexto;
+	srand(time(NULL));
 
-	criaFase(1, &minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores, &minhasFlores, &minhasNuvens);
+	criarMapa(1, &minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores,
+			&minhasFlores, &minhasNuvens, &janela);
 
 	while (janela.isOpen()) {
 
@@ -27,11 +29,11 @@ int main() {
 		}
 
 		meuJogador.moveJogador();
-		minhasNuvens.moverNuvem();
+		moverNuvem(1, minhasNuvens);
 		janela.clear(sf::Color(168, 231, 240));
-		girar(&minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores, &minhasFlores, &minhasNuvens);
-		checarColisaoFruta(&meuJogador, &minhasFrutas, &meuTexto);
-		desenhaFase(minhasParedes, minhasEscadas, &minhasFrutas, &minhasArvores, &minhasFlores, &minhasNuvens, &janela, 1);
+		checarColisaoFruta(&meuJogador, minhasFrutas, &meuTexto);
+		desenharMapa(1, minhasParedes, minhasEscadas, minhasFrutas,
+				minhasArvores, minhasFlores, minhasNuvens, &janela);
 		janela.draw(meuJogador.jogadorCorpo);
 		janela.draw(meuJogador.jogadorHitbox);
 		janela.draw(meuTexto.retanguloCenario);
