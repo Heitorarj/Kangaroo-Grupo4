@@ -116,6 +116,17 @@ void criarNuvem(int inputNumeroFase, std::vector<Nuvem> *inputNuvem) {
 	}
 }
 
+void criarNuvemInimiga(int inputNumeroFase, NuvemInimiga *inputNuvemInimiga) {
+	if (inputNumeroFase == 1) {
+
+		NuvemInimiga minhaNuvemInimiga;
+
+		minhaNuvemInimiga.nuvemCorpo.setPosition(140, 50);
+		minhaNuvemInimiga.nuvemTiro.setPosition(-100, -100);
+		*inputNuvemInimiga = minhaNuvemInimiga;
+	}
+}
+
 void criarFilhote(int inputNumeroFase, Filhote *inputFilhote) {
 	if (inputNumeroFase == 1) {
 		Filhote meuFilhote;
@@ -130,7 +141,7 @@ void criarMapa(int inputNumeroFase, std::vector<Parede> *inputParede,
 		std::vector<Escada> *inputEscada, std::vector<Fruta> *inputFruta,
 		std::vector<Arvore> *inputArvore, std::vector<Flor> *inputFlor,
 		std::vector<Nuvem> *inputNuvem, Filhote *inputFilhote,
-		sf::RenderWindow *janela) {
+		NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
 		criarParede(inputNumeroFase, inputParede);
 		criarEscada(inputNumeroFase, inputEscada);
@@ -138,6 +149,7 @@ void criarMapa(int inputNumeroFase, std::vector<Parede> *inputParede,
 		criarArvore(inputNumeroFase, inputArvore);
 		criarFlor(inputNumeroFase, inputFlor);
 		criarNuvem(inputNumeroFase, inputNuvem);
+		criarNuvemInimiga(inputNumeroFase, inputNuvemInimiga);
 		criarFilhote(inputNumeroFase, inputFilhote);
 
 	}
@@ -147,12 +159,21 @@ void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		std::vector<Escada> &inputEscada, std::vector<Fruta> &inputFruta,
 		std::vector<Arvore> &inputArvore, std::vector<Flor> &inputFlor,
 		std::vector<Nuvem> &inputNuvem, Filhote *inputFilhote,
-		sf::RenderWindow *janela) {
+		NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
+
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
 			inputNuvem[i].nuvemCorpo.setTexture(inputNuvem[i].nuvemTextura);
 			janela->draw(inputNuvem[i].nuvemCorpo);
 		}
+
+		inputNuvemInimiga->nuvemCorpo.setTexture(
+				inputNuvemInimiga->nuvemTextura);
+		janela->draw(inputNuvemInimiga->nuvemCorpo);
+		inputNuvemInimiga->nuvemTiro.setTexture(inputNuvemInimiga->nuvemTiroTextura);
+		janela->draw(inputNuvemInimiga->nuvemTiro);
+		janela->draw(inputNuvemInimiga->hitboxNuvemInimiga);
+
 		for (unsigned int i = 0; i < inputArvore.size(); i++) {
 			inputArvore[i].arvoreCorpo.setTexture(inputArvore[i].arvoreTextura);
 			janela->draw(inputArvore[i].arvoreCorpo);
@@ -201,7 +222,8 @@ void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 	}
 }
 
-void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem) {
+void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem,
+		float inputDeltaTime) {
 	if (inputNumeroFase == 1) {
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
 			if ((inputNuvem[i].nuvemCorpo.getPosition().x <= 0)
@@ -212,13 +234,29 @@ void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem) {
 			}
 			inputNuvem[i].nuvemCorpo.setPosition(
 					inputNuvem[i].nuvemCorpo.getPosition().x
-							+ inputNuvem[i].velocidadeX,
+							+ inputNuvem[i].velocidadeX * inputDeltaTime,
 					inputNuvem[i].nuvemCorpo.getPosition().y);
 		}
 	}
 }
 
-void moverFilhote(int inputNumeroFase, Filhote *inputFilhote) {
+void moverNuvemInimiga(int inputNumeroFase, NuvemInimiga *inputNuvemInimiga,
+		float inputDeltaTime) {
+	if (inputNumeroFase == 1) {
+		if ((inputNuvemInimiga->nuvemCorpo.getPosition().x <= 140)
+				or (inputNuvemInimiga->nuvemCorpo.getPosition().x >= 850)) {
+			inputNuvemInimiga->velocidadeX *= -1;
+		}
+		inputNuvemInimiga->nuvemCorpo.setPosition(
+				inputNuvemInimiga->nuvemCorpo.getPosition().x
+						+ inputNuvemInimiga->velocidadeX * inputDeltaTime,
+				inputNuvemInimiga->nuvemCorpo.getPosition().y);
+		inputNuvemInimiga->hitboxNuvemInimiga.setPosition(inputNuvemInimiga->nuvemCorpo.getPosition().x, inputNuvemInimiga->nuvemCorpo.getPosition().y);
+	}
+}
+
+void moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
+		float inputDeltaTime) {
 	if (inputNumeroFase == 1) {
 		if ((inputFilhote->filhoteCorpo.getPosition().x <= 600)
 				or (inputFilhote->filhoteCorpo.getPosition().x >= 850)) {
@@ -229,7 +267,7 @@ void moverFilhote(int inputNumeroFase, Filhote *inputFilhote) {
 				inputFilhote->filhoteCorpo.getPosition().y);
 		inputFilhote->filhoteCorpo.setPosition(
 				inputFilhote->filhoteCorpo.getPosition().x
-						+ inputFilhote->velocidadeX,
+						+ inputFilhote->velocidadeX * inputDeltaTime,
 				inputFilhote->filhoteCorpo.getPosition().y);
 	}
 }

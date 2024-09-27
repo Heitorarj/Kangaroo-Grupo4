@@ -1,4 +1,3 @@
-
 #include "Jogo.hpp"
 #include "Moveis.hpp"
 #include "Cenario.hpp"
@@ -12,13 +11,16 @@ int main() {
 	std::vector<Arvore> minhasArvores;
 	std::vector<Flor> minhasFlores;
 	std::vector<Nuvem> minhasNuvens;
+	NuvemInimiga minhaNuvemInimiga;
+	Tempo meuTempo;
 	Filhote meuFilhote;
 	Jogador meuJogador;
 	Texto meuTexto;
 	srand(time(NULL));
 
 	criarMapa(1, &minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores,
-			&minhasFlores, &minhasNuvens, &meuFilhote, &janela);
+			&minhasFlores, &minhasNuvens, &meuFilhote, &minhaNuvemInimiga,
+			&janela);
 
 	while (janela.isOpen()) {
 
@@ -30,14 +32,19 @@ int main() {
 			}
 		}
 
-		meuJogador.moveJogador();
-		moverNuvem(1, minhasNuvens);
-		moverFilhote(1, &meuFilhote);
+		minhaNuvemInimiga.nuvemTiro.setPosition(200, 200);
+		minhaNuvemInimiga.nuvemAtacar(meuJogador);
+		meuJogador.moveJogador(meuTempo.deltaTime);
+		moverNuvem(1, minhasNuvens, meuTempo.deltaTime);
+		moverNuvemInimiga(1, &minhaNuvemInimiga, meuTempo.deltaTime);
+		moverFilhote(1, &meuFilhote, meuTempo.deltaTime);
 		checarFimJogo(&meuJogador, &meuFilhote, &janela);
+		meuTempo.updateDeltaTime();
 		janela.clear(sf::Color(168, 231, 240));
 		checarColisaoFruta(&meuJogador, minhasFrutas, &meuTexto);
 		desenharMapa(1, minhasParedes, minhasEscadas, minhasFrutas,
-				minhasArvores, minhasFlores, minhasNuvens, &meuFilhote, &janela);
+				minhasArvores, minhasFlores, minhasNuvens, &meuFilhote,
+				&minhaNuvemInimiga, &janela);
 		janela.draw(meuJogador.jogadorCorpo);
 		janela.draw(meuJogador.jogadorHitbox);
 		janela.draw(meuTexto.retanguloCenario);
