@@ -16,23 +16,29 @@ void criarArvore(int inputNumeroFase, std::vector<Arvore> *inputArvore);
 void criarFlor(int inputNumeroFase, std::vector<Flor> *inputFlor);
 void criarNuvem(int inputNumeroFase, std::vector<Nuvem> *inputNuvem);
 void criarFilhote(int inputNumeroFase, Filhote *inputFilhote);
+void criarNuvemInimiga(int inputNumeroFase, NuvemInimiga *inputNuvemInimiga);
 
 void criarMapa(int inputNumeroFase,
 		std::vector<Parede> *inputParede, // Chama as funões de que criam os objetos do mapa
 		std::vector<Escada> *inputEscada, std::vector<Fruta> *inputFruta,
 		std::vector<Arvore> *inputArvore, std::vector<Flor> *inputFlor,
 		std::vector<Nuvem> *inputNuvem, Filhote *inputFilhote,
-		sf::RenderWindow *janela);
+		NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela);
 void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		std::vector<Escada> &inputEscada, std::vector<Fruta> &inputFruta,
 		std::vector<Arvore> &inputArvore, std::vector<Flor> &inputFlor,
 		std::vector<Nuvem> &inputNuvem, Filhote *inputFilhote,
-		sf::RenderWindow *janela);
+		NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela);
 
 void checarColisaoFruta(Jogador *inputJogador, std::vector<Fruta> &inputFruta, // Desenha o mapa
 		Texto *inputTexto);
-void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote, sf::RenderWindow *inputJanela);
+void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
+		sf::RenderWindow *inputJanela);
 
-void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem);
-void moverFilhote(int inputNumeroFase, Filhote *inputFilhote);
+void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem,
+		float inputDeltaTime);
+void moverNuvemInimiga(int inputNumeroFase, NuvemInimiga *inputNuvem,
+		float inputDeltaTime);
+void moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
+		float inputDeltaTime);
 #endif

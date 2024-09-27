@@ -1,6 +1,15 @@
 #ifndef MOVEIS_HPP_
 #define MOVEIS_HPP_
 
+class Tempo {
+public:
+	sf::Clock deltaTimeObject;
+	float deltaTime;
+
+	Tempo();
+	void updateDeltaTime();
+};
+
 class Movel {
 public:
 	float velocidadeX, velocidadeY;
@@ -18,7 +27,7 @@ public:
 	int pontos;
 
 	Jogador();
-	void moveJogador();
+	void moveJogador(float deltaTime);
 };
 
 class Nuvem {
@@ -28,6 +37,18 @@ public:
 	sf::Sprite nuvemCorpo;
 
 	Nuvem();
+};
+
+class NuvemInimiga: public Nuvem {
+public:
+	float velocidadeX, tiroVelocidadeY;
+	sf::Texture nuvemTiroTextura;
+	sf::Sprite nuvemTiro;
+	sf::RectangleShape hitboxNuvemInimiga;
+
+	NuvemInimiga();
+	void moverTiro();
+	void nuvemAtacar(Jogador &inputJogador);
 };
 
 class Filhote {
