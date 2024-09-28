@@ -16,6 +16,7 @@ int main() {
 	Filhote meuFilhote;
 	Jogador meuJogador;
 	Texto meuTexto;
+
 	srand(time(NULL));
 
 	criarMapa(1, &minhasParedes, &minhasEscadas, &minhasFrutas, &minhasArvores,
@@ -32,16 +33,17 @@ int main() {
 			}
 		}
 
-		minhaNuvemInimiga.nuvemTiro.setPosition(200, 200);
-		minhaNuvemInimiga.nuvemAtacar(meuJogador);
+		janela.clear(sf::Color(168, 231, 240));
+		moverNuvemInimiga(1, &minhaNuvemInimiga, meuTempo.deltaTime);
+		minhaNuvemInimiga.nuvemAtacar(meuJogador, meuTempo.deltaTime, &janela);
 		meuJogador.moveJogador(meuTempo.deltaTime);
 		moverNuvem(1, minhasNuvens, meuTempo.deltaTime);
-		moverNuvemInimiga(1, &minhaNuvemInimiga, meuTempo.deltaTime);
 		moverFilhote(1, &meuFilhote, meuTempo.deltaTime);
-		checarFimJogo(&meuJogador, &meuFilhote, &janela);
+
 		meuTempo.updateDeltaTime();
-		janela.clear(sf::Color(168, 231, 240));
+		checarFimJogo(&meuJogador, &meuFilhote, &janela);
 		checarColisaoFruta(&meuJogador, minhasFrutas, &meuTexto);
+
 		desenharMapa(1, minhasParedes, minhasEscadas, minhasFrutas,
 				minhasArvores, minhasFlores, minhasNuvens, &meuFilhote,
 				&minhaNuvemInimiga, &janela);

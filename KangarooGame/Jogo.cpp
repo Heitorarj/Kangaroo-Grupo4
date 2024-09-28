@@ -170,7 +170,8 @@ void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		inputNuvemInimiga->nuvemCorpo.setTexture(
 				inputNuvemInimiga->nuvemTextura);
 		janela->draw(inputNuvemInimiga->nuvemCorpo);
-		inputNuvemInimiga->nuvemTiro.setTexture(inputNuvemInimiga->nuvemTiroTextura);
+		inputNuvemInimiga->nuvemTiro.setTexture(
+				inputNuvemInimiga->nuvemTiroTextura);
 		janela->draw(inputNuvemInimiga->nuvemTiro);
 		janela->draw(inputNuvemInimiga->hitboxNuvemInimiga);
 
@@ -251,7 +252,9 @@ void moverNuvemInimiga(int inputNumeroFase, NuvemInimiga *inputNuvemInimiga,
 				inputNuvemInimiga->nuvemCorpo.getPosition().x
 						+ inputNuvemInimiga->velocidadeX * inputDeltaTime,
 				inputNuvemInimiga->nuvemCorpo.getPosition().y);
-		inputNuvemInimiga->hitboxNuvemInimiga.setPosition(inputNuvemInimiga->nuvemCorpo.getPosition().x, inputNuvemInimiga->nuvemCorpo.getPosition().y);
+		inputNuvemInimiga->hitboxNuvemInimiga.setPosition(
+				inputNuvemInimiga->nuvemCorpo.getPosition().x -50,
+				inputNuvemInimiga->nuvemCorpo.getPosition().y);
 	}
 }
 

@@ -47,8 +47,7 @@ public:
 	sf::RectangleShape hitboxNuvemInimiga;
 
 	NuvemInimiga();
-	void moverTiro();
-	void nuvemAtacar(Jogador &inputJogador);
+	void nuvemAtacar(Jogador &inputJogador, float inputDeltaTime, sf::RenderWindow *inputJanela);
 };
 
 class Filhote {

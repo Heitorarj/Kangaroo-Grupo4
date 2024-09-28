@@ -100,25 +100,40 @@ NuvemInimiga::NuvemInimiga() {
 	hitboxNuvemInimiga.setOutlineThickness(5);
 	hitboxNuvemInimiga.setOrigin(hitboxNuvemInimiga.getLocalBounds().width / 2,
 			hitboxNuvemInimiga.getLocalBounds().height / 2);
-	hitboxNuvemInimiga.setSize(sf::Vector2f(0, 800));
-	tiroVelocidadeY = 50;
+	hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
+	tiroVelocidadeY = 500;
 	velocidadeX = 100;
 }
 
-void NuvemInimiga::moverTiro() {
-	while (nuvemTiro.getPosition().y < 900) {
-		nuvemTiro.setPosition(nuvemTiro.getPosition().x,
-				nuvemTiro.getPosition().y + tiroVelocidadeY);
-	}
-}
+void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
+		sf::RenderWindow *inputJanela) {
 
-void NuvemInimiga::nuvemAtacar(Jogador &inputJogador) {
-
-	if (inputJogador.jogadorHitbox.getGlobalBounds().intersects(
+	if (!inputJogador.jogadorHitbox.getGlobalBounds().intersects(
 			hitboxNuvemInimiga.getGlobalBounds())) {
+		nuvemTiro.setPosition(nuvemCorpo.getPosition());
+		hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
 
-		moverTiro();
-
+	} else {
+		if (nuvemTiro.getPosition().y > 1000) {
+			nuvemTiro.setPosition(nuvemTiro.getPosition().x,
+					nuvemTiro.getPosition().y - 1000);
+			nuvemTiro.setPosition(nuvemCorpo.getPosition());
+			hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
+			hitboxNuvemInimiga.setPosition(nuvemCorpo.getPosition().x - 50,
+					nuvemCorpo.getPosition().y);
+		} else {
+			hitboxNuvemInimiga.setSize(sf::Vector2f(1000, 800));
+			hitboxNuvemInimiga.setPosition(
+					inputJogador.jogadorHitbox.getPosition().x - 500,
+					inputJogador.jogadorHitbox.getPosition().y - 500);
+			nuvemTiro.setPosition(nuvemTiro.getPosition().x,
+					nuvemTiro.getPosition().y
+							+ tiroVelocidadeY * inputDeltaTime);
+			if (inputJogador.jogadorHitbox.getGlobalBounds().intersects(
+					nuvemTiro.getGlobalBounds())) {
+				inputJanela->close();
+			}
+		}
 	}
 }
 
