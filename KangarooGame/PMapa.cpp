@@ -27,6 +27,11 @@ Fruta::Fruta() {
 	frutaCorpo.setScale(0.04, 0.04);
 	frutaCorpo.setOrigin(frutaCorpo.getLocalBounds().width / 2,
 			frutaCorpo.getLocalBounds().height / 2);
+	valorPontos[0] = 100;
+	valorPontos[1] = 200;
+	valorPontos[2] = 500;
+	valorPontos[3] = 1000;
+	numeroTextura = 0;
 }
 
 Arvore::Arvore() {
@@ -55,11 +60,11 @@ Nuvem::Nuvem() {
 }
 
 Filhote::Filhote() {
-	filhoteTextura.loadFromFile("assets/kangaroo.png");
+	filhoteTextura.loadFromFile("assets/Filhote1.png");
 	filhoteCorpo.setTexture(filhoteTextura);
 	filhoteCorpo.setOrigin(filhoteCorpo.getLocalBounds().width / 2,
 			filhoteCorpo.getLocalBounds().height / 2);
-	filhoteCorpo.setScale(0.05, 0.05);
+	filhoteCorpo.setScale(0.08, 0.08);
 	filhoteHitbox.setSize(
 			sf::Vector2f(filhoteCorpo.getLocalBounds().width / 20,
 					filhoteCorpo.getLocalBounds().height / 20));
@@ -69,6 +74,14 @@ Filhote::Filhote() {
 	filhoteHitbox.setOutlineColor(sf::Color::Green);
 	filhoteHitbox.setOutlineThickness(5);
 	velocidadeX = 2;
+}
+
+Sino::Sino() {
+	sinoTextura.loadFromFile("assets/sino.png");
+	sinoCorpo.setTexture(sinoTextura);
+	sinoCorpo.setOrigin(sinoCorpo.getLocalBounds().width / 2,
+			sinoCorpo.getLocalBounds().height / 2);
+	sinoCorpo.setScale(0.06, 0.06);
 }
 
 Texto::Texto() {
@@ -221,6 +234,16 @@ void Mapa::criarFilhote(int inputNumeroFase, Filhote *inputFilhote) {
 	}
 }
 
+void Mapa::criarSino(int inputNumeroFase, Sino *inputSino) {
+	if (inputNumeroFase == 1) {
+		Sino meuSino;
+
+		meuSino.sinoCorpo.setPosition(550, 200);
+
+		*inputSino = meuSino;
+	}
+}
+
 Mapa::Mapa() {
 	std::vector<Parede> minhasParedes;
 	std::vector<Escada> minhasEscadas;
@@ -232,6 +255,7 @@ Mapa::Mapa() {
 	Filhote meuFilhote;
 	Jogador meuJogador;
 	Texto meuTexto;
+	Sino meuSino;
 }
 
 void Mapa::criarMapa(int inputNumeroFase,
@@ -239,7 +263,8 @@ void Mapa::criarMapa(int inputNumeroFase,
 		std::vector<Escada> *inputEscada, std::vector<Fruta> *inputFruta,
 		std::vector<Arvore> *inputArvore, std::vector<Flor> *inputFlor,
 		std::vector<Nuvem> *inputNuvem, Filhote *inputFilhote,
-		NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela) {
+		NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
+		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
 		criarParede(inputNumeroFase, inputParede);
 		criarEscada(inputNumeroFase, inputEscada);
@@ -249,6 +274,7 @@ void Mapa::criarMapa(int inputNumeroFase,
 		criarNuvem(inputNumeroFase, inputNuvem);
 		criarNuvemInimiga(inputNumeroFase, inputNuvemInimiga);
 		criarFilhote(inputNumeroFase, inputFilhote);
+		criarSino(inputNumeroFase, inputSino);
 	}
 
 }
@@ -257,7 +283,7 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		std::vector<Escada> &inputEscada, std::vector<Fruta> &inputFruta,
 		std::vector<Arvore> &inputArvore, std::vector<Flor> &inputFlor,
 		std::vector<Nuvem> &inputNuvem, Filhote *inputFilhote,
-		NuvemInimiga *inputNuvemInimiga, Texto *inputTexto,
+		NuvemInimiga *inputNuvemInimiga, Texto *inputTexto, Sino *inputSino,
 		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
 
@@ -292,6 +318,9 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		for (unsigned int i = 0; i < inputEscada.size(); i++) {
 			janela->draw(inputEscada[i].retanguloCenario);
 		}
+
+		inputSino->sinoCorpo.setTexture(inputSino->sinoTextura);
+		janela->draw(inputSino->sinoCorpo);
 		janela->draw(inputTexto->retanguloCenario);
 		janela->draw(inputTexto->texto);
 
@@ -306,13 +335,93 @@ void Mapa::checarColisaoFruta(Jogador *inputJogador,
 	for (unsigned int i = 0; i < inputFruta.size(); i++) {
 		if (inputJogador->corpoJogador.getGlobalBounds().intersects(
 				inputFruta[i].frutaCorpo.getGlobalBounds())) {
-			inputJogador->pontos += 100;
+			inputJogador->pontos +=
+					inputFruta[i].valorPontos[inputFruta[i].numeroTextura];
 			inputFruta[i].frutaCorpo.setPosition(-50, -50);
 
 			char textoContador[5];
 			sprintf(textoContador, "Pontos:\t%d", inputJogador->pontos); // Código pego do ChuvaGame
 			inputTexto->texto.setString(textoContador);
 			std::cout << "Pontos: " << inputJogador->pontos << std::endl;
+		}
+	}
+}
+
+void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
+		std::vector<Fruta> &inputFruta) {
+	if (inputJogador->hitboxJogador.getGlobalBounds().intersects(
+			inputSino->sinoCorpo.getGlobalBounds())) {
+		for (unsigned int i = 0; i < inputFruta.size(); i++) {
+
+			if (inputFruta[i].numeroTextura > 2) {
+				inputSino->sinoCorpo.setPosition(-50, -50);
+			}
+
+			if (inputFruta[i].frutaCorpo.getPosition().x == -50) {
+				if (i == 0) {
+					inputFruta[i].frutaCorpo.setPosition(750, 515);
+					if (inputFruta[i].numeroTextura == 0) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/banana.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 1) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/cereja.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 2) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/abacaxi.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+						inputFruta[i].frutaCorpo.setScale(0.04, 0.08);
+					}
+					inputFruta[i].numeroTextura++;
+
+				} else if (i == 1) {
+					inputFruta[i].frutaCorpo.setPosition(280, 420);
+					if (inputFruta[i].numeroTextura == 0) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/banana.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 1) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/cereja.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 2) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/abacaxi.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+						inputFruta[i].frutaCorpo.setScale(0.04, 0.08);
+					}
+					inputFruta[i].numeroTextura++;
+
+				} else {
+					inputFruta[i].frutaCorpo.setPosition(680, 270);
+					if (inputFruta[i].numeroTextura == 0) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/banana.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 1) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/cereja.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+					} else if (inputFruta[i].numeroTextura == 2) {
+						inputFruta[i].frutaTextura.loadFromFile(
+								"assets/abacaxi.png");
+						inputFruta[i].frutaCorpo.setTexture(
+								inputFruta[i].frutaTextura);
+						inputFruta[i].frutaCorpo.setScale(0.04, 0.08);
+					}
+					inputFruta[i].numeroTextura++;
+				}
+			}
 		}
 	}
 }
@@ -379,9 +488,10 @@ void Mapa::moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
 void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 		Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-		NuvemInimiga *inputNuvemInimiga, float inputTempo,
+		NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
 		sf::RenderWindow *janela) {
 
+	checarColisaoSino(inputJogador, inputSino, inputFrutas);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto);
 	moverFilhote(inputNumeroFase, inputFilhote, inputTempo);
 	checarFimJogo(inputJogador, inputFilhote, janela);

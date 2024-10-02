@@ -8,11 +8,11 @@ protected:
 	sf::RectangleShape hitboxInimigo;
 	sf::Texture texturaInimigo;
 	sf::Sprite corpoInimigo;
-	sf::Vector2f escalaInimigo;
-	float velocidadeMovimento;
-	float persegueJogadorX, persegueJogadorY;
+	sf::Vector2f escalaInimigo, direcaoAleatoria;
+	float velocidadeMovimento, persegueJogadorX, persegueJogadorY;
+	int tempoMudancaDirecao, frameAtual;
 
-	Jogador jogador;
+	Jogador& jogador;
 
 	//Funcoes privadas
 	void inicializaVariaveisInimigo();
@@ -21,7 +21,7 @@ protected:
 
 public:
 	//Construtores / Destrutores
-	Inimigo();
+	Inimigo(Jogador& jogador);
 	virtual ~Inimigo();
 
 	//Funcoes

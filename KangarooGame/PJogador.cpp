@@ -19,9 +19,9 @@ void Jogador::inicializaTexturaJogador() {
 	this->corpoJogador.setTexture(texturaJogador);
 	this->corpoJogador.setScale(escalaJogador);
 	this->corpoJogador.setPosition(hitboxJogador.getPosition());
-	vidaTextura.loadFromFile("assets/fruta.png");
+	vidaTextura.loadFromFile("assets/coracao.png");
 	for (int i = 0; i < 3; i++) {
-		vida[i].setScale(0.02, 0.02);
+		vida[i].setScale(0.03, 0.03);
 		vida[i].setTexture(vidaTextura);
 	}
 }
@@ -83,6 +83,7 @@ void Jogador::atualizaInput() {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
 		corpoJogador.rotate(5); // Transforma o kanguru em um sharingan, apenas um easter egg engraçadinho
+		corpoJogador.rotate(5);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2)) {

@@ -19,7 +19,8 @@ void Inimigo::inicializaTexturaInimigo() {
 }
 
 //Construtores / Destrutores
-Inimigo::Inimigo() {
+Inimigo::Inimigo(Jogador &jogador) :
+		jogador(jogador) {
 	this->inicializaVariaveisInimigo();
 	this->inicializaHitboxInimigo();
 	this->inicializaTexturaInimigo();
@@ -34,28 +35,69 @@ sf::RectangleShape Inimigo::getHitboxInimigo() {
 	return hitboxInimigo;
 }
 
-//MOVIMENTACAO NAO FUNCIONA, RESOLVER ISSO
 void Inimigo::persegueJogador() {
-	if (this->jogador.getHitboxJogador().getPosition().x
-			- hitboxInimigo.getPosition().x > 0.f) {
-		hitboxInimigo.move(velocidadeMovimento, 0.f);
-	} else {
-		hitboxInimigo.move(-velocidadeMovimento, 0.f);
-	}
-	if (this->jogador.getHitboxJogador().getPosition().y
-			- hitboxInimigo.getPosition().y > 0.f) {
-		hitboxInimigo.move(0.f, velocidadeMovimento);
-	} else {
-		hitboxInimigo.move(0.f, -velocidadeMovimento);
+	// Obtém a posição atual do jogador
+	sf::Vector2f posicaoJogador =
+			this->jogador.getHitboxJogador().getPosition();
+
+	// Calcula a diferença de posição entre o inimigo e o jogador
+	float deltaX = posicaoJogador.x - hitboxInimigo.getPosition().x;
+	float deltaY = posicaoJogador.y - hitboxInimigo.getPosition().y;
+
+	// Calcula a magnitude da diferença de posição
+	float magnitude = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+	// Verifica se a magnitude não é zero para evitar divisões por zero
+	if (magnitude != 0) {
+		// Normaliza o vetor de movimento
+		float moveX = (deltaX / magnitude) * velocidadeMovimento;
+		float moveY = (deltaY / magnitude) * velocidadeMovimento;
+
+		// Move a hitbox do inimigo na direção do jogador
+		hitboxInimigo.move(moveX, moveY);
+
+		// Atualiza a posição do corpo do inimigo para seguir a hitbox
+		corpoInimigo.setPosition(hitboxInimigo.getPosition());
 	}
 }
 
 void Inimigo::movimentoAleatorioInimigo() {
-	if (this->jogador.getHitboxJogador().getPosition().x
-			- this->hitboxInimigo.getPosition().x <= persegueJogadorX
-			&& this->jogador.getHitboxJogador().getPosition().y
-					- this->hitboxInimigo.getPosition().y <= persegueJogadorY) {
+	// Distância entre o jogador e o inimigo
+	float distanciaX = abs(
+			this->jogador.getHitboxJogador().getPosition().x
+					- this->hitboxInimigo.getPosition().x);
+	float distanciaY = abs(
+			this->jogador.getHitboxJogador().getPosition().y
+					- this->hitboxInimigo.getPosition().y);
+
+	// Se o jogador estiver dentro do raio de perseguição, persegue o jogador
+	if (distanciaX <= persegueJogadorX && distanciaY <= persegueJogadorY) {
 		this->persegueJogador();
+	} else {
+		// Movimento aleatório quando não está perseguindo o jogador
+
+		// Verifica se é hora de mudar a direção
+		if (frameAtual >= tempoMudancaDirecao) {
+			// Gera uma direção aleatória (x, y) entre -1 e 1
+			float direcaoX = static_cast<float>(rand() % 3 - 1);  // -1, 0 ou 1
+			float direcaoY = static_cast<float>(rand() % 3 - 1);  // -1, 0 ou 1
+
+			// Atualiza a direção
+			this->direcaoAleatoria = sf::Vector2f(direcaoX, direcaoY);
+
+			// Reinicia o contador de frames
+			frameAtual = 0;
+		}
+
+		// Aplica o movimento com a direção atual e a velocidade
+		hitboxInimigo.move(direcaoAleatoria.x * velocidadeMovimento,
+				direcaoAleatoria.y * velocidadeMovimento);
+
+		// Atualiza o corpo do inimigo
+		corpoInimigo.setPosition(hitboxInimigo.getPosition());
+
+		// Incrementa o contador de frames
+		frameAtual++;
 	}
 }
 
