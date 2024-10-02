@@ -83,6 +83,19 @@ public:
 
 };
 
+class TelasFimJogo
+{
+public:
+	sf::RectangleShape tela;
+	sf::Text texto;
+	sf::Font fonteTexto;
+	int codigoDesenho;
+
+	TelasFimJogo();
+	void desenhaVitoria(sf::RenderWindow *inputJanela, Jogador *inputJogador, Texto *inputTexto);
+	void desenhaDerrota(sf::RenderWindow *inputJanela, Jogador *inputJogador, Texto *inputTexto);
+};
+
 class Mapa {
 public:
 
@@ -131,7 +144,7 @@ public:
 	void checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 			std::vector<Fruta> &inputFruta);
 
-	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
+	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote, int *inputFim,
 			sf::RenderWindow *inputJanela);
 
 	void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem,
@@ -144,7 +157,7 @@ public:
 	void mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
+			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo, int *inputFim,
 			sf::RenderWindow *janela);
 
 };

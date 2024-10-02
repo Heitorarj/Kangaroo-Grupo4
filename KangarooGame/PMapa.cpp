@@ -97,6 +97,69 @@ Texto::Texto() {
 	retanguloCenario.setPosition(395, 762);
 }
 
+TelasFimJogo::TelasFimJogo() {
+	fonteTexto.loadFromFile("assets/arial_narrow_7.ttf");
+	texto.setFont(fonteTexto);
+	tela.setFillColor(sf::Color::Black);
+	tela.setSize(sf::Vector2f(1100, 800));
+	tela.setPosition(sf::Vector2f(-1100, 0));
+	codigoDesenho = 0;
+}
+
+void TelasFimJogo::desenhaVitoria(sf::RenderWindow *inputJanela,
+		Jogador *inputJogador, Texto *inputTexto) {
+	tela.setPosition(sf::Vector2f(0, 0));
+	sf::Text meuTexto("Vitoria", fonteTexto, 100);
+	texto = meuTexto;
+	texto.setPosition(sf::Vector2f(550, 400));
+	texto.setOrigin(texto.getLocalBounds().width / 2,
+			texto.getLocalBounds().height);
+	texto.setColor(sf::Color::Yellow);
+
+	inputJogador->vida[0].setPosition(490, 517);
+	inputJogador->vida[1].setPosition(515, 517);
+	inputJogador->vida[2].setPosition(540, 517);
+
+	if (inputJogador->vidas == 2) {
+		inputJogador->vida[2].setPosition(-50, -50);
+	} else if (inputJogador->vidas == 1) {
+		inputJogador->vida[2].setPosition(-50, -50);
+		inputJogador->vida[1].setPosition(-50, -50);
+	}
+
+	inputTexto->texto.setPosition(425, 475);
+	inputJogador->vidasTexto.setPosition(425, 510);
+	inputJogador->hitboxJogador.setPosition(0, 0);
+	inputJanela->draw(tela);
+	inputJanela->draw(texto);
+	inputJanela->draw(inputTexto->texto);
+	inputJanela->draw(inputJogador->vidasTexto);
+	for (int i; i < 3; i++) {
+		inputJanela->draw(inputJogador->vida[i]);
+	}
+	inputJanela->display();
+
+}
+void TelasFimJogo::desenhaDerrota(sf::RenderWindow *inputJanela,
+		Jogador *inputJogador, Texto *inputTexto) {
+	tela.setPosition(sf::Vector2f(0, 0));
+	sf::Text meuTexto("Derrota", fonteTexto, 100);
+	texto = meuTexto;
+	texto.setPosition(sf::Vector2f(550, 400));
+	texto.setOrigin(texto.getLocalBounds().width / 2,
+			texto.getLocalBounds().height);
+	texto.setColor(sf::Color::Red);
+
+	inputTexto->texto.setPosition(425, 475);
+	inputJogador->vidasTexto.setPosition(425, 510);
+	inputJogador->hitboxJogador.setPosition(0, 0);
+	inputJanela->draw(tela);
+	inputJanela->draw(texto);
+	inputJanela->draw(inputTexto->texto);
+	inputJanela->draw(inputJogador->vidasTexto);
+	inputJanela->display();
+
+}
 void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { // Cria e posiciona objetos
 	if (inputNumeroFase == 1) {
 		std::vector<Parede> minhasParedes(6,
@@ -427,11 +490,15 @@ void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 }
 
 void Mapa::checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
-		sf::RenderWindow *inputJanela) {
+		int *inputFim, sf::RenderWindow *inputJanela) {
 	if (inputJogador->hitboxJogador.getGlobalBounds().intersects(
 			inputFilhote->filhoteHitbox.getGlobalBounds()) == true) {
-		inputJanela->close();
+		*inputFim = 1;
 	}
+	if (inputJogador->vidas <= 0) {
+		*inputFim = 2;
+	}
+
 }
 
 void Mapa::moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem,
@@ -489,12 +556,12 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 		Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
 		NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
-		sf::RenderWindow *janela) {
+		int *inputFim, sf::RenderWindow *janela) {
 
 	checarColisaoSino(inputJogador, inputSino, inputFrutas);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto);
 	moverFilhote(inputNumeroFase, inputFilhote, inputTempo);
-	checarFimJogo(inputJogador, inputFilhote, janela);
+	checarFimJogo(inputJogador, inputFilhote, inputFim, janela);
 	moverNuvem(1, inputNuvens, inputTempo);
 	moverNuvemInimiga(1, inputNuvemInimiga, inputTempo);
 	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, janela);

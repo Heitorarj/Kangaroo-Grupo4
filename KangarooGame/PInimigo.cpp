@@ -191,8 +191,6 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 				inputJogador.hitboxJogador.setPosition(sf::Vector2f(200, 650));
 				nuvemTiro.setPosition(sf::Vector2f(1000, 1000));
 				inputJogador.atualizaVidas();
-			} else if (inputJogador.vidas <= 0) {
-				inputJanela->close();
 			}
 		}
 	}
