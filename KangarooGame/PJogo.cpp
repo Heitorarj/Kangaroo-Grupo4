@@ -3,6 +3,7 @@
 //Funcoes privadas
 void Jogo::inicializaVariaveis() {
 	this->janela = nullptr;
+	this->fim = 0;
 }
 
 void Jogo::inicializaJanela() {
@@ -49,7 +50,8 @@ void Jogo::atualiza() {
 	//std::cout << meuTempo.deltaTime << "\n";
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
-			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuTempo.deltaTime, janela);
+			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuTempo.deltaTime,
+			&fim, janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
 	this->jogador.atualizaJogador(this->janela);
@@ -60,14 +62,23 @@ void Jogo::atualiza() {
 void Jogo::desenha(int inputNumeroFase) {
 	this->janela->clear(sf::Color(168, 231, 240));
 
-	meuMapa.desenharMapa(inputNumeroFase, meuMapa.minhasParedes,
-			meuMapa.minhasEscadas, meuMapa.minhasFrutas, meuMapa.minhasArvores,
-			meuMapa.minhasFlores, meuMapa.minhasNuvens, &meuMapa.meuFilhote,
-			&meuMapa.minhaNuvemInimiga, &meuMapa.meuTexto, &meuMapa.meuSino,
-			janela);
+	if (fim == 0) {
+		meuMapa.desenharMapa(inputNumeroFase, meuMapa.minhasParedes,
+				meuMapa.minhasEscadas, meuMapa.minhasFrutas,
+				meuMapa.minhasArvores, meuMapa.minhasFlores,
+				meuMapa.minhasNuvens, &meuMapa.meuFilhote,
+				&meuMapa.minhaNuvemInimiga, &meuMapa.meuTexto, &meuMapa.meuSino,
+				janela);
 
-	this->inimigo.desenhaInimigo(this->janela);
-	this->jogador.desenhaJogador(this->janela);
+		this->inimigo.desenhaInimigo(this->janela);
+		this->jogador.desenhaJogador(this->janela);
 
-	this->janela->display();
+		this->janela->display();
+
+	} else if (fim == 1) {
+		minhaTela.desenhaVitoria(janela, &jogador, &meuMapa.meuTexto);
+	} else if (fim == 2) {
+		minhaTela.desenhaDerrota(janela, &jogador, &meuMapa.meuTexto);
+	}
+
 }
