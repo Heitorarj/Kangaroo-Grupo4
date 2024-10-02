@@ -13,13 +13,15 @@ void Jogo::inicializaJanela() {
 }
 
 //Construtores / Destrutores
-Jogo::Jogo(int inputNumeroFase) {
+Jogo::Jogo(int inputNumeroFase) :
+		jogador(),  // Exemplo de posição inicial
+		inimigo(jogador) {
 	this->inicializaVariaveis();
 	meuMapa.criarMapa(inputNumeroFase, &meuMapa.minhasParedes,
 			&meuMapa.minhasEscadas, &meuMapa.minhasFrutas,
 			&meuMapa.minhasArvores, &meuMapa.minhasFlores,
 			&meuMapa.minhasNuvens, &meuMapa.meuFilhote,
-			&meuMapa.minhaNuvemInimiga, janela);
+			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, janela);
 	meuTempo.updateDeltaTime();
 	this->inicializaJanela();
 
@@ -47,8 +49,7 @@ void Jogo::atualiza() {
 	//std::cout << meuTempo.deltaTime << "\n";
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
-			&meuMapa.minhaNuvemInimiga, meuTempo.deltaTime, janela);
-
+			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuTempo.deltaTime, janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
 	this->jogador.atualizaJogador(this->janela);
@@ -62,7 +63,8 @@ void Jogo::desenha(int inputNumeroFase) {
 	meuMapa.desenharMapa(inputNumeroFase, meuMapa.minhasParedes,
 			meuMapa.minhasEscadas, meuMapa.minhasFrutas, meuMapa.minhasArvores,
 			meuMapa.minhasFlores, meuMapa.minhasNuvens, &meuMapa.meuFilhote,
-			&meuMapa.minhaNuvemInimiga, &meuMapa.meuTexto, janela);
+			&meuMapa.minhaNuvemInimiga, &meuMapa.meuTexto, &meuMapa.meuSino,
+			janela);
 
 	this->inimigo.desenhaInimigo(this->janela);
 	this->jogador.desenhaJogador(this->janela);

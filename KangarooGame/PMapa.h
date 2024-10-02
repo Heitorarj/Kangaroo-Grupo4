@@ -24,6 +24,7 @@ class Fruta {
 public:
 	sf::Texture frutaTextura;
 	sf::Sprite frutaCorpo;
+	int valorPontos[4], numeroTextura;
 
 	Fruta();
 };
@@ -72,6 +73,16 @@ public:
 	Texto();
 };
 
+class Sino {
+public:
+
+	sf::Texture sinoTextura;
+	sf::Sprite sinoCorpo;
+
+	Sino();
+
+};
+
 class Mapa {
 public:
 
@@ -84,6 +95,7 @@ public:
 	Filhote meuFilhote;
 	NuvemInimiga minhaNuvemInimiga;
 	Texto meuTexto;
+	Sino meuSino;
 
 	Mapa();
 
@@ -96,23 +108,28 @@ public:
 	void criarFilhote(int inputNumeroFase, Filhote *inputFilhote);
 	void criarNuvemInimiga(int inputNumeroFase,
 			NuvemInimiga *inputNuvemInimiga);
+	void criarSino(int inputNumeroFase, Sino *inputSino);
 
 	void criarMapa(int inputNumeroFase,
 			std::vector<Parede> *inputParede, // Chama as funções de que criam os objetos do mapa
 			std::vector<Escada> *inputEscada, std::vector<Fruta> *inputFruta,
 			std::vector<Arvore> *inputArvore, std::vector<Flor> *inputFlor,
 			std::vector<Nuvem> *inputNuvem, Filhote *inputFilhote,
-			NuvemInimiga *inputNuvemInimiga, sf::RenderWindow *janela);
+			NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
+			sf::RenderWindow *janela);
 
 	void desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 			std::vector<Escada> &inputEscada, std::vector<Fruta> &inputFruta,
 			std::vector<Arvore> &inputArvore, std::vector<Flor> &inputFlor,
 			std::vector<Nuvem> &inputNuvem, Filhote *inputFilhote,
-			NuvemInimiga *inputNuvemInimiga, Texto *inputTexto,
+			NuvemInimiga *inputNuvemInimiga, Texto *inputTexto, Sino *inputSino,
 			sf::RenderWindow *janela);
 
 	void checarColisaoFruta(Jogador *inputJogador,
 			std::vector<Fruta> &inputFruta, Texto *inputTexto);
+
+	void checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
+			std::vector<Fruta> &inputFruta);
 
 	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 			sf::RenderWindow *inputJanela);
@@ -127,7 +144,7 @@ public:
 	void mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-			NuvemInimiga *inputNuvemInimiga, float inputTempo,
+			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
 			sf::RenderWindow *janela);
 
 };
