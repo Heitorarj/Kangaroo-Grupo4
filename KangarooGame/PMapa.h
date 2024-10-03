@@ -4,14 +4,6 @@
 #include "PInimigo.h"
 #include "PTempo.h"
 
-class Parede {
-public:
-	sf::RectangleShape retanguloCenario;
-
-	Parede(int inputLargura, int inputAltura, int inputPosicaoX,
-			int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda);
-};
-
 class Escada {
 public:
 	sf::RectangleShape retanguloCenario;

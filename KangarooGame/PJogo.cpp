@@ -54,7 +54,7 @@ void Jogo::atualiza() {
 			&telaCodigo, janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
-	this->jogador.atualizaJogador(this->janela);
+	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes);
 	this->jogador.atualizaVidas();
 
 }

@@ -130,9 +130,136 @@ void Jogador::atualizaVidas() {
 	}
 }
 
-void Jogador::atualizaJogador(const sf::RenderTarget *target) {
+void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
+	if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[0].retanguloCenario.getGlobalBounds())) {
+		hitboxJogador.setPosition(
+				sf::Vector2f(hitboxJogador.getPosition().x,
+						hitboxJogador.getPosition().y - velocidadeMovimento));
+	}
+	if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[4].retanguloCenario.getGlobalBounds())) {
+		hitboxJogador.setPosition(
+				sf::Vector2f(
+						hitboxJogador.getPosition().x + velocidadeMovimento,
+						hitboxJogador.getPosition().y));
+	}
+	if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[5].retanguloCenario.getGlobalBounds())) {
+		hitboxJogador.setPosition(
+				sf::Vector2f(
+						hitboxJogador.getPosition().x - velocidadeMovimento,
+						hitboxJogador.getPosition().y));
+	} // Colisões com o chão e as paredes da esquerda e direita
+
+	if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[6].retanguloCenario.getGlobalBounds())) {
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[6].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[10].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[1].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									+ velocidadeMovimento));
+		}
+	} // Colisão do primeiro andar
+
+	else if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[7].retanguloCenario.getGlobalBounds())) {
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[7].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[10].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[1].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									- velocidadeMovimento));
+		}
+
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[7].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[11].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[2].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									+ velocidadeMovimento));
+		}
+	} // Colisão do segundo andar
+
+	else if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[8].retanguloCenario.getGlobalBounds())) {
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[8].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[11].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[2].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									- velocidadeMovimento));
+		}
+
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[8].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[12].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[3].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									+ velocidadeMovimento));
+		}
+	} // Colisão do terceiro andar
+
+	else if (hitboxJogador.getGlobalBounds().intersects(
+			inputParedes[9].retanguloCenario.getGlobalBounds())) {
+		if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[9].retanguloCenario.getGlobalBounds())
+				and hitboxJogador.getGlobalBounds().intersects(
+						inputParedes[12].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y));
+		} else if (hitboxJogador.getGlobalBounds().intersects(
+				inputParedes[3].retanguloCenario.getGlobalBounds())) {
+			hitboxJogador.setPosition(
+					sf::Vector2f(hitboxJogador.getPosition().x,
+							hitboxJogador.getPosition().y
+									- velocidadeMovimento));
+		}
+	} // Colisão do quarto andar
+}
+
+void Jogador::atualizaJogador(const sf::RenderTarget *target,
+		std::vector<Parede> &inputParedes) {
 	this->atualizaInput();
 	this->atualizaColisaoBorda(target);
+	this->atualizaColisaoParede(inputParedes);
 }
 
 void Jogador::desenhaJogador(sf::RenderTarget *target) {
