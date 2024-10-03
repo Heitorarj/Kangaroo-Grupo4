@@ -138,7 +138,7 @@ public:
 			std::vector<Fruta> &inputFruta, Texto *inputTexto);
 
 	void checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
-			std::vector<Fruta> &inputFruta);
+			std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga);
 
 	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 			int *inputFim, sf::RenderWindow *inputJanela);

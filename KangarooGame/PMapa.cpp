@@ -478,7 +478,7 @@ void Mapa::checarColisaoFruta(Jogador *inputJogador,
 }
 
 void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
-		std::vector<Fruta> &inputFruta) {
+		std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga) {
 	if (inputJogador->hitboxJogador.getGlobalBounds().intersects(
 			inputSino->sinoCorpo.getGlobalBounds())) {
 		for (unsigned int i = 0; i < inputFruta.size(); i++) {
@@ -554,6 +554,23 @@ void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 			}
 		}
 	}
+
+	if (inputJogador->pontos >= 300 and inputJogador->pontos < 900) {
+		inputNuvemInimiga->tiroVelocidadeY = 60;
+	} else if (inputJogador->pontos >= 900 and inputJogador->pontos < 2000) {
+		inputNuvemInimiga->tiroVelocidadeY = 80;
+		inputNuvemInimiga->nuvemTiro.setColor(sf::Color::Red);
+		inputNuvemInimiga->nuvemTiro.setScale(0.06, 0.06);
+	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
+		inputNuvemInimiga->tiroVelocidadeY = 90;
+		inputNuvemInimiga->nuvemCorpo.setColor(sf::Color::Black);
+		inputNuvemInimiga->nuvemTiro.setScale(0.1, 0.1);
+	} else if (inputJogador->pontos >= 4000) {
+		inputNuvemInimiga->tiroVelocidadeY = 120;
+		inputNuvemInimiga->nuvemTiroTextura.loadFromFile("assets/images.jpeg");
+		inputNuvemInimiga->nuvemTiro.setTexture(inputNuvemInimiga->nuvemTiroTextura);
+		inputNuvemInimiga->nuvemTiro.setScale(1, 1);
+	}
 }
 
 void Mapa::checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
@@ -625,7 +642,7 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
 		int *inputFim, sf::RenderWindow *janela) {
 
-	checarColisaoSino(inputJogador, inputSino, inputFrutas);
+	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto);
 	moverFilhote(inputNumeroFase, inputFilhote, inputTempo);
 	checarFimJogo(inputJogador, inputFilhote, inputFim, janela);
