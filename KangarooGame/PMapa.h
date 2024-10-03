@@ -83,17 +83,21 @@ public:
 
 };
 
-class TelasFimJogo
-{
+class TelasJogo {
 public:
-	sf::RectangleShape tela;
+	sf::RectangleShape tela, botao;
+	sf::CircleShape click;
 	sf::Text texto;
 	sf::Font fonteTexto;
 	int codigoDesenho;
 
-	TelasFimJogo();
-	void desenhaVitoria(sf::RenderWindow *inputJanela, Jogador *inputJogador, Texto *inputTexto);
-	void desenhaDerrota(sf::RenderWindow *inputJanela, Jogador *inputJogador, Texto *inputTexto);
+	TelasJogo();
+	void clickMouse(sf::RenderWindow *inputJanela, int *inputTelaCodigo, Jogador *inputJogador);
+	void desenhaVitoria(sf::RenderWindow *inputJanela, Jogador *inputJogador,
+			Texto *inputTexto);
+	void desenhaDerrota(sf::RenderWindow *inputJanela, Jogador *inputJogador,
+			Texto *inputTexto);
+	void desenhaMenu(sf::RenderWindow *inputJanela, Jogador *inputJogador, int *inputTelaCodigo);
 };
 
 class Mapa {
@@ -144,8 +148,8 @@ public:
 	void checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 			std::vector<Fruta> &inputFruta);
 
-	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote, int *inputFim,
-			sf::RenderWindow *inputJanela);
+	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
+			int *inputFim, sf::RenderWindow *inputJanela);
 
 	void moverNuvem(int inputNumeroFase, std::vector<Nuvem> &inputNuvem,
 			float inputDeltaTime);
@@ -157,8 +161,8 @@ public:
 	void mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo, int *inputFim,
-			sf::RenderWindow *janela);
+			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
+			int *inputFim, sf::RenderWindow *janela);
 
 };
 

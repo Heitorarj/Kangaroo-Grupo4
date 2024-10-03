@@ -3,7 +3,7 @@
 //Funcoes privadas
 void Jogo::inicializaVariaveis() {
 	this->janela = nullptr;
-	this->fim = 0;
+	this->telaCodigo = -1;
 }
 
 void Jogo::inicializaJanela() {
@@ -51,7 +51,7 @@ void Jogo::atualiza() {
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
 			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuTempo.deltaTime,
-			&fim, janela);
+			&telaCodigo, janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
 	this->jogador.atualizaJogador(this->janela);
@@ -62,7 +62,9 @@ void Jogo::atualiza() {
 void Jogo::desenha(int inputNumeroFase) {
 	this->janela->clear(sf::Color(168, 231, 240));
 
-	if (fim == 0) {
+	if (telaCodigo == -1) {
+		minhaTela.desenhaMenu(janela, &jogador, &telaCodigo);
+	} else if (telaCodigo == 0) {
 		meuMapa.desenharMapa(inputNumeroFase, meuMapa.minhasParedes,
 				meuMapa.minhasEscadas, meuMapa.minhasFrutas,
 				meuMapa.minhasArvores, meuMapa.minhasFlores,
@@ -75,9 +77,9 @@ void Jogo::desenha(int inputNumeroFase) {
 
 		this->janela->display();
 
-	} else if (fim == 1) {
+	} else if (telaCodigo == 1) {
 		minhaTela.desenhaVitoria(janela, &jogador, &meuMapa.meuTexto);
-	} else if (fim == 2) {
+	} else if (telaCodigo == 2) {
 		minhaTela.desenhaDerrota(janela, &jogador, &meuMapa.meuTexto);
 	}
 

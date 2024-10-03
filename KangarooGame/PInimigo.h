@@ -1,4 +1,3 @@
-
 #ifndef PINIMIGO_H_
 #define PINIMIGO_H_
 
@@ -9,12 +8,9 @@ protected:
 	sf::RectangleShape hitboxInimigo;
 	sf::Texture texturaInimigo;
 	sf::Sprite corpoInimigo;
-	sf::Texture macacoTiroTextura;
-	sf::Sprite macacoTiro;
 	sf::Vector2f escalaInimigo, direcaoAleatoria;
 	float velocidadeMovimento, persegueJogadorX, persegueJogadorY;
 	int tempoMudancaDirecao, frameAtual;
-	float velocidadeX, tiroVelocidadeY;
 
 	Jogador& jogador;
 
