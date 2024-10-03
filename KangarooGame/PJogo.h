@@ -18,8 +18,8 @@ public:
 	Inimigo inimigo;
 	Mapa meuMapa;
 	Tempo meuTempo;
-	TelasFimJogo minhaTela;
-	int fim;
+	TelasJogo minhaTela;
+	int telaCodigo;
 
 	//Funcoes privadas
 	void inicializaVariaveis();

@@ -1,10 +1,9 @@
-
 #include "PInimigo.h"
 
 //Funcoes privadas
 void Inimigo::inicializaVariaveisInimigo() {
 	this->velocidadeMovimento = 5.f;
-	this->escalaInimigo = sf::Vector2f(0.2, 0.2);
+	this->escalaInimigo = sf::Vector2f(0.1, 0.1);
 	this->persegueJogadorX = 200.f;
 	this->persegueJogadorY = 200.f;
 }
@@ -14,7 +13,6 @@ void Inimigo::inicializaHitboxInimigo() {
 	this->hitboxInimigo.setPosition(sf::Vector2f(900.f, 20.f));
 }
 void Inimigo::inicializaTexturaInimigo() {
-	this->texturaInimigo.loadFromFile("assets/macaco.png");
 	this->corpoInimigo.setTexture(texturaInimigo);
 	this->corpoInimigo.setScale(escalaInimigo);
 	this->corpoInimigo.setPosition(hitboxInimigo.getPosition());
@@ -156,7 +154,7 @@ NuvemInimiga::NuvemInimiga() {
 	hitboxNuvemInimiga.setOrigin(hitboxNuvemInimiga.getLocalBounds().width / 2,
 			hitboxNuvemInimiga.getLocalBounds().height / 2);
 	hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
-	tiroVelocidadeY = 25;
+	tiroVelocidadeY = 50;
 	velocidadeX = 15;
 }
 
@@ -197,4 +195,3 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 		}
 	}
 }
-
