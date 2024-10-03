@@ -1,15 +1,6 @@
 #include "PMapa.h"
 #include "PJogador.h"
-
-Parede::Parede(int inputLargura, int inputAltura, int inputPosicaoX,
-		int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda) {
-
-	retanguloCenario.setOutlineColor(inputCorBorda);
-	retanguloCenario.setOutlineThickness(5);
-	retanguloCenario.setFillColor(inputCor);
-	retanguloCenario.setSize(sf::Vector2f(inputLargura, inputAltura));
-	retanguloCenario.setPosition(inputPosicaoX, inputPosicaoY);
-}
+#include "PParede.h"
 
 Escada::Escada(int inputLargura, int inputAltura, int inputPosicaoX,
 		int inputPosicaoY, sf::Color inputCor, sf::Color inputCorBorda) {
@@ -213,7 +204,7 @@ void TelasJogo::desenhaMenu(sf::RenderWindow *inputJanela,
 
 void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { // Cria e posiciona objetos
 	if (inputNumeroFase == 1) {
-		std::vector<Parede> minhasParedes(6,
+		std::vector<Parede> minhasParedes(13,
 				Parede(800, 25, 0, 0, sf::Color(122, 77, 31),
 						sf::Color(0, 0, 0)));
 
@@ -225,9 +216,34 @@ void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { 
 		minhasParedes[4].retanguloCenario.setPosition(0, 0);
 		minhasParedes[5].retanguloCenario.setPosition(900, 0);
 
+		minhasParedes[6].retanguloCenario.setFillColor(sf::Color::Transparent);
+		minhasParedes[6].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		for (int i = 6; i < 13; i++) {
+			minhasParedes[i].retanguloCenario =
+					minhasParedes[6].retanguloCenario;
+		}
+
+		minhasParedes[6].retanguloCenario.setPosition(0, 600); // Hitbox das paredes do primeiro andar
+		minhasParedes[7].retanguloCenario.setPosition(0, 400); // Hitbox das paredes do segundo andar
+		minhasParedes[8].retanguloCenario.setPosition(0, 200); // Hitbox das paredes do terceiro andar
+		minhasParedes[9].retanguloCenario.setPosition(0, 0); // Hitbox das paredes do quarto andar
+
+		minhasParedes[10].retanguloCenario.setPosition(800, 500); // Hitboxes das escadas
+		minhasParedes[11].retanguloCenario.setPosition(175, 300);
+		minhasParedes[12].retanguloCenario.setPosition(800, 100);
+
 		minhasParedes[0].retanguloCenario.setSize(sf::Vector2f(800, 50));
 		minhasParedes[4].retanguloCenario.setSize(sf::Vector2f(100, 800));
 		minhasParedes[5].retanguloCenario.setSize(sf::Vector2f(200, 800));
+
+		minhasParedes[6].retanguloCenario.setSize(sf::Vector2f(1100, 150)); // Hitboxes das paredes
+		minhasParedes[7].retanguloCenario.setSize(sf::Vector2f(1100, 150));
+		minhasParedes[8].retanguloCenario.setSize(sf::Vector2f(1100, 150));
+		minhasParedes[9].retanguloCenario.setSize(sf::Vector2f(1100, 150));
+
+		minhasParedes[10].retanguloCenario.setSize(sf::Vector2f(30, 250)); // Hitboxes das escadas
+		minhasParedes[11].retanguloCenario.setSize(sf::Vector2f(30, 250));
+		minhasParedes[12].retanguloCenario.setSize(sf::Vector2f(30, 250));
 
 		*inputParede = minhasParedes;
 

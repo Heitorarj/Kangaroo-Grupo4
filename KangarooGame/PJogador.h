@@ -2,6 +2,7 @@
 #define PJOGADOR_H_
 
 #include "PBibliotecas.h"
+#include "PParede.h"
 
 class Jogador {
 public:
@@ -33,8 +34,9 @@ public:
 	sf::RectangleShape getHitboxJogador();
 	void atualizaInput();
 	void atualizaColisaoBorda(const sf::RenderTarget *target);
+	void atualizaColisaoParede(std::vector <Parede> &inputParedes);
 	void atualizaVidas();
-	void atualizaJogador(const sf::RenderTarget *target);
+	void atualizaJogador(const sf::RenderTarget *target, std::vector <Parede> &inputParedes);
 	void desenhaJogador(sf::RenderTarget *target);
 };
 
