@@ -8,13 +8,12 @@ class Jogador {
 public:
 	float velocidadeMovimento;
 	int pontos, vidas;
+	bool jogadorColideEscada, jogadorGiradoEsquerda, jogadorAgachado;
 
 	sf::RectangleShape hitboxJogador;
-	sf::Texture texturaJogador;
-	sf::Texture texturaJogadorAgachado;
+	sf::Texture texturaJogador, texturaJogadorAgachado, texturaJogadorAgachadoGirado, vidaTextura, texturaJogadorEscada, texturaJogadorGirado;
 	sf::Sprite corpoJogador;
 	sf::Vector2f escalaJogador;
-	sf::Texture vidaTextura;
 	sf::Sprite vida[3];
 	sf::RectangleShape vidasMoldura;
 	sf::Text vidasTexto;
@@ -32,10 +31,12 @@ public:
 	//Funcoes
 	sf::RectangleShape getHitboxJogador();
 	void atualizaInput();
+	void atualizaTexturas();
 	void atualizaColisaoBorda(const sf::RenderTarget *target);
-	void atualizaColisaoParede(std::vector <Parede> &inputParedes);
+	void atualizaColisaoParede(std::vector<Parede> &inputParedes);
 	void atualizaVidas();
-	void atualizaJogador(const sf::RenderTarget *target, std::vector <Parede> &inputParedes);
+	void atualizaJogador(const sf::RenderTarget *target,
+			std::vector<Parede> &inputParedes);
 	void desenhaJogador(sf::RenderTarget *target);
 };
 
