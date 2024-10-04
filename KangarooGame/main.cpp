@@ -1,4 +1,4 @@
-#include "PJogo.h"
+#include "Jogo.h"
 
 int main(int argc, char **argv) {
 
