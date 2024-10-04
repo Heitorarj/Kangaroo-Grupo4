@@ -8,7 +8,7 @@ void Inimigo::inicializaVariaveisInimigo() {
 	this->persegueJogadorY = 200.f;
 }
 void Inimigo::inicializaHitboxInimigo() {
-	this->hitboxInimigo.setFillColor(sf::Color::Red);
+	this->hitboxInimigo.setFillColor(sf::Color::Transparent);
 	this->hitboxInimigo.setSize(sf::Vector2f(60.f, 100.f));
 	this->hitboxInimigo.setPosition(sf::Vector2f(900.f, 20.f));
 }
@@ -149,7 +149,7 @@ NuvemInimiga::NuvemInimiga() {
 	nuvemTiro.setOrigin(nuvemTiro.getLocalBounds().width / 2,
 			nuvemTiro.getLocalBounds().height / 2);
 	hitboxNuvemInimiga.setFillColor(sf::Color::Transparent);
-	hitboxNuvemInimiga.setOutlineColor(sf::Color::Green);
+	hitboxNuvemInimiga.setOutlineColor(sf::Color::Transparent);
 	hitboxNuvemInimiga.setOutlineThickness(5);
 	hitboxNuvemInimiga.setOrigin(hitboxNuvemInimiga.getLocalBounds().width / 2,
 			hitboxNuvemInimiga.getLocalBounds().height / 2);

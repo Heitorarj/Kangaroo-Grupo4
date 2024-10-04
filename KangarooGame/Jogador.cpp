@@ -9,7 +9,7 @@ void Jogador::inicializaVariaveisJogador() {
 }
 
 void Jogador::inicializaHitboxJogador() {
-	this->hitboxJogador.setFillColor(sf::Color::Green);
+	this->hitboxJogador.setFillColor(sf::Color::Transparent);
 	this->hitboxJogador.setSize(sf::Vector2f(60.f, 100.f));
 }
 

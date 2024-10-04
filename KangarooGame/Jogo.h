@@ -5,7 +5,6 @@
 #include "Inimigo.h"
 #include "Mapa.h"
 #include "Tempo.h"
-#include "Menu.h"
 
 class Jogo {
 public:

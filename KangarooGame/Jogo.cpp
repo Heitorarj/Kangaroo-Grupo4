@@ -50,8 +50,8 @@ void Jogo::atualiza() {
 	//std::cout << meuTempo.deltaTime << "\n";
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
-			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuTempo.deltaTime,
-			&telaCodigo, janela);
+			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuMapa.minhasParedes,
+			&inimigo, meuTempo.deltaTime, &telaCodigo, janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
 	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes);
