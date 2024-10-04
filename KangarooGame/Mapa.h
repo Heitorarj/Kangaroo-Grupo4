@@ -77,11 +77,15 @@ public:
 	void moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
 			float inputDeltaTime);
 
+	void atualizaVisibilidadeHitbox(Jogador *inputJogador,
+			std::vector<Parede> &inputParedes, NuvemInimiga *inputNuvemInimiga,
+			Inimigo *inputInimigo, Filhote *inputFilhote);
 	void mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-			NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
-			int *inputFim, sf::RenderWindow *janela);
+			NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
+			std::vector<Parede> &inputParede, Inimigo *inputInimigo,
+			float inputTempo, int *inputFim, sf::RenderWindow *janela);
 
 };
 

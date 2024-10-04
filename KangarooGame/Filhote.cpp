@@ -12,7 +12,7 @@ Filhote::Filhote() {
 	filhoteHitbox.setOrigin(filhoteHitbox.getLocalBounds().width / 2,
 			filhoteHitbox.getLocalBounds().height / 2);
 	filhoteHitbox.setFillColor(sf::Color::Transparent);
-	filhoteHitbox.setOutlineColor(sf::Color::Green);
+	filhoteHitbox.setOutlineColor(sf::Color::Transparent);
 	filhoteHitbox.setOutlineThickness(5);
 	velocidadeX = 2;
 }

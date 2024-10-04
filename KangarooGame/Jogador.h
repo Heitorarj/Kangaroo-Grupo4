@@ -7,8 +7,7 @@
 class Jogador {
 public:
 	float velocidadeMovimento;
-	int pontos;
-	int vidas;
+	int pontos, vidas;
 
 	sf::RectangleShape hitboxJogador;
 	sf::Texture texturaJogador;

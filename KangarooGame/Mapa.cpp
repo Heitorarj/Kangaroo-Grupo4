@@ -15,7 +15,8 @@ void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { 
 		minhasParedes[5].retanguloCenario.setPosition(900, 0);
 
 		minhasParedes[6].retanguloCenario.setFillColor(sf::Color::Transparent);
-		minhasParedes[6].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		minhasParedes[6].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
 		for (int i = 6; i < 13; i++) {
 			minhasParedes[i].retanguloCenario =
 					minhasParedes[6].retanguloCenario;
@@ -453,12 +454,45 @@ void Mapa::moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
 	}
 }
 
+void Mapa::atualizaVisibilidadeHitbox(Jogador *inputJogador,
+		std::vector<Parede> &inputParedes, NuvemInimiga *inputNuvemInimiga,
+		Inimigo *inputInimigo, Filhote *inputFilhote) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3)) {
+
+		inputJogador->hitboxJogador.setFillColor(sf::Color::Green);
+		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(sf::Color::Red);
+		inputFilhote->filhoteHitbox.setOutlineColor(sf::Color::Green);
+		inputParedes[6].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[7].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[8].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[9].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[10].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[11].retanguloCenario.setOutlineColor(sf::Color::Blue);
+		inputParedes[12].retanguloCenario.setOutlineColor(sf::Color::Blue);
+	} else {
+
+		inputJogador->hitboxJogador.setFillColor(sf::Color::Transparent);
+		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(sf::Color::Transparent);
+		inputFilhote->filhoteHitbox.setOutlineColor(sf::Color::Transparent);
+		inputParedes[6].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[7].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[8].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[9].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[10].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[11].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[12].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+	}
+}
+
 void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 		Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
-		NuvemInimiga *inputNuvemInimiga, Sino *inputSino, float inputTempo,
-		int *inputFim, sf::RenderWindow *janela) {
+		NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
+		std::vector<Parede> &inputParede, Inimigo *inputInimigo,
+		float inputTempo, int *inputFim, sf::RenderWindow *janela) {
 
+	atualizaVisibilidadeHitbox(inputJogador, inputParede, inputNuvemInimiga,
+			inputInimigo, inputFilhote);
 	nivelDificuldade(inputJogador, inputNuvemInimiga);
 	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto);
