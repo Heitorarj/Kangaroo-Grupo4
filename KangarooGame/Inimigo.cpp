@@ -159,7 +159,7 @@ NuvemInimiga::NuvemInimiga() {
 }
 
 void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
-		sf::RenderWindow *inputJanela) {
+		Som *inputSom, sf::RenderWindow *inputJanela) {
 
 	if (!inputJogador.hitboxJogador.getGlobalBounds().intersects(
 			hitboxNuvemInimiga.getGlobalBounds())) {
@@ -167,8 +167,15 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 		hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
 		hitboxNuvemInimiga.setPosition(nuvemCorpo.getPosition().x - 50,
 				nuvemCorpo.getPosition().y);
+		std::cout << tiroVelocidadeY + nuvemCorpo.getPosition().y << std::endl;
 
 	} else {
+		if (nuvemTiro.getPosition().y
+				<= 60) {
+			inputSom->gotaSom.play();
+		}
+
+		std::cout << nuvemTiro.getPosition().y << std::endl;
 		if (nuvemTiro.getPosition().y > 1000) {
 			nuvemTiro.setPosition(nuvemTiro.getPosition().x,
 					nuvemTiro.getPosition().y - 1000);
@@ -176,6 +183,7 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 			hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
 
 		} else {
+
 			hitboxNuvemInimiga.setSize(sf::Vector2f(1000, 800));
 			hitboxNuvemInimiga.setPosition(
 					inputJogador.hitboxJogador.getPosition().x - 500,
@@ -187,6 +195,7 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 
 			if (inputJogador.hitboxJogador.getGlobalBounds().intersects(
 					nuvemTiro.getGlobalBounds())) {
+				inputSom->danoSom.play();
 				inputJogador.vidas--;
 				inputJogador.hitboxJogador.setPosition(sf::Vector2f(200, 650));
 				nuvemTiro.setPosition(sf::Vector2f(1000, 1000));

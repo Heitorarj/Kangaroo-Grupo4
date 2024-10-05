@@ -4,6 +4,7 @@
 void Jogo::inicializaVariaveis() {
 	this->janela = nullptr;
 	this->telaCodigo = -1;
+	this->corFundo = sf::Color(168, 231, 240);
 }
 
 void Jogo::inicializaJanela() {
@@ -51,16 +52,18 @@ void Jogo::atualiza() {
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
 			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuMapa.minhasParedes,
-			&inimigo, meuTempo.deltaTime, &telaCodigo, janela);
+			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom,
+			janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
-	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes);
+	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom);
 	this->jogador.atualizaVidas();
 
+	meuSom.somUpdate(telaCodigo);
 }
 
 void Jogo::desenha(int inputNumeroFase) {
-	this->janela->clear(sf::Color(168, 231, 240));
+	this->janela->clear(corFundo);
 
 	if (telaCodigo == -1) {
 		minhaTela.desenhaMenu(janela, &jogador, &telaCodigo);

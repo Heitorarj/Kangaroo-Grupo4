@@ -43,7 +43,7 @@ public:
 	sf::RectangleShape hitboxNuvemInimiga;
 
 	NuvemInimiga();
-	void nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
+	void nuvemAtacar(Jogador &inputJogador, float inputDeltaTime, Som *inputSom,
 			sf::RenderWindow *inputJanela);
 };
 

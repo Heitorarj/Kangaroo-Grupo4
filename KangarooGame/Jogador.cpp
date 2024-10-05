@@ -313,7 +313,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 	} // Colisão do quarto andar
 }
 
-void Jogador::atualizaTexturas() {
+void Jogador::atualizaTexturas(Som *inputSom) {
 
 	if (jogadorGiradoEsquerda == true) {
 		corpoJogador.setTexture(texturaJogadorGirado);
@@ -348,14 +348,16 @@ void Jogador::atualizaTexturas() {
 
 	if ((jogadorSoco == true) and (jogadorGiradoEsquerda == true)) {
 		corpoJogador.setTexture(texturaJogadorSocoGirado);
+		inputSom->socoSom.play();
 	} else if (jogadorSoco == true) {
 		corpoJogador.setTexture(texturaJogadorSoco);
+		inputSom->socoSom.play();
 	}
 
 }
 void Jogador::atualizaJogador(const sf::RenderTarget *target,
-		std::vector<Parede> &inputParedes) {
-	this->atualizaTexturas();
+		std::vector<Parede> &inputParedes, Som*inputSom) {
+	this->atualizaTexturas(inputSom);
 	this->atualizaInput();
 	this->atualizaColisaoBorda(target);
 	this->atualizaColisaoParede(inputParedes);
