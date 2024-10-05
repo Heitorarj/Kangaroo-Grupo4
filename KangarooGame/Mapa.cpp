@@ -461,8 +461,10 @@ void Mapa::atualizaVisibilidadeHitbox(Jogador *inputJogador,
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3)) {
 
 		inputJogador->hitboxJogador.setFillColor(sf::Color::Green);
+		inputJogador->hitboxSoco.setOutlineColor(sf::Color::Cyan);
 		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(sf::Color::Red);
 		inputFilhote->filhoteHitbox.setOutlineColor(sf::Color::Green);
+		inputInimigo->hitboxInimigo.setFillColor(sf::Color::Red);
 		inputParedes[6].retanguloCenario.setOutlineColor(sf::Color::Blue);
 		inputParedes[7].retanguloCenario.setOutlineColor(sf::Color::Blue);
 		inputParedes[8].retanguloCenario.setOutlineColor(sf::Color::Blue);
@@ -473,15 +475,24 @@ void Mapa::atualizaVisibilidadeHitbox(Jogador *inputJogador,
 	} else {
 
 		inputJogador->hitboxJogador.setFillColor(sf::Color::Transparent);
-		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(sf::Color::Transparent);
+		inputJogador->hitboxSoco.setOutlineColor(sf::Color::Transparent);
+		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(
+				sf::Color::Transparent);
 		inputFilhote->filhoteHitbox.setOutlineColor(sf::Color::Transparent);
-		inputParedes[6].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[7].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[8].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[9].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[10].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[11].retanguloCenario.setOutlineColor(sf::Color::Transparent);
-		inputParedes[12].retanguloCenario.setOutlineColor(sf::Color::Transparent);
+		inputParedes[6].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[7].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[8].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[9].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[10].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[11].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
+		inputParedes[12].retanguloCenario.setOutlineColor(
+				sf::Color::Transparent);
 	}
 }
 

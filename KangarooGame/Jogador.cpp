@@ -9,11 +9,17 @@ void Jogador::inicializaVariaveisJogador() {
 	jogadorGiradoEsquerda = false;
 	jogadorColideEscada = false;
 	jogadorAgachado = false;
+	jogadorSoco = false;
 }
 
 void Jogador::inicializaHitboxJogador() {
 	this->hitboxJogador.setFillColor(sf::Color::Transparent);
 	this->hitboxJogador.setSize(sf::Vector2f(60.f, 100.f));
+	this->hitboxSoco.setSize(sf::Vector2f(30, 30));
+	this->hitboxSoco.setFillColor(sf::Color::Transparent);
+	this->hitboxSoco.setOutlineColor(sf::Color::Transparent);
+	this->hitboxSoco.setOutlineThickness(5);
+	this->hitboxSoco.setPosition(-50, -50);
 }
 
 void Jogador::inicializaTexturaJogador() {
@@ -23,6 +29,9 @@ void Jogador::inicializaTexturaJogador() {
 	this->texturaJogadorGirado.loadFromFile("assets/kangarooGirado.png");
 	this->texturaJogadorAgachadoGirado.loadFromFile(
 			"assets/kangarooAgachadoGirado.png");
+	this->texturaJogadorSoco.loadFromFile("assets/kangarooSoco.png");
+	this->texturaJogadorSocoGirado.loadFromFile(
+			"assets/kangarooSocoGirado.png");
 	corpoJogador.setOrigin(corpoJogador.getLocalBounds().width / 2,
 			corpoJogador.getLocalBounds().height / 2);
 	this->corpoJogador.setTexture(texturaJogador);
@@ -83,13 +92,32 @@ void Jogador::atualizaInput() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		this->hitboxJogador.move(0.f, -this->velocidadeMovimento);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+			and (jogadorSoco == true)) {
+		jogadorAgachado = false;
+		this->hitboxJogador.setSize(sf::Vector2f(60.f, 100.f));
+
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		this->hitboxJogador.move(0.f, this->velocidadeMovimento);
 		this->hitboxJogador.setSize(sf::Vector2f(60.f, 60.f));
 		jogadorAgachado = true;
 	} else {
 		jogadorAgachado = false;
 		this->hitboxJogador.setSize(sf::Vector2f(60.f, 100.f));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
+			and (jogadorGiradoEsquerda == true)) {
+		jogadorSoco = true;
+		hitboxSoco.setPosition(hitboxJogador.getPosition().x - 33,
+				hitboxJogador.getPosition().y + 40);
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		jogadorSoco = true;
+		hitboxSoco.setPosition(hitboxJogador.getPosition().x + 60,
+				hitboxJogador.getPosition().y + 40);
+	} else {
+		jogadorSoco = false;
+		hitboxSoco.setPosition(-50, -50);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
@@ -102,7 +130,14 @@ void Jogador::atualizaInput() {
 		}
 	}
 
-	corpoJogador.setPosition(hitboxJogador.getPosition());
+	if (jogadorAgachado == true) {
+		corpoJogador.setPosition(hitboxJogador.getPosition().x,
+				hitboxJogador.getPosition().y - 5);
+	} else {
+		corpoJogador.setPosition(hitboxJogador.getPosition().x,
+				hitboxJogador.getPosition().y + 10);
+	}
+
 }
 
 void Jogador::atualizaColisaoBorda(const sf::RenderTarget *target) {
@@ -311,6 +346,12 @@ void Jogador::atualizaTexturas() {
 		corpoJogador.setTexture(texturaJogadorGirado);
 	}
 
+	if ((jogadorSoco == true) and (jogadorGiradoEsquerda == true)) {
+		corpoJogador.setTexture(texturaJogadorSocoGirado);
+	} else if (jogadorSoco == true) {
+		corpoJogador.setTexture(texturaJogadorSoco);
+	}
+
 }
 void Jogador::atualizaJogador(const sf::RenderTarget *target,
 		std::vector<Parede> &inputParedes) {
@@ -323,6 +364,7 @@ void Jogador::atualizaJogador(const sf::RenderTarget *target,
 void Jogador::desenhaJogador(sf::RenderTarget *target) {
 	target->draw(this->hitboxJogador);
 	target->draw(this->corpoJogador);
+	target->draw(this->hitboxSoco);
 	target->draw(vidasMoldura);
 	target->draw(vidasTexto);
 	for (int i; i < 3; i++) {

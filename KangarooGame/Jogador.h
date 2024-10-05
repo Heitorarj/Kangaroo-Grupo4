@@ -8,10 +8,13 @@ class Jogador {
 public:
 	float velocidadeMovimento;
 	int pontos, vidas;
-	bool jogadorColideEscada, jogadorGiradoEsquerda, jogadorAgachado;
+	bool jogadorColideEscada, jogadorGiradoEsquerda, jogadorAgachado,
+			jogadorSoco;
 
-	sf::RectangleShape hitboxJogador;
-	sf::Texture texturaJogador, texturaJogadorAgachado, texturaJogadorAgachadoGirado, vidaTextura, texturaJogadorEscada, texturaJogadorGirado;
+	sf::RectangleShape hitboxJogador, hitboxSoco;
+	sf::Texture texturaJogador, texturaJogadorAgachado,
+			texturaJogadorAgachadoGirado, vidaTextura, texturaJogadorEscada,
+			texturaJogadorGirado, texturaJogadorSoco, texturaJogadorSocoGirado;
 	sf::Sprite corpoJogador;
 	sf::Vector2f escalaJogador;
 	sf::Sprite vida[3];
