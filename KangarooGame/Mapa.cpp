@@ -260,13 +260,15 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 }
 
 void Mapa::checarColisaoFruta(Jogador *inputJogador,
-		std::vector<Fruta> &inputFruta, Texto *inputTexto) {
+		std::vector<Fruta> &inputFruta, Texto *inputTexto, Som *inputSom) {
 	for (unsigned int i = 0; i < inputFruta.size(); i++) {
 		if (inputJogador->corpoJogador.getGlobalBounds().intersects(
 				inputFruta[i].frutaCorpo.getGlobalBounds())) {
 			inputJogador->pontos +=
 					inputFruta[i].valorPontos[inputFruta[i].numeroTextura];
 			inputFruta[i].frutaCorpo.setPosition(-50, -50);
+
+			inputSom->frutaSom.play();
 
 			char textoContador[5];
 			sprintf(textoContador, "Pontos:\t%d", inputJogador->pontos); // Código pego do ChuvaGame
@@ -277,9 +279,12 @@ void Mapa::checarColisaoFruta(Jogador *inputJogador,
 }
 
 void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
-		std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga) {
+		std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga,
+		Som *inputSom) {
 	if (inputJogador->hitboxJogador.getGlobalBounds().intersects(
 			inputSino->sinoCorpo.getGlobalBounds())) {
+
+		inputSom->sinoSomOn = true;
 		for (unsigned int i = 0; i < inputFruta.size(); i++) {
 
 			if (inputFruta[i].numeroTextura > 2) {
@@ -371,11 +376,12 @@ void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 }
 
 void Mapa::nivelDificuldade(Jogador *inputJogador,
-		NuvemInimiga *inputNuvemInimiga) {
+		NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor, Som *inputSom) {
 	if (inputJogador->pontos >= 300 and inputJogador->pontos < 900) {
 		inputNuvemInimiga->tiroVelocidadeY = 60;
 	} else if (inputJogador->pontos >= 900 and inputJogador->pontos < 2000) {
 		inputNuvemInimiga->tiroVelocidadeY = 80;
+		*inputCor = sf::Color(120, 2, 2);
 		inputNuvemInimiga->nuvemTiro.setColor(sf::Color::Red);
 		inputNuvemInimiga->nuvemTiro.setScale(0.06, 0.06);
 	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
@@ -383,6 +389,7 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		inputNuvemInimiga->nuvemCorpo.setColor(sf::Color::Black);
 		inputNuvemInimiga->nuvemTiro.setScale(0.1, 0.1);
 	} else if (inputJogador->pontos >= 4000) {
+		inputSom->gotaSom.setBuffer(inputSom->raioSomBuffer);
 		inputNuvemInimiga->tiroVelocidadeY = 120;
 		inputNuvemInimiga->nuvemTiroTextura.loadFromFile("assets/raio.png");
 		inputNuvemInimiga->nuvemTiro.setTexture(
@@ -501,17 +508,18 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
 		NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
 		std::vector<Parede> &inputParede, Inimigo *inputInimigo,
-		float inputTempo, int *inputFim, sf::RenderWindow *janela) {
+		float inputTempo, int *inputTelaCodigo, sf::Color *inputCor,
+		Som *inputSom, sf::RenderWindow *janela) {
 
 	atualizaVisibilidadeHitbox(inputJogador, inputParede, inputNuvemInimiga,
 			inputInimigo, inputFilhote);
-	nivelDificuldade(inputJogador, inputNuvemInimiga);
-	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga);
-	checarColisaoFruta(inputJogador, inputFrutas, inputTexto);
+	nivelDificuldade(inputJogador, inputNuvemInimiga, inputCor, inputSom);
+	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga,
+			inputSom);
+	checarColisaoFruta(inputJogador, inputFrutas, inputTexto, inputSom);
 	moverFilhote(inputNumeroFase, inputFilhote, inputTempo);
-	checarFimJogo(inputJogador, inputFilhote, inputFim, janela);
+	checarFimJogo(inputJogador, inputFilhote, inputTelaCodigo, janela);
 	moverNuvem(1, inputNuvens, inputTempo);
 	moverNuvemInimiga(1, inputNuvemInimiga, inputTempo);
-	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, janela);
-
+	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, inputSom, janela);
 }

@@ -5,6 +5,7 @@
 #include "Inimigo.h"
 #include "Mapa.h"
 #include "Tempo.h"
+#include "Som.h"
 
 class Jogo {
 public:
@@ -12,12 +13,14 @@ public:
 	//Janela
 	sf::RenderWindow *janela;
 	sf::Event evento;
+	sf::Color corFundo;
 
 	Jogador jogador;
 	Inimigo inimigo;
 	Mapa meuMapa;
 	Tempo meuTempo;
 	TelasJogo minhaTela;
+	Som meuSom;
 	int telaCodigo;
 
 	//Funcoes privadas

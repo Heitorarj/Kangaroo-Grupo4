@@ -59,13 +59,15 @@ public:
 			sf::RenderWindow *janela);
 
 	void checarColisaoFruta(Jogador *inputJogador,
-			std::vector<Fruta> &inputFruta, Texto *inputTexto);
+			std::vector<Fruta> &inputFruta, Texto *inputTexto, Som *inputSom);
 
 	void checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
-			std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga);
+			std::vector<Fruta> &inputFruta, NuvemInimiga *inputNuvemInimiga,
+			Som *inputSom);
 
 	void nivelDificuldade(Jogador *inputJogador,
-			NuvemInimiga *inputNuvemInimiga);
+			NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor,
+			Som *inputSom);
 
 	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 			int *inputFim, sf::RenderWindow *inputJanela);
@@ -85,8 +87,8 @@ public:
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
 			NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
 			std::vector<Parede> &inputParede, Inimigo *inputInimigo,
-			float inputTempo, int *inputFim, sf::RenderWindow *janela);
-
+			float inputTempo, int *inputTelaCodigo, sf::Color *inputCor,
+			Som *inputSom, sf::RenderWindow *janela);
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "Bibliotecas.h"
 #include "Parede.h"
+#include "Som.h"
 
 class Jogador {
 public:
@@ -22,6 +23,8 @@ public:
 	sf::Text vidasTexto;
 	sf::Font fonteTexto;
 
+	Som meuSom;
+
 	//Funcoes privadas
 	void inicializaVariaveisJogador();
 	void inicializaHitboxJogador();
@@ -34,12 +37,12 @@ public:
 	//Funcoes
 	sf::RectangleShape getHitboxJogador();
 	void atualizaInput();
-	void atualizaTexturas();
+	void atualizaTexturas(Som *inputSom);
 	void atualizaColisaoBorda(const sf::RenderTarget *target);
 	void atualizaColisaoParede(std::vector<Parede> &inputParedes);
 	void atualizaVidas();
 	void atualizaJogador(const sf::RenderTarget *target,
-			std::vector<Parede> &inputParedes);
+			std::vector<Parede> &inputParedes, Som *inputSom);
 	void desenhaJogador(sf::RenderTarget *target);
 };
 
