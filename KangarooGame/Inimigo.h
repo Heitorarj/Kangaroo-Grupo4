@@ -4,7 +4,7 @@
 #include "Jogador.h"
 
 class Inimigo {
-protected:
+public:
 	sf::RectangleShape hitboxInimigo;
 	sf::Texture texturaInimigo;
 	sf::Sprite corpoInimigo;
