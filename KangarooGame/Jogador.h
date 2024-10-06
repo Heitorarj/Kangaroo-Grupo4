@@ -4,13 +4,14 @@
 #include "Bibliotecas.h"
 #include "Parede.h"
 #include "Som.h"
+#include "Tempo.h"
 
 class Jogador {
 public:
-	float velocidadeMovimento;
+	float velocidadeMovimento, velocidadePulo, velocidadeVertical, gravidade;
 	int pontos, vidas;
 	bool jogadorColideEscada, jogadorGiradoEsquerda, jogadorAgachado,
-			jogadorSoco;
+			jogadorSoco, noChao;
 
 	sf::RectangleShape hitboxJogador, hitboxSoco;
 	sf::Texture texturaJogador, texturaJogadorAgachado,
@@ -36,13 +37,13 @@ public:
 
 	//Funcoes
 	sf::RectangleShape getHitboxJogador();
-	void atualizaInput();
+	void atualizaVidas();
+	void atualizaInput(float meuTempo);
 	void atualizaTexturas(Som *inputSom);
 	void atualizaColisaoBorda(const sf::RenderTarget *target);
 	void atualizaColisaoParede(std::vector<Parede> &inputParedes);
-	void atualizaVidas();
 	void atualizaJogador(const sf::RenderTarget *target,
-			std::vector<Parede> &inputParedes, Som *inputSom);
+			std::vector<Parede> &inputParedes, Som *inputSom, float meuTempo);
 	void desenhaJogador(sf::RenderTarget *target);
 };
 

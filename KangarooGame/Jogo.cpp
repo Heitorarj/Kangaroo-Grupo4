@@ -56,7 +56,7 @@ void Jogo::atualiza() {
 			janela);
 
 	this->inimigo.atualizaInimigo(this->janela);
-	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom);
+	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom, meuTempo.deltaTime);
 	this->jogador.atualizaVidas();
 
 	meuSom.somUpdate(telaCodigo);

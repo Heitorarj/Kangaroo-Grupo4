@@ -22,9 +22,9 @@ void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { 
 					minhasParedes[6].retanguloCenario;
 		}
 
-		minhasParedes[6].retanguloCenario.setPosition(0, 600); // Hitbox das paredes do primeiro andar
-		minhasParedes[7].retanguloCenario.setPosition(0, 400); // Hitbox das paredes do segundo andar
-		minhasParedes[8].retanguloCenario.setPosition(0, 200); // Hitbox das paredes do terceiro andar
+		minhasParedes[6].retanguloCenario.setPosition(0, 575); // Hitbox das paredes do primeiro andar
+		minhasParedes[7].retanguloCenario.setPosition(0, 375); // Hitbox das paredes do segundo andar
+		minhasParedes[8].retanguloCenario.setPosition(0, 175); // Hitbox das paredes do terceiro andar
 		minhasParedes[9].retanguloCenario.setPosition(0, 0); // Hitbox das paredes do quarto andar
 
 		minhasParedes[10].retanguloCenario.setPosition(800, 500); // Hitboxes das escadas

@@ -1,8 +1,10 @@
 #include "Jogador.h"
 
-//Funcoes privadas
 void Jogador::inicializaVariaveisJogador() {
-	this->velocidadeMovimento = 5.f;
+	this->velocidadeMovimento = 3.f;
+	this->velocidadePulo = 10.f;
+	this->gravidade = 0.5f;
+	this->velocidadeVertical = 0.f;
 	this->escalaJogador = sf::Vector2f(0.1, 0.1);
 	pontos = 0;
 	vidas = 3;
@@ -10,11 +12,12 @@ void Jogador::inicializaVariaveisJogador() {
 	jogadorColideEscada = false;
 	jogadorAgachado = false;
 	jogadorSoco = false;
+	noChao = false;
 }
 
 void Jogador::inicializaHitboxJogador() {
 	this->hitboxJogador.setFillColor(sf::Color::Transparent);
-	this->hitboxJogador.setSize(sf::Vector2f(60.f, 100.f));
+	this->hitboxJogador.setSize(sf::Vector2f(60.f, 90.f));
 	this->hitboxSoco.setSize(sf::Vector2f(30, 30));
 	this->hitboxSoco.setFillColor(sf::Color::Transparent);
 	this->hitboxSoco.setOutlineColor(sf::Color::Transparent);
@@ -60,7 +63,6 @@ void Jogador::inicializaVidas() {
 	vidasMoldura.setPosition(sf::Vector2f(150, 762));
 }
 
-//Construtores / Destrutores
 Jogador::Jogador(float x, float y) {
 	this->hitboxJogador.setPosition(x, y);
 
@@ -74,23 +76,51 @@ Jogador::~Jogador() {
 
 }
 
-//Funcoes
 sf::RectangleShape Jogador::getHitboxJogador() {
 	return hitboxJogador;
 }
 
-void Jogador::atualizaInput() {
-	//Entrada do teclado
+void Jogador::atualizaVidas() {
+	if (vidas == 2) {
+		vida[2].setPosition(-50, -50);
+	} else if (vidas == 1) {
+		vida[1].setPosition(-50, -50);
+	}
+}
+
+void Jogador::atualizaInput(float meuTempo) {
+	// Movimentação para cima quando estiver em uma escada
+	if (jogadorColideEscada) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			this->hitboxJogador.move(0.f, -this->velocidadeMovimento * 3); // Sobe escada
+		} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			this->hitboxJogador.move(0.f, this->velocidadeMovimento); // Desce escada
+		}
+	}
+	// Aplicar gravidade
+	if (!noChao) {
+		this->velocidadeVertical += gravidade; // Aumenta a velocidade vertical com a gravidade
+		this->hitboxJogador.move(0.f, this->velocidadeVertical); // Aplica a velocidade vertical ao jogador
+	}
+
+	// Tecla para pular
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		if (noChao) {
+			this->velocidadeVertical = -this->velocidadePulo; // Aplica força para o pulo
+			noChao = false; // O jogador não está mais no chão
+		}
+	}
+
+	// Movimento para a esquerda
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		this->hitboxJogador.move(-this->velocidadeMovimento, 0.f);
 		jogadorGiradoEsquerda = true;
 	}
+
+	// Movimento para a direita
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		this->hitboxJogador.move(this->velocidadeMovimento, 0.f);
 		jogadorGiradoEsquerda = false;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		this->hitboxJogador.move(0.f, -this->velocidadeMovimento);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 			and (jogadorSoco == true)) {
@@ -141,7 +171,7 @@ void Jogador::atualizaInput() {
 }
 
 void Jogador::atualizaColisaoBorda(const sf::RenderTarget *target) {
-
+	// Verificar colisão com as bordas laterais
 	if (this->hitboxJogador.getGlobalBounds().left <= 0.f) {
 		this->hitboxJogador.setPosition(0.f,
 				this->hitboxJogador.getGlobalBounds().top);
@@ -153,25 +183,24 @@ void Jogador::atualizaColisaoBorda(const sf::RenderTarget *target) {
 						- this->hitboxJogador.getGlobalBounds().width,
 				this->hitboxJogador.getGlobalBounds().top);
 	}
+
+	// Verificar colisão com o topo
 	if (this->hitboxJogador.getGlobalBounds().top <= 0.f) {
 		this->hitboxJogador.setPosition(
 				this->hitboxJogador.getGlobalBounds().left, 0.f);
-	} else if (this->hitboxJogador.getGlobalBounds().top
+		this->velocidadeVertical = 0.f;
+	}
+
+	// Verificar colisão com o chão
+	if (this->hitboxJogador.getGlobalBounds().top
 			+ this->hitboxJogador.getGlobalBounds().height
 			>= target->getSize().y) {
 		this->hitboxJogador.setPosition(
 				this->hitboxJogador.getGlobalBounds().left,
 				target->getSize().y
 						- this->hitboxJogador.getGlobalBounds().height);
-	}
-
-}
-
-void Jogador::atualizaVidas() {
-	if (vidas == 2) {
-		vida[2].setPosition(-50, -50);
-	} else if (vidas == 1) {
-		vida[1].setPosition(-50, -50);
+		this->velocidadeVertical = 0.f; // Reseta a velocidade vertical ao atingir o chão
+		noChao = true; // Jogador está no chão
 	}
 }
 
@@ -182,6 +211,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 				sf::Vector2f(hitboxJogador.getPosition().x,
 						hitboxJogador.getPosition().y - velocidadeMovimento));
 		jogadorColideEscada = false;
+		noChao = true;
 	}
 	if (hitboxJogador.getGlobalBounds().intersects(
 			inputParedes[4].retanguloCenario.getGlobalBounds())) {
@@ -218,7 +248,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 		}
 	} // Colisão do primeiro andar
 
-	else if (hitboxJogador.getGlobalBounds().intersects(
+	if (hitboxJogador.getGlobalBounds().intersects(
 			inputParedes[7].retanguloCenario.getGlobalBounds())) {
 		if (hitboxJogador.getGlobalBounds().intersects(
 				inputParedes[7].retanguloCenario.getGlobalBounds())
@@ -235,6 +265,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 							hitboxJogador.getPosition().y
 									- velocidadeMovimento));
 			jogadorColideEscada = false;
+			noChao = true;
 		}
 
 		if (hitboxJogador.getGlobalBounds().intersects(
@@ -272,6 +303,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 							hitboxJogador.getPosition().y
 									- velocidadeMovimento));
 			jogadorColideEscada = false;
+			noChao = true;
 		}
 
 		if (hitboxJogador.getGlobalBounds().intersects(
@@ -309,6 +341,7 @@ void Jogador::atualizaColisaoParede(std::vector<Parede> &inputParedes) {
 							hitboxJogador.getPosition().y
 									- velocidadeMovimento));
 			jogadorColideEscada = false;
+			noChao = true;
 		}
 	} // Colisão do quarto andar
 }
@@ -356,11 +389,11 @@ void Jogador::atualizaTexturas(Som *inputSom) {
 
 }
 void Jogador::atualizaJogador(const sf::RenderTarget *target,
-		std::vector<Parede> &inputParedes, Som*inputSom) {
+		std::vector<Parede> &inputParedes, Som *inputSom, float meuTempo) {
 	this->atualizaTexturas(inputSom);
-	this->atualizaInput();
 	this->atualizaColisaoBorda(target);
 	this->atualizaColisaoParede(inputParedes);
+	this->atualizaInput(meuTempo);
 }
 
 void Jogador::desenhaJogador(sf::RenderTarget *target) {
