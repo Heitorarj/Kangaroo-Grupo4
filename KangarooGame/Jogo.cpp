@@ -10,7 +10,6 @@ void Jogo::inicializaVariaveis() {
 void Jogo::inicializaJanela() {
 	this->janela = new sf::RenderWindow(sf::VideoMode(1100, 800),
 			"Kangaroo Game", sf::Style::Titlebar | sf::Style::Close);
-
 	this->janela->setFramerateLimit(60);
 }
 

@@ -215,20 +215,12 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		NuvemInimiga *inputNuvemInimiga, Texto *inputTexto, Sino *inputSino,
 		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
-
+		inputSino->sinoCorpo.setTexture(inputSino->sinoTextura);
+		janela->draw(inputSino->sinoCorpo);
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
 			inputNuvem[i].nuvemCorpo.setTexture(inputNuvem[i].nuvemTextura);
 			janela->draw(inputNuvem[i].nuvemCorpo);
 		}
-
-		inputNuvemInimiga->nuvemTiro.setTexture(
-				inputNuvemInimiga->nuvemTiroTextura);
-		janela->draw(inputNuvemInimiga->nuvemTiro);
-		inputNuvemInimiga->nuvemCorpo.setTexture(
-				inputNuvemInimiga->nuvemTextura);
-		janela->draw(inputNuvemInimiga->nuvemCorpo);
-		janela->draw(inputNuvemInimiga->hitboxNuvemInimiga);
-
 		for (unsigned int i = 0; i < inputArvore.size(); i++) {
 			inputArvore[i].arvoreCorpo.setTexture(inputArvore[i].arvoreTextura);
 			janela->draw(inputArvore[i].arvoreCorpo);
@@ -248,8 +240,14 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 			janela->draw(inputEscada[i].retanguloCenario);
 		}
 
-		inputSino->sinoCorpo.setTexture(inputSino->sinoTextura);
-		janela->draw(inputSino->sinoCorpo);
+		inputNuvemInimiga->nuvemTiro.setTexture(
+				inputNuvemInimiga->nuvemTiroTextura);
+		janela->draw(inputNuvemInimiga->nuvemTiro);
+		inputNuvemInimiga->nuvemCorpo.setTexture(
+				inputNuvemInimiga->nuvemTextura);
+		janela->draw(inputNuvemInimiga->nuvemCorpo);
+		janela->draw(inputNuvemInimiga->hitboxNuvemInimiga);
+
 		janela->draw(inputTexto->retanguloCenario);
 		janela->draw(inputTexto->texto);
 
