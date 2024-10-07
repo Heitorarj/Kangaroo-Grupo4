@@ -52,7 +52,7 @@ void Jogo::atualiza() {
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
 			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuMapa.minhasParedes,
-			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom,
+			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom, meuMapa.minhasFlores, meuMapa.minhasArvores, meuMapa.minhasEscadas,
 			janela);
 
 	this->inimigo.atualizaInimigo(this->janela);

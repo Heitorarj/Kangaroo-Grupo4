@@ -4,10 +4,9 @@ Som::Som() {
 	gotaSomBuffer.loadFromFile("assets/gota.wav");
 	gotaSom.setBuffer(gotaSomBuffer);
 
-	raioSomBuffer.loadFromFile("assets/raio.wav");
-	raioSom.setBuffer(raioSomBuffer);
+	raioSomBuffer.loadFromFile("assets/raio2.wav");
 
-	socoSomBuffer.loadFromFile("assets/agachar.wav");
+	socoSomBuffer.loadFromFile("assets/soco.wav");
 	socoSom.setBuffer(socoSomBuffer);
 
 	danoSomBuffer.loadFromFile("assets/dano.wav");
@@ -16,8 +15,8 @@ Som::Som() {
 	frutaSomBuffer.loadFromFile("assets/frutaColetar.wav");
 	frutaSom.setBuffer(frutaSomBuffer);
 
-	pularSomBuffer.loadFromFile("assets/agachar.wav");
-	pularSom.setBuffer(pularSomBuffer);
+	agacharSomBuffer.loadFromFile("assets/agachar.wav");
+	agacharSom.setBuffer(agacharSomBuffer);
 
 	pularSomBuffer.loadFromFile("assets/pulo.wav");
 	pularSom.setBuffer(pularSomBuffer);
@@ -25,6 +24,10 @@ Som::Som() {
 	sinoSomBuffer.loadFromFile("assets/sinoNormal.wav");
 	sinoSomDificilBuffer.loadFromFile("assets/sinoDificil.wav");
 	sinoSom.setBuffer(sinoSomBuffer);
+
+	andarSom.openFromFile("assets/passos.wav");
+	andarSom.setVolume(200);
+	andarSom.setLoop(true);
 
 	musicaMenu.openFromFile("assets/menu.wav");
 	musicaMenu.setLoop(true);
@@ -42,6 +45,7 @@ Som::Som() {
 	musicaPrincipalDificilOnCerteza = false;
 	musicaVitoriaOn = false;
 	musicaDerrotaOn = false;
+	andarSomOn = false;
 
 }
 
@@ -51,6 +55,7 @@ void Som::somMusica(int inputTelaCodigo) {
 
 		if (musicaMenuOn == false) {
 			musicaMenu.play();
+			musicaMenu.setVolume(50);
 			musicaMenuOn = true;
 		}
 
@@ -64,7 +69,8 @@ void Som::somMusica(int inputTelaCodigo) {
 			musicaPrincipalOn = true;
 		}
 
-		if ((musicaPrincipalDificilOn == true) and (musicaPrincipalOn == true) and ((musicaPrincipalDificilOnCerteza == false))) {
+		if ((musicaPrincipalDificilOn == true) and (musicaPrincipalOn == true)
+				and ((musicaPrincipalDificilOnCerteza == false))) {
 			musicaPrincipal.openFromFile("assets/musicaDificil.wav");
 			musicaPrincipal.setVolume(50);
 			musicaPrincipal.pause();

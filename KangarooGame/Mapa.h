@@ -66,8 +66,10 @@ public:
 			Som *inputSom);
 
 	void nivelDificuldade(Jogador *inputJogador,
-			NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor,
-			Som *inputSom);
+			NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor, Som *inputSom,
+			std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
+			std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
+			Filhote *inputFilhote, std::vector<Escada> &inputEscadas, Sino *inputSino);
 
 	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 			int *inputFim, sf::RenderWindow *inputJanela);
@@ -82,13 +84,16 @@ public:
 	void atualizaVisibilidadeHitbox(Jogador *inputJogador,
 			std::vector<Parede> &inputParedes, NuvemInimiga *inputNuvemInimiga,
 			Inimigo *inputInimigo, Filhote *inputFilhote);
+
 	void mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 			Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
 			NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
 			std::vector<Parede> &inputParede, Inimigo *inputInimigo,
 			float inputTempo, int *inputTelaCodigo, sf::Color *inputCor,
-			Som *inputSom, sf::RenderWindow *janela);
+			Som *inputSom, std::vector<Flor> &inputFlores,
+			std::vector<Arvore> &inputArvores,
+			std::vector<Escada> &inputEscadas, sf::RenderWindow *janela);
 };
 
 #endif

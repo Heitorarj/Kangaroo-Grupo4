@@ -159,7 +159,10 @@ NuvemInimiga::NuvemInimiga() {
 }
 
 void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
-		Som *inputSom, sf::RenderWindow *inputJanela) {
+		Som *inputSom, sf::RenderWindow *inputJanela,
+		std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
+		std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
+		std::vector<Escada> &inputEscadas, Sino *inputSino) {
 
 	if (!inputJogador.hitboxJogador.getGlobalBounds().intersects(
 			hitboxNuvemInimiga.getGlobalBounds())) {
@@ -168,9 +171,30 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 		hitboxNuvemInimiga.setPosition(nuvemCorpo.getPosition().x - 50,
 				nuvemCorpo.getPosition().y);
 
+		if (inputSom->musicaPrincipalDificilOnCerteza == true) {
+			inputSino->sinoCorpo.setColor(sf::Color::Black);
+			nuvemCorpo.setColor(sf::Color::Black);
+			for (unsigned int i = 0; i < inputNuvens.size(); i++) {
+				inputNuvens[i].nuvemCorpo.setColor(sf::Color::Black);
+			}
+			for (unsigned int i = 0; i < inputFlores.size(); i++) {
+				inputFlores[i].florCorpo.setColor(sf::Color::Black);
+			}
+			for (unsigned int i = 0; i < inputArvores.size(); i++) {
+				inputArvores[i].arvoreCorpo.setColor(sf::Color::Black);
+			}
+			for (unsigned int i = 0; i < inputEscadas.size(); i++) {
+				inputEscadas[i].retanguloCenario.setFillColor(sf::Color::Black);
+			}
+			for (unsigned int i = 0; i < 6; i++) {
+				inputParedes[i].retanguloCenario.setFillColor(sf::Color::Black);
+			}
+		}
+
 	} else {
-		if (nuvemTiro.getPosition().y
-				<= 60) {
+		if (nuvemTiro.getPosition().y <= 100) {
+			inputSom->gotaSom.play();
+		} else if (inputSom->musicaPrincipalDificilOnCerteza) {
 			inputSom->gotaSom.play();
 		}
 
@@ -181,6 +205,33 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 			hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
 
 		} else {
+
+			if (inputSom->musicaPrincipalDificilOnCerteza == true) {
+				inputSino->sinoCorpo.setColor(sf::Color::White);
+				nuvemCorpo.setColor(sf::Color::White);
+				for (unsigned int i = 0; i < inputNuvens.size(); i++) {
+					inputNuvens[i].nuvemCorpo.setColor(sf::Color::White);
+				}
+				for (unsigned int i = 0; i < inputFlores.size(); i++) {
+					inputFlores[i].florCorpo.setColor(sf::Color::White);
+				}
+				for (unsigned int i = 0; i < inputArvores.size(); i++) {
+					inputArvores[i].arvoreCorpo.setColor(sf::Color::White);
+				}
+				for (unsigned int i = 0; i < inputEscadas.size(); i++) {
+					inputEscadas[i].retanguloCenario.setFillColor(
+							sf::Color(122, 77, 31));
+				}
+				for (unsigned int i = 0; i < 6; i++) {
+					if (i == 0) {
+						inputParedes[i].retanguloCenario.setFillColor(
+								sf::Color(113, 175, 41));
+					} else {
+						inputParedes[i].retanguloCenario.setFillColor(
+								sf::Color(122, 77, 31));
+					}
+				}
+			}
 
 			hitboxNuvemInimiga.setSize(sf::Vector2f(1000, 800));
 			hitboxNuvemInimiga.setPosition(

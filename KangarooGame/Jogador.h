@@ -3,20 +3,26 @@
 
 #include "Bibliotecas.h"
 #include "Parede.h"
+#include "Arvore.h"
+#include "Flor.h"
+#include "Escada.h"
 #include "Som.h"
 #include "Tempo.h"
+#include "Nuvem.h"
+#include "Sino.h"
 
 class Jogador {
 public:
 	float velocidadeMovimento, velocidadePulo, velocidadeVertical, gravidade;
 	int pontos, vidas;
 	bool jogadorColideEscada, jogadorGiradoEsquerda, jogadorAgachado,
-			jogadorSoco, noChao;
+			jogadorSoco, jogadorPulo, jogadorAndando, noChao;
 
 	sf::RectangleShape hitboxJogador, hitboxSoco;
 	sf::Texture texturaJogador, texturaJogadorAgachado,
 			texturaJogadorAgachadoGirado, vidaTextura, texturaJogadorEscada,
-			texturaJogadorGirado, texturaJogadorSoco, texturaJogadorSocoGirado;
+			texturaJogadorGirado, texturaJogadorSoco, texturaJogadorSocoGirado,
+			texturaJogadorPulo, texturaJogadorPuloGirado;
 	sf::Sprite corpoJogador;
 	sf::Vector2f escalaJogador;
 	sf::Sprite vida[3];

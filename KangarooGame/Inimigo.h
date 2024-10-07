@@ -12,7 +12,7 @@ public:
 	float velocidadeMovimento, persegueJogadorX, persegueJogadorY;
 	int tempoMudancaDirecao, frameAtual;
 
-	Jogador& jogador;
+	Jogador &jogador;
 
 	//Funcoes privadas
 	void inicializaVariaveisInimigo();
@@ -21,7 +21,7 @@ public:
 
 public:
 	//Construtores / Destrutores
-	Inimigo(Jogador& jogador);
+	Inimigo(Jogador &jogador);
 	virtual ~Inimigo();
 
 	//Funcoes
@@ -44,7 +44,10 @@ public:
 
 	NuvemInimiga();
 	void nuvemAtacar(Jogador &inputJogador, float inputDeltaTime, Som *inputSom,
-			sf::RenderWindow *inputJanela);
+			sf::RenderWindow *inputJanela, std::vector<Nuvem> &inputNuvens,
+			std::vector<Parede> &inputParedes, std::vector<Flor> &inputFlores,
+			std::vector<Arvore> &inputArvores,
+			std::vector<Escada> &inputEscadas, Sino *inputSino);
 };
 
 #endif
