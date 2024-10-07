@@ -5,32 +5,35 @@
 
 class Inimigo {
 public:
-	sf::RectangleShape hitboxInimigo;
-	sf::Texture texturaInimigo;
-	sf::Sprite corpoInimigo;
-	sf::Vector2f escalaInimigo, direcaoAleatoria;
-	float velocidadeMovimento, persegueJogadorX, persegueJogadorY;
-	int tempoMudancaDirecao, frameAtual;
+    sf::RectangleShape hitboxInimigo;
+    sf::Sprite corpoInimigo;
+    sf::Texture texturaInimigo;
 
-	Jogador &jogador;
+    float velocidadeVertical, velocidadeHorizontal, persegueJogadorX, persegueJogadorY;
+    sf::Vector2f escalaInimigo;
 
-	//Funcoes privadas
-	void inicializaVariaveisInimigo();
-	void inicializaHitboxInimigo();
-	void inicializaTexturaInimigo();
+    bool colidiuChao, colidiuTopo, colidiuDireita, colidiuEsquerda, colidiuPlataforma, podeDescer;
+    int direcaoMovimento;
+    sf::Vector2f posicaoInicial;
 
-public:
-	//Construtores / Destrutores
-	Inimigo(Jogador &jogador);
-	virtual ~Inimigo();
+    void inicializaVariaveisInimigo();
+    void inicializaHitboxInimigo();
+    void inicializaTexturaInimigo();
 
-	//Funcoes
-	sf::RectangleShape getHitboxInimigo();
-	void persegueJogador();
-	void movimentoAleatorioInimigo();
-	void atualizaColisaoBorda(const sf::RenderTarget *target);
-	void atualizaInimigo(const sf::RenderTarget *target);
-	void desenhaInimigo(sf::RenderTarget *target);
+    void movimentoInimigo();
+    void descer();
+
+    Jogador &jogador;
+
+    Inimigo(Jogador &jogador);
+    ~Inimigo();
+
+    // Funções
+    sf::RectangleShape getHitboxInimigo();
+    void atualizaColisaoPlataforma(std::vector<Parede> &inputParedes);
+    void atualizaColisaoBorda(const sf::RenderTarget *target);
+    void atualizaInimigo(const sf::RenderTarget *target, std::vector<Parede> &inputParedes);
+    void desenhaInimigo(sf::RenderTarget *target);
 };
 
 class NuvemInimiga {
