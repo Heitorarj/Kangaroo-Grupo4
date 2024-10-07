@@ -71,7 +71,7 @@ void Som::somMusica(int inputTelaCodigo) {
 
 		if ((musicaPrincipalDificilOn == true) and (musicaPrincipalOn == true)
 				and ((musicaPrincipalDificilOnCerteza == false))) {
-			musicaPrincipal.openFromFile("assets/musicaDificil.wav");
+			musicaPrincipal.openFromFile("assets/musicaDificil.ogg");
 			musicaPrincipal.setVolume(50);
 			musicaPrincipal.pause();
 			musicaPrincipal.play();
