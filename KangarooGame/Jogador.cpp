@@ -160,11 +160,17 @@ void Jogador::atualizaInput(float meuTempo) {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
-			and (jogadorGiradoEsquerda == true)) {
+			and (jogadorGiradoEsquerda == true)
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) == false))
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) == false))
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) == false))) {
 		jogadorSoco = true;
 		hitboxSoco.setPosition(hitboxJogador.getPosition().x - 33,
 				hitboxJogador.getPosition().y + 40);
-	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) == false))
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) == false))
+			and ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) == false))) {
 		jogadorSoco = true;
 		hitboxSoco.setPosition(hitboxJogador.getPosition().x + 60,
 				hitboxJogador.getPosition().y + 40);

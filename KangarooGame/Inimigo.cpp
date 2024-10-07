@@ -206,7 +206,7 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 
 		} else {
 
-			if (inputSom->musicaPrincipalDificilOnCerteza == true) {
+			if (inputSom->cenarioRaio == true) {
 				inputSino->sinoCorpo.setColor(sf::Color::White);
 				nuvemCorpo.setColor(sf::Color::White);
 				for (unsigned int i = 0; i < inputNuvens.size(); i++) {

@@ -4,7 +4,7 @@ Som::Som() {
 	gotaSomBuffer.loadFromFile("assets/gota.wav");
 	gotaSom.setBuffer(gotaSomBuffer);
 
-	raioSomBuffer.loadFromFile("assets/raio2.wav");
+	raioSomBuffer.loadFromFile("assets/raio.wav");
 
 	socoSomBuffer.loadFromFile("assets/soco.wav");
 	socoSom.setBuffer(socoSomBuffer);
@@ -22,7 +22,6 @@ Som::Som() {
 	pularSom.setBuffer(pularSomBuffer);
 
 	sinoSomBuffer.loadFromFile("assets/sinoNormal.wav");
-	sinoSomDificilBuffer.loadFromFile("assets/sinoDificil.wav");
 	sinoSom.setBuffer(sinoSomBuffer);
 
 	andarSom.openFromFile("assets/passos.wav");
@@ -46,6 +45,7 @@ Som::Som() {
 	musicaVitoriaOn = false;
 	musicaDerrotaOn = false;
 	andarSomOn = false;
+	cenarioRaio = false;
 
 }
 

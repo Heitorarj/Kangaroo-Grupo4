@@ -1,7 +1,8 @@
 #include "Filhote.h"
 
 Filhote::Filhote() {
-	filhoteTextura.loadFromFile("assets/Filhote1.png");
+	filhoteTextura.loadFromFile("assets/Filhote.png");
+	filhoteTexturaGirado.loadFromFile("assets/FilhoteGirado.png");
 	filhoteCorpo.setTexture(filhoteTextura);
 	filhoteCorpo.setOrigin(filhoteCorpo.getLocalBounds().width / 2,
 			filhoteCorpo.getLocalBounds().height / 2);
@@ -14,5 +15,6 @@ Filhote::Filhote() {
 	filhoteHitbox.setFillColor(sf::Color::Transparent);
 	filhoteHitbox.setOutlineColor(sf::Color::Transparent);
 	filhoteHitbox.setOutlineThickness(5);
-	velocidadeX = 2;
+	velocidadeX = 10;
+
 }

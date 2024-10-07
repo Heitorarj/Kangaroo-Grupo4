@@ -157,7 +157,7 @@ void Mapa::criarFilhote(int inputNumeroFase, Filhote *inputFilhote) {
 	if (inputNumeroFase == 1) {
 		Filhote meuFilhote;
 
-		meuFilhote.filhoteCorpo.setPosition(800, 120);
+		meuFilhote.filhoteCorpo.setPosition(800, 122);
 
 		*inputFilhote = meuFilhote;
 	}
@@ -253,7 +253,6 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		janela->draw(inputTexto->retanguloCenario);
 		janela->draw(inputTexto->texto);
 
-		inputFilhote->filhoteCorpo.setTexture(inputFilhote->filhoteTextura);
 		janela->draw(inputFilhote->filhoteCorpo);
 		janela->draw(inputFilhote->filhoteHitbox);
 	}
@@ -273,7 +272,6 @@ void Mapa::checarColisaoFruta(Jogador *inputJogador,
 			char textoContador[5];
 			sprintf(textoContador, "Pontos:\t%d", inputJogador->pontos); // Código pego do ChuvaGame
 			inputTexto->texto.setString(textoContador);
-			std::cout << "Pontos: " << inputJogador->pontos << std::endl;
 		}
 	}
 }
@@ -392,8 +390,6 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		inputNuvemInimiga->nuvemTiro.setScale(0.06, 0.06);
 		if (inputSom->musicaPrincipalDificilOn == false) {
 			inputSom->musicaPrincipalDificilOn = true;
-			std::cout << "musicaPrincipalDificilOn: "
-					<< inputSom->musicaPrincipalDificilOn << std::endl;
 		}
 	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
 		inputNuvemInimiga->tiroVelocidadeY = 90;
@@ -416,6 +412,7 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		}
 		inputNuvemInimiga->nuvemTiro.setScale(0.1, 0.1);
 	} else if (inputJogador->pontos >= 4000) {
+		inputSom->cenarioRaio = true;
 		inputSom->gotaSom.setBuffer(inputSom->raioSomBuffer);
 		inputNuvemInimiga->tiroVelocidadeY = 120;
 		inputNuvemInimiga->nuvemTiroTextura.loadFromFile("assets/raio.png");
@@ -475,16 +472,26 @@ void Mapa::moverNuvemInimiga(int inputNumeroFase,
 void Mapa::moverFilhote(int inputNumeroFase, Filhote *inputFilhote,
 		float inputDeltaTime) {
 	if (inputNumeroFase == 1) {
-		if ((inputFilhote->filhoteCorpo.getPosition().x <= 600)
-				or (inputFilhote->filhoteCorpo.getPosition().x >= 850)) {
+		if ((inputFilhote->filhoteCorpo.getPosition().x <= 600)) {
+			inputFilhote->velocidadeX *= -1;
+
+		} else if (inputFilhote->filhoteCorpo.getPosition().x >= 850) {
 			inputFilhote->velocidadeX *= -1;
 		}
+
+		if (inputFilhote->velocidadeX <= 0) {
+			inputFilhote->filhoteCorpo.setTexture(
+					inputFilhote->filhoteTexturaGirado);
+		} else if (inputFilhote->velocidadeX >= 0) {
+			inputFilhote->filhoteCorpo.setTexture(inputFilhote->filhoteTextura);
+		}
+
 		inputFilhote->filhoteHitbox.setPosition(
 				inputFilhote->filhoteCorpo.getPosition().x,
 				inputFilhote->filhoteCorpo.getPosition().y);
 		inputFilhote->filhoteCorpo.setPosition(
 				inputFilhote->filhoteCorpo.getPosition().x
-						+ inputFilhote->velocidadeX,
+						+ inputFilhote->velocidadeX * inputDeltaTime,
 				inputFilhote->filhoteCorpo.getPosition().y);
 	}
 }

@@ -6,12 +6,16 @@
 class Som {
 public:
 	sf::SoundBuffer gotaSomBuffer, raioSomBuffer, socoSomBuffer, danoSomBuffer,
-			sinoSomBuffer, sinoSomDificilBuffer, frutaSomBuffer, pularSomBuffer, agacharSomBuffer;
+			sinoSomBuffer, frutaSomBuffer, pularSomBuffer,
+			agacharSomBuffer;
 	sf::Sound gotaSom, socoSom, danoSom, sinoSom, frutaSom, pularSom,
 			agacharSom;
-	sf::Music musicaMenu, musicaPrincipal, musicaVitoria, musicaDerrota, andarSom;
+	sf::Music musicaMenu, musicaPrincipal, musicaVitoria, musicaDerrota,
+			andarSom;
 
-	bool musicaMenuOn, musicaPrincipalOn, musicaPrincipalDificilOn, musicaPrincipalDificilOnCerteza, musicaVitoriaOn, musicaDerrotaOn, andarSomOn;
+	bool musicaMenuOn, musicaPrincipalOn, musicaPrincipalDificilOn,
+			musicaPrincipalDificilOnCerteza, musicaVitoriaOn, musicaDerrotaOn,
+			andarSomOn, cenarioRaio;
 
 	Som();
 	void somMusica(int inputTelaCodigo);
