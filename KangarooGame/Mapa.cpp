@@ -27,9 +27,9 @@ void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { 
 		minhasParedes[8].retanguloCenario.setPosition(0, 215); // Hitbox das paredes do terceiro andar
 		minhasParedes[9].retanguloCenario.setPosition(0, 0); // Hitbox das paredes do quarto andar
 
-		minhasParedes[10].retanguloCenario.setPosition(800, 550); // Hitboxes das escadas
-		minhasParedes[11].retanguloCenario.setPosition(175, 350);
-		minhasParedes[12].retanguloCenario.setPosition(800, 150);
+		minhasParedes[10].retanguloCenario.setPosition(809, 560); // Hitboxes das escadas
+		minhasParedes[11].retanguloCenario.setPosition(184, 360);
+		minhasParedes[12].retanguloCenario.setPosition(809, 160);
 
 		minhasParedes[0].retanguloCenario.setSize(sf::Vector2f(800, 50));
 		minhasParedes[4].retanguloCenario.setSize(sf::Vector2f(100, 800));
@@ -40,9 +40,9 @@ void Mapa::criarParede(int inputNumeroFase, std::vector<Parede> *inputParede) { 
 		minhasParedes[8].retanguloCenario.setSize(sf::Vector2f(1100, 130));
 		minhasParedes[9].retanguloCenario.setSize(sf::Vector2f(1100, 130));
 
-		minhasParedes[10].retanguloCenario.setSize(sf::Vector2f(30, 130)); // Hitboxes das escadas
-		minhasParedes[11].retanguloCenario.setSize(sf::Vector2f(30, 130));
-		minhasParedes[12].retanguloCenario.setSize(sf::Vector2f(30, 130));
+		minhasParedes[10].retanguloCenario.setSize(sf::Vector2f(10, 70)); // Hitboxes das escadas
+		minhasParedes[11].retanguloCenario.setSize(sf::Vector2f(10, 70));
+		minhasParedes[12].retanguloCenario.setSize(sf::Vector2f(10, 70));
 
 		*inputParede = minhasParedes;
 
@@ -376,23 +376,44 @@ void Mapa::checarColisaoSino(Jogador *inputJogador, Sino *inputSino,
 }
 
 void Mapa::nivelDificuldade(Jogador *inputJogador,
-		NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor, Som *inputSom) {
+		NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor, Som *inputSom,
+		std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
+		std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
+		Filhote *inputFilhote, std::vector<Escada> &inputEscadas,
+		Sino *inputSino) {
 	if (inputJogador->pontos >= 300 and inputJogador->pontos < 900) {
 		inputNuvemInimiga->tiroVelocidadeY = 60;
 	} else if (inputJogador->pontos >= 900 and inputJogador->pontos < 2000) {
 		inputNuvemInimiga->tiroVelocidadeY = 80;
 		*inputCor = sf::Color(120, 2, 2);
 		inputNuvemInimiga->nuvemTiro.setColor(sf::Color::Red);
+		inputFilhote->filhoteCorpo.setColor(sf::Color::Red);
+		inputJogador->corpoJogador.setColor(sf::Color::Red);
 		inputNuvemInimiga->nuvemTiro.setScale(0.06, 0.06);
-
-		if(inputSom->musicaPrincipalDificilOn == false)
-		{
+		if (inputSom->musicaPrincipalDificilOn == false) {
 			inputSom->musicaPrincipalDificilOn = true;
-			std::cout << "musicaPrincipalDificilOn: " << inputSom->musicaPrincipalDificilOn << std::endl;
+			std::cout << "musicaPrincipalDificilOn: "
+					<< inputSom->musicaPrincipalDificilOn << std::endl;
 		}
 	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
 		inputNuvemInimiga->tiroVelocidadeY = 90;
 		inputNuvemInimiga->nuvemCorpo.setColor(sf::Color::Black);
+		inputSino->sinoCorpo.setColor(sf::Color::Black);
+		for (unsigned int i = 0; i < inputNuvens.size(); i++) {
+			inputNuvens[i].nuvemCorpo.setColor(sf::Color::Black);
+		}
+		for (unsigned int i = 0; i < inputFlores.size(); i++) {
+			inputFlores[i].florCorpo.setColor(sf::Color::Black);
+		}
+		for (unsigned int i = 0; i < inputArvores.size(); i++) {
+			inputArvores[i].arvoreCorpo.setColor(sf::Color::Black);
+		}
+		for (unsigned int i = 0; i < inputEscadas.size(); i++) {
+			inputEscadas[i].retanguloCenario.setFillColor(sf::Color::Black);
+		}
+		for (unsigned int i = 0; i < 6; i++) {
+			inputParedes[i].retanguloCenario.setFillColor(sf::Color::Black);
+		}
 		inputNuvemInimiga->nuvemTiro.setScale(0.1, 0.1);
 	} else if (inputJogador->pontos >= 4000) {
 		inputSom->gotaSom.setBuffer(inputSom->raioSomBuffer);
@@ -513,13 +534,17 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 		std::vector<Fruta> &inputFrutas, Texto *inputTexto,
 		Filhote *inputFilhote, std::vector<Nuvem> &inputNuvens,
 		NuvemInimiga *inputNuvemInimiga, Sino *inputSino,
-		std::vector<Parede> &inputParede, Inimigo *inputInimigo,
+		std::vector<Parede> &inputParedes, Inimigo *inputInimigo,
 		float inputTempo, int *inputTelaCodigo, sf::Color *inputCor,
-		Som *inputSom, sf::RenderWindow *janela) {
+		Som *inputSom, std::vector<Flor> &inputFlores,
+		std::vector<Arvore> &inputArvores, std::vector<Escada> &inputEscadas,
+		sf::RenderWindow *janela) {
 
-	atualizaVisibilidadeHitbox(inputJogador, inputParede, inputNuvemInimiga,
+	atualizaVisibilidadeHitbox(inputJogador, inputParedes, inputNuvemInimiga,
 			inputInimigo, inputFilhote);
-	nivelDificuldade(inputJogador, inputNuvemInimiga, inputCor, inputSom);
+	nivelDificuldade(inputJogador, inputNuvemInimiga, inputCor, inputSom,
+			inputNuvens, inputParedes, inputFlores, inputArvores, inputFilhote,
+			inputEscadas, inputSino);
 	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga,
 			inputSom);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto, inputSom);
@@ -527,5 +552,7 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 	checarFimJogo(inputJogador, inputFilhote, inputTelaCodigo, janela);
 	moverNuvem(1, inputNuvens, inputTempo);
 	moverNuvemInimiga(1, inputNuvemInimiga, inputTempo);
-	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, inputSom, janela);
+	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, inputSom, janela,
+			inputNuvens, inputParedes, inputFlores, inputArvores, inputEscadas,
+			inputSino);
 }
