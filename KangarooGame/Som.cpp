@@ -7,7 +7,7 @@ Som::Som() {
 	raioSomBuffer.loadFromFile("assets/raio.wav");
 	raioSom.setBuffer(raioSomBuffer);
 
-	socoSomBuffer.loadFromFile("assets/soco.wav");
+	socoSomBuffer.loadFromFile("assets/agachar.wav");
 	socoSom.setBuffer(socoSomBuffer);
 
 	danoSomBuffer.loadFromFile("assets/dano.wav");
@@ -38,6 +38,8 @@ Som::Som() {
 
 	musicaMenuOn = false;
 	musicaPrincipalOn = false;
+	musicaPrincipalDificilOn = false;
+	musicaPrincipalDificilOnCerteza = false;
 	musicaVitoriaOn = false;
 	musicaDerrotaOn = false;
 
@@ -60,6 +62,14 @@ void Som::somMusica(int inputTelaCodigo) {
 			musicaMenu.pause();
 			musicaPrincipal.play();
 			musicaPrincipalOn = true;
+		}
+
+		if ((musicaPrincipalDificilOn == true) and (musicaPrincipalOn == true) and ((musicaPrincipalDificilOnCerteza == false))) {
+			musicaPrincipal.openFromFile("assets/musicaDificil.wav");
+			musicaPrincipal.setVolume(50);
+			musicaPrincipal.pause();
+			musicaPrincipal.play();
+			musicaPrincipalDificilOnCerteza = true;
 		}
 
 		break;

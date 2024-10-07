@@ -373,7 +373,9 @@ void Jogador::atualizaTexturas(Som *inputSom) {
 	if (jogadorAgachado == true) {
 		if ((jogadorAgachado == true) and (jogadorGiradoEsquerda == true)) {
 			corpoJogador.setTexture(texturaJogadorAgachadoGirado);
+			inputSom->agacharSom.play();
 		} else {
+			inputSom->agacharSom.play();
 			corpoJogador.setTexture(texturaJogadorAgachado);
 		}
 	} else if ((jogadorAgachado == false) and (jogadorGiradoEsquerda == false)

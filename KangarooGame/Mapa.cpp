@@ -384,6 +384,12 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		*inputCor = sf::Color(120, 2, 2);
 		inputNuvemInimiga->nuvemTiro.setColor(sf::Color::Red);
 		inputNuvemInimiga->nuvemTiro.setScale(0.06, 0.06);
+
+		if(inputSom->musicaPrincipalDificilOn == false)
+		{
+			inputSom->musicaPrincipalDificilOn = true;
+			std::cout << "musicaPrincipalDificilOn: " << inputSom->musicaPrincipalDificilOn << std::endl;
+		}
 	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
 		inputNuvemInimiga->tiroVelocidadeY = 90;
 		inputNuvemInimiga->nuvemCorpo.setColor(sf::Color::Black);

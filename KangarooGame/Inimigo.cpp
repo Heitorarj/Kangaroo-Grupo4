@@ -167,7 +167,6 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 		hitboxNuvemInimiga.setSize(sf::Vector2f(100, 800));
 		hitboxNuvemInimiga.setPosition(nuvemCorpo.getPosition().x - 50,
 				nuvemCorpo.getPosition().y);
-		std::cout << tiroVelocidadeY + nuvemCorpo.getPosition().y << std::endl;
 
 	} else {
 		if (nuvemTiro.getPosition().y
@@ -175,7 +174,6 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 			inputSom->gotaSom.play();
 		}
 
-		std::cout << nuvemTiro.getPosition().y << std::endl;
 		if (nuvemTiro.getPosition().y > 1000) {
 			nuvemTiro.setPosition(nuvemTiro.getPosition().x,
 					nuvemTiro.getPosition().y - 1000);

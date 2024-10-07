@@ -11,7 +11,7 @@ public:
 			agacharSom;
 	sf::Music musicaMenu, musicaPrincipal, musicaVitoria, musicaDerrota, andarSom;
 
-	bool musicaMenuOn, musicaPrincipalOn, musicaVitoriaOn, musicaDerrotaOn;
+	bool musicaMenuOn, musicaPrincipalOn, musicaPrincipalDificilOn, musicaPrincipalDificilOnCerteza, musicaVitoriaOn, musicaDerrotaOn;
 
 	Som();
 	void somMusica(int inputTelaCodigo);
