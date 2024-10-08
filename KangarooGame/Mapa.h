@@ -69,7 +69,7 @@ public:
 			NuvemInimiga *inputNuvemInimiga, sf::Color *inputCor, Som *inputSom,
 			std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
 			std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
-			Filhote *inputFilhote, std::vector<Escada> &inputEscadas, Sino *inputSino);
+			Filhote *inputFilhote, std::vector<Escada> &inputEscadas, Sino *inputSino, Inimigo *inputInimigo);
 
 	void checarFimJogo(Jogador *inputJogador, Filhote *inputFilhote,
 			int *inputFim, sf::RenderWindow *inputJanela);

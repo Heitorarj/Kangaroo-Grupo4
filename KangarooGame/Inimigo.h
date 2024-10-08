@@ -5,35 +5,42 @@
 
 class Inimigo {
 public:
-    sf::RectangleShape hitboxInimigo;
-    sf::Sprite corpoInimigo;
-    sf::Texture texturaInimigo;
+	sf::RectangleShape hitboxInimigo, hitboxTiro;
+	sf::Sprite corpoInimigo, tiroInimigo;
+	sf::Texture texturaInimigo, texturaTiroInimigo, texturaInimigoPedraAlta, texturaInimigoGirada;
 
-    float velocidadeVertical, velocidadeHorizontal, persegueJogadorX, persegueJogadorY;
-    sf::Vector2f escalaInimigo;
+	float velocidadeVertical, velocidadeHorizontal, persegueJogadorX,
+			persegueJogadorY;
+	sf::Vector2f escalaInimigo;
 
-    bool colidiuChao, colidiuTopo, colidiuDireita, colidiuEsquerda, colidiuPlataforma, podeDescer;
-    int direcaoMovimento;
-    sf::Vector2f posicaoInicial;
+	bool colidiuChao, colidiuTopo, colidiuDireita, colidiuEsquerda,
+			colidiuPlataforma, podeDescer;
+	int direcaoMovimento, tipoTiro;
+	sf::Vector2f posicaoInicial;
 
-    void inicializaVariaveisInimigo();
-    void inicializaHitboxInimigo();
-    void inicializaTexturaInimigo();
+	void inicializaVariaveisInimigo();
+	void inicializaHitboxInimigo();
+	void inicializaTexturaInimigo();
 
-    void movimentoInimigo();
-    void descer();
+	void movimentoInimigo();
+	void descer();
 
-    Jogador &jogador;
+	Jogador &jogador;
 
-    Inimigo(Jogador &jogador);
-    ~Inimigo();
+	Inimigo(Jogador &jogador);
+	~Inimigo();
 
-    // Funções
-    sf::RectangleShape getHitboxInimigo();
-    void atualizaColisaoPlataforma(std::vector<Parede> &inputParedes);
-    void atualizaColisaoBorda(const sf::RenderTarget *target);
-    void atualizaInimigo(const sf::RenderTarget *target, std::vector<Parede> &inputParedes);
-    void desenhaInimigo(sf::RenderTarget *target);
+	// Funções
+	sf::RectangleShape getHitboxInimigo();
+	void colisaoJogador(Jogador *inputJogador, Som *inputSom,
+			Texto *inputTexto);
+	void atualizaColisaoPlataforma(std::vector<Parede> &inputParedes);
+	void atualizaColisaoBorda(const sf::RenderTarget *target);
+	void atacarJogador(Jogador &inputJogador, Som *inputSom);
+	void atualizaInimigo(const sf::RenderTarget *target,
+			std::vector<Parede> &inputParedes, Jogador *inputJogador,
+			Som *inputSom, Texto *inputTexto);
+	void desenhaInimigo(sf::RenderTarget *target);
 };
 
 class NuvemInimiga {
@@ -50,7 +57,7 @@ public:
 			sf::RenderWindow *inputJanela, std::vector<Nuvem> &inputNuvens,
 			std::vector<Parede> &inputParedes, std::vector<Flor> &inputFlores,
 			std::vector<Arvore> &inputArvores,
-			std::vector<Escada> &inputEscadas, Sino *inputSino);
+			std::vector<Escada> &inputEscadas, Sino *inputSino, Inimigo *inputInimigo);
 };
 
 #endif

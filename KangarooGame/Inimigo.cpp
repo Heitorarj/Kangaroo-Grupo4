@@ -3,7 +3,7 @@
 void Inimigo::inicializaVariaveisInimigo() {
 	this->velocidadeVertical = 2.f;
 	this->velocidadeHorizontal = 2.f;
-	this->escalaInimigo = sf::Vector2f(0.1, 0.1);
+	this->escalaInimigo = sf::Vector2f(0.15, 0.15);
 	this->persegueJogadorX = 200.f;
 	this->persegueJogadorY = 200.f;
 	this->colidiuDireita = false;
@@ -15,12 +15,24 @@ void Inimigo::inicializaHitboxInimigo() {
 	this->hitboxInimigo.setFillColor(sf::Color::Transparent);
 	this->hitboxInimigo.setSize(sf::Vector2f(60.f, 100.f));
 	this->hitboxInimigo.setPosition(sf::Vector2f(900.f, 50.f));
+	this->hitboxTiro.setSize(sf::Vector2f(1100, 1));
+	this->hitboxTiro.setPosition(2000, 2000);
+	this->hitboxTiro.setFillColor(sf::Color::Transparent);
+	this->hitboxTiro.setOutlineColor(sf::Color::Transparent);
+	this->hitboxTiro.setOutlineThickness(5);
 }
 void Inimigo::inicializaTexturaInimigo() {
 	this->texturaInimigo.loadFromFile("assets/macaco.png");
 	this->corpoInimigo.setTexture(texturaInimigo);
 	this->corpoInimigo.setScale(escalaInimigo);
 	this->corpoInimigo.setPosition(hitboxInimigo.getPosition());
+	this->texturaTiroInimigo.loadFromFile("assets/pedra.png");
+	this->texturaInimigoPedraAlta.loadFromFile("assets/macacoPedra.png");
+	this->texturaInimigoGirada.loadFromFile("assets/macacoGirado.png");
+	this->tiroInimigo.setTexture(texturaTiroInimigo);
+	this->tiroInimigo.setOrigin(tiroInimigo.getLocalBounds().width / 2,
+			tiroInimigo.getLocalBounds().height / 2);
+	this->tiroInimigo.setScale(0.015, 0.015);
 }
 
 //Construtores / Destrutores
@@ -31,11 +43,89 @@ Inimigo::Inimigo(Jogador &jogador) :
 	this->inicializaTexturaInimigo();
 }
 
-Inimigo::~Inimigo() {}
+Inimigo::~Inimigo() {
+}
 
 //Funcoes
 sf::RectangleShape Inimigo::getHitboxInimigo() {
 	return hitboxInimigo;
+}
+
+void Inimigo::atacarJogador(Jogador &inputJogador, Som *inputSom) {
+
+	srand(time(NULL));
+
+	if (!inputJogador.hitboxJogador.getGlobalBounds().intersects(
+			hitboxTiro.getGlobalBounds())) {
+		tipoTiro = rand() % 2;
+		std::cout << tipoTiro;
+		if (tipoTiro == 1) {
+			tiroInimigo.setPosition(hitboxInimigo.getPosition().x + 30,
+					hitboxInimigo.getPosition().y + 25);
+		} else if (tipoTiro == 0) {
+			tiroInimigo.setPosition(hitboxInimigo.getPosition().x + 30,
+					hitboxInimigo.getPosition().y + 80);
+		}
+		hitboxTiro.setSize(sf::Vector2f(1100, 1));
+		hitboxTiro.setPosition(hitboxInimigo.getPosition().x - 1100,
+				hitboxInimigo.getPosition().y + 50);
+
+		if (!colidiuEsquerda) {
+			corpoInimigo.setTexture(texturaInimigo);
+		} else if (colidiuEsquerda) {
+			corpoInimigo.setTexture(texturaInimigoGirada);
+		}
+
+	} else {
+
+		if (tiroInimigo.getPosition().x <= hitboxInimigo.getPosition().x) {
+			inputSom->gotaSom.play();
+		}
+
+		if (tiroInimigo.getPosition().x <= -1000) {
+			tiroInimigo.setPosition(hitboxInimigo.getPosition().x - 1100,
+					hitboxInimigo.getPosition().y + 80);
+			hitboxTiro.setSize(sf::Vector2f(1100, 1));
+		} else {
+			inputSom->danoSom.play();
+			corpoInimigo.setTexture(texturaInimigoPedraAlta);
+			tiroInimigo.rotate(45);
+			hitboxTiro.setSize(sf::Vector2f(1100, 800));
+			hitboxTiro.setPosition(0,0);
+
+			tiroInimigo.setPosition(tiroInimigo.getPosition().x - 10,
+					tiroInimigo.getPosition().y);
+
+			if (inputJogador.hitboxJogador.getGlobalBounds().intersects(
+					tiroInimigo.getGlobalBounds())) {
+				inputSom->danoSom.play();
+				inputJogador.vidas--;
+				inputJogador.hitboxJogador.setPosition(sf::Vector2f(200, 650));
+				tiroInimigo.setPosition(sf::Vector2f(-10000, 0));
+				inputJogador.atualizaVidas();
+			}
+		}
+	}
+}
+
+void Inimigo::colisaoJogador(Jogador *inputJogador, Som *inputSom,
+		Texto *inputTexto) {
+
+	if ((inputJogador->jogadorSoco)
+			and (inputJogador->hitboxSoco.getGlobalBounds().intersects(
+					hitboxInimigo.getGlobalBounds()))) {
+		hitboxInimigo.setPosition(sf::Vector2f(900.f, 50.f));
+		inputJogador->pontos += 500;
+		inputSom->danoSom.play();
+		char textoContador[5];
+		sprintf(textoContador, "Pontos:\t%d", inputJogador->pontos); // Código pego do ChuvaGame
+		inputTexto->texto.setString(textoContador);
+	} else if (inputJogador->hitboxJogador.getGlobalBounds().intersects(
+			hitboxInimigo.getGlobalBounds())) {
+		inputSom->danoSom.play();
+		inputJogador->hitboxJogador.setPosition(sf::Vector2f(200, 650));
+		inputJogador->vidas--;
+	}
 }
 
 void Inimigo::movimentoInimigo() {
@@ -52,8 +142,10 @@ void Inimigo::movimentoInimigo() {
 					hitboxInimigo.getPosition().y + 200.f);
 			colidiuDireita = false;
 		}
+
 	}
-	this->corpoInimigo.setPosition(this->hitboxInimigo.getPosition());
+	this->corpoInimigo.setPosition(hitboxInimigo.getPosition().x,
+			hitboxInimigo.getPosition().y + 30);
 }
 
 void Inimigo::atualizaColisaoPlataforma(std::vector<Parede> &inputParedes) {
@@ -115,16 +207,20 @@ void Inimigo::atualizaColisaoBorda(const sf::RenderTarget *target) {
 }
 
 void Inimigo::atualizaInimigo(const sf::RenderTarget *target,
-		std::vector<Parede> &inputParedes) {
+		std::vector<Parede> &inputParedes, Jogador *inputJogador, Som *inputSom,
+		Texto *inputTexto) {
 	this->atualizaColisaoBorda(target);
 	this->atualizaColisaoPlataforma(inputParedes);
 	this->movimentoInimigo();
-
+	this->colisaoJogador(inputJogador, inputSom, inputTexto);
+	this->atacarJogador(*inputJogador, inputSom);
 }
 
 void Inimigo::desenhaInimigo(sf::RenderTarget *target) {
 	target->draw(this->hitboxInimigo);
 	target->draw(this->corpoInimigo);
+	target->draw(this->hitboxTiro);
+	target->draw(this->tiroInimigo);
 }
 
 NuvemInimiga::NuvemInimiga() {
@@ -152,7 +248,8 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 		Som *inputSom, sf::RenderWindow *inputJanela,
 		std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
 		std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
-		std::vector<Escada> &inputEscadas, Sino *inputSino) {
+		std::vector<Escada> &inputEscadas, Sino *inputSino,
+		Inimigo *inputInimigo) {
 
 	if (!inputJogador.hitboxJogador.getGlobalBounds().intersects(
 			hitboxNuvemInimiga.getGlobalBounds())) {
@@ -179,6 +276,8 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 			for (unsigned int i = 0; i < 6; i++) {
 				inputParedes[i].retanguloCenario.setFillColor(sf::Color::Black);
 			}
+			inputInimigo->corpoInimigo.setColor(sf::Color::Black);
+			inputInimigo->tiroInimigo.setColor(sf::Color::Black);
 		}
 
 	} else {
@@ -196,7 +295,8 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 
 		} else {
 
-			if (inputSom->musicaPrincipalDificilOnCerteza == true) {
+			if ((inputSom->musicaPrincipalDificilOnCerteza == true)
+					and (inputSom->cenarioRaio)) {
 				inputSino->sinoCorpo.setColor(sf::Color::White);
 				nuvemCorpo.setColor(sf::Color::White);
 				for (unsigned int i = 0; i < inputNuvens.size(); i++) {
@@ -221,6 +321,8 @@ void NuvemInimiga::nuvemAtacar(Jogador &inputJogador, float inputDeltaTime,
 								sf::Color(122, 77, 31));
 					}
 				}
+				inputInimigo->corpoInimigo.setColor(sf::Color::White);
+				inputInimigo->tiroInimigo.setColor(sf::Color::White);
 			}
 
 			hitboxNuvemInimiga.setSize(sf::Vector2f(1000, 800));

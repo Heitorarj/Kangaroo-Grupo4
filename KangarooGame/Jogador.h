@@ -10,6 +10,7 @@
 #include "Tempo.h"
 #include "Nuvem.h"
 #include "Sino.h"
+#include "Texto.h"
 
 class Jogador {
 public:

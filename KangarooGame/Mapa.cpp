@@ -215,8 +215,6 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 		NuvemInimiga *inputNuvemInimiga, Texto *inputTexto, Sino *inputSino,
 		sf::RenderWindow *janela) {
 	if (inputNumeroFase == 1) {
-		inputSino->sinoCorpo.setTexture(inputSino->sinoTextura);
-		janela->draw(inputSino->sinoCorpo);
 		for (unsigned int i = 0; i < inputNuvem.size(); i++) {
 			inputNuvem[i].nuvemCorpo.setTexture(inputNuvem[i].nuvemTextura);
 			janela->draw(inputNuvem[i].nuvemCorpo);
@@ -253,6 +251,9 @@ void Mapa::desenharMapa(int inputNumeroFase, std::vector<Parede> &inputParede,
 
 		janela->draw(inputFilhote->filhoteCorpo);
 		janela->draw(inputFilhote->filhoteHitbox);
+
+		inputSino->sinoCorpo.setTexture(inputSino->sinoTextura);
+		janela->draw(inputSino->sinoCorpo);
 	}
 }
 
@@ -376,7 +377,7 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		std::vector<Nuvem> &inputNuvens, std::vector<Parede> &inputParedes,
 		std::vector<Flor> &inputFlores, std::vector<Arvore> &inputArvores,
 		Filhote *inputFilhote, std::vector<Escada> &inputEscadas,
-		Sino *inputSino) {
+		Sino *inputSino, Inimigo *inputInimigo) {
 	if (inputJogador->pontos >= 300 and inputJogador->pontos < 900) {
 		inputNuvemInimiga->tiroVelocidadeY = 60;
 	} else if (inputJogador->pontos >= 900 and inputJogador->pontos < 2000) {
@@ -391,6 +392,8 @@ void Mapa::nivelDificuldade(Jogador *inputJogador,
 		}
 	} else if (inputJogador->pontos >= 2000 and inputJogador->pontos < 4000) {
 		inputNuvemInimiga->tiroVelocidadeY = 90;
+		inputInimigo->corpoInimigo.setColor(sf::Color::Black);
+		inputInimigo->tiroInimigo.setColor(sf::Color::Black);
 		inputNuvemInimiga->nuvemCorpo.setColor(sf::Color::Black);
 		inputSino->sinoCorpo.setColor(sf::Color::Black);
 		for (unsigned int i = 0; i < inputNuvens.size(); i++) {
@@ -504,6 +507,7 @@ void Mapa::atualizaVisibilidadeHitbox(Jogador *inputJogador,
 		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(sf::Color::Red);
 		inputFilhote->filhoteHitbox.setOutlineColor(sf::Color::Green);
 		inputInimigo->hitboxInimigo.setFillColor(sf::Color::Red);
+		inputInimigo->hitboxTiro.setOutlineColor(sf::Color::Red);
 		inputParedes[6].retanguloCenario.setOutlineColor(sf::Color::Blue);
 		inputParedes[7].retanguloCenario.setOutlineColor(sf::Color::Blue);
 		inputParedes[8].retanguloCenario.setOutlineColor(sf::Color::Blue);
@@ -512,7 +516,8 @@ void Mapa::atualizaVisibilidadeHitbox(Jogador *inputJogador,
 		inputParedes[11].retanguloCenario.setOutlineColor(sf::Color::Blue);
 		inputParedes[12].retanguloCenario.setOutlineColor(sf::Color::Blue);
 	} else {
-
+		inputInimigo->hitboxTiro.setOutlineColor(sf::Color::Transparent);
+		inputInimigo->hitboxInimigo.setFillColor(sf::Color::Transparent);
 		inputJogador->hitboxJogador.setFillColor(sf::Color::Transparent);
 		inputJogador->hitboxSoco.setOutlineColor(sf::Color::Transparent);
 		inputNuvemInimiga->hitboxNuvemInimiga.setOutlineColor(
@@ -549,7 +554,7 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 			inputInimigo, inputFilhote);
 	nivelDificuldade(inputJogador, inputNuvemInimiga, inputCor, inputSom,
 			inputNuvens, inputParedes, inputFlores, inputArvores, inputFilhote,
-			inputEscadas, inputSino);
+			inputEscadas, inputSino, inputInimigo);
 	checarColisaoSino(inputJogador, inputSino, inputFrutas, inputNuvemInimiga,
 			inputSom);
 	checarColisaoFruta(inputJogador, inputFrutas, inputTexto, inputSom);
@@ -559,5 +564,5 @@ void Mapa::mapaUpdate(int inputNumeroFase, Jogador *inputJogador,
 	moverNuvemInimiga(1, inputNuvemInimiga, inputTempo);
 	inputNuvemInimiga->nuvemAtacar(*inputJogador, inputTempo, inputSom, janela,
 			inputNuvens, inputParedes, inputFlores, inputArvores, inputEscadas,
-			inputSino);
+			inputSino, inputInimigo);
 }
