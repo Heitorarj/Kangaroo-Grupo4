@@ -107,7 +107,7 @@ void TelasJogo::desenhaMenu(sf::RenderWindow *inputJanela,
 			botao.getLocalBounds().height);
 	botao.setPosition(sf::Vector2f(545, 445));
 
-	inputJogador->hitboxJogador.setPosition(0, 0);
+	inputJogador->hitboxJogador.setPosition(-100, -100);
 	clickMouse(inputJanela, inputTelaCodigo, inputJogador);
 	inputJanela->draw(tela);
 	inputJanela->draw(botao);

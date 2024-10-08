@@ -51,11 +51,14 @@ void Jogo::atualiza() {
 	meuMapa.mapaUpdate(1, &jogador, meuMapa.minhasFrutas, &meuMapa.meuTexto,
 			&meuMapa.meuFilhote, meuMapa.minhasNuvens,
 			&meuMapa.minhaNuvemInimiga, &meuMapa.meuSino, meuMapa.minhasParedes,
-			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom, meuMapa.minhasFlores, meuMapa.minhasArvores, meuMapa.minhasEscadas,
+			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom,
+			meuMapa.minhasFlores, meuMapa.minhasArvores, meuMapa.minhasEscadas,
 			janela);
 
-	this->inimigo.atualizaInimigo(this->janela, meuMapa.minhasParedes);
-	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom, meuTempo.deltaTime);
+	this->inimigo.atualizaInimigo(this->janela, meuMapa.minhasParedes, &jogador,
+			&meuSom, &meuMapa.meuTexto);
+	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom,
+			meuTempo.deltaTime);
 	this->jogador.atualizaVidas();
 
 	meuSom.somMusica(telaCodigo);
@@ -67,6 +70,8 @@ void Jogo::desenha(int inputNumeroFase) {
 	if (telaCodigo == -1) {
 		minhaTela.desenhaMenu(janela, &jogador, &telaCodigo);
 	} else if (telaCodigo == 0) {
+
+		this->inimigo.desenhaInimigo(this->janela);
 		meuMapa.desenharMapa(inputNumeroFase, meuMapa.minhasParedes,
 				meuMapa.minhasEscadas, meuMapa.minhasFrutas,
 				meuMapa.minhasArvores, meuMapa.minhasFlores,
@@ -74,9 +79,7 @@ void Jogo::desenha(int inputNumeroFase) {
 				&meuMapa.minhaNuvemInimiga, &meuMapa.meuTexto, &meuMapa.meuSino,
 				janela);
 
-		this->inimigo.desenhaInimigo(this->janela);
 		this->jogador.desenhaJogador(this->janela);
-
 		this->janela->display();
 
 	} else if (telaCodigo == 1) {
