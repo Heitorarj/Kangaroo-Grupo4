@@ -6,8 +6,6 @@ void Inimigo::inicializaVariaveisInimigo() {
 	this->escalaInimigo = sf::Vector2f(0.1, 0.1);
 	this->persegueJogadorX = 200.f;
 	this->persegueJogadorY = 200.f;
-	this->colidiuChao = false;
-	this->colidiuTopo = false;
 	this->colidiuDireita = false;
 	this->colidiuEsquerda = false;
 	this->colidiuPlataforma = false;
@@ -33,9 +31,7 @@ Inimigo::Inimigo(Jogador &jogador) :
 	this->inicializaTexturaInimigo();
 }
 
-Inimigo::~Inimigo() {
-
-}
+Inimigo::~Inimigo() {}
 
 //Funcoes
 sf::RectangleShape Inimigo::getHitboxInimigo() {
@@ -43,20 +39,18 @@ sf::RectangleShape Inimigo::getHitboxInimigo() {
 }
 
 void Inimigo::movimentoInimigo() {
-	if (!colidiuChao) {
-		if (colidiuPlataforma) {
-			// Movimento horizontal
-			if (!colidiuEsquerda && !colidiuDireita) {
-				this->hitboxInimigo.move(-velocidadeHorizontal, 0.f);
-			}
-			if (colidiuEsquerda) {
-				this->hitboxInimigo.move(velocidadeHorizontal, 0.f);
-			}
-			if (colidiuDireita) {
-				this->hitboxInimigo.setPosition(hitboxInimigo.getPosition().x,
-						hitboxInimigo.getPosition().y + 200.f);
-				colidiuDireita = false;
-			}
+	if (colidiuPlataforma) {
+		// Movimento horizontal
+		if (!colidiuEsquerda && !colidiuDireita) {
+			this->hitboxInimigo.move(-velocidadeHorizontal, 0.f);
+		}
+		if (colidiuEsquerda) {
+			this->hitboxInimigo.move(velocidadeHorizontal, 0.f);
+		}
+		if (colidiuDireita) {
+			this->hitboxInimigo.setPosition(hitboxInimigo.getPosition().x,
+					hitboxInimigo.getPosition().y + 200.f);
+			colidiuDireita = false;
 		}
 	}
 	this->corpoInimigo.setPosition(this->hitboxInimigo.getPosition());
@@ -110,20 +104,13 @@ void Inimigo::atualizaColisaoBorda(const sf::RenderTarget *target) {
 		// Se a hitbox passou da borda superior, reposiciona na posição zero no eixo Y
 		this->hitboxInimigo.setPosition(
 				this->hitboxInimigo.getGlobalBounds().left, 0.f);
-		this->colidiuTopo = true;
-		this->colidiuChao = false;
 	}
 	// Verifica se o inimigo ultrapassou o limite inferior da tela
 	else if (this->hitboxInimigo.getGlobalBounds().top
 			+ this->hitboxInimigo.getGlobalBounds().height
 			>= target->getSize().y) {
 		// Se a hitbox passou da borda inferior, reposiciona para o máximo permitido no eixo Y
-		this->hitboxInimigo.setPosition(
-				this->hitboxInimigo.getGlobalBounds().left,
-				target->getSize().y
-						- this->hitboxInimigo.getGlobalBounds().height);
-		this->colidiuChao = true;
-		this->colidiuTopo = false;
+		this->hitboxInimigo.setPosition(sf::Vector2f(900.f, 50.f));
 	}
 }
 

@@ -54,7 +54,7 @@ void Jogo::atualiza() {
 			&inimigo, meuTempo.deltaTime, &telaCodigo, &corFundo, &meuSom, meuMapa.minhasFlores, meuMapa.minhasArvores, meuMapa.minhasEscadas,
 			janela);
 
-	this->inimigo.atualizaInimigo(this->janela);
+	this->inimigo.atualizaInimigo(this->janela, meuMapa.minhasParedes);
 	this->jogador.atualizaJogador(this->janela, meuMapa.minhasParedes, &meuSom, meuTempo.deltaTime);
 	this->jogador.atualizaVidas();
 
